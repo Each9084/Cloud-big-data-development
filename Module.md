@@ -849,3 +849,499 @@ Amazon Aurora 数据库引擎与现有的 MySQL 和 PostgreSQL 开源数据库�
 
 正如您在本模块中看到的，云继续降低存储和计算成本。新一代应用程序已经出现，这对数据库提出了一系列新要求。这些应用程序需要数据库来存储 TB 到 PB 级的新类型数据、以毫秒级延迟提供对数据的访问、每秒处理数百万个请求以及扩展以支持世界各地的数百万用户。为了满足这些要求，您需要专门为满足应用程序的特定需求而构建的关系数据库和非关系数据库。AWS 提供了为您的特定应用程序用例构建的各种数据库。
 
+### Module 8 Knowledge Check
+
+**1.You are designing an ecommerce web application that will scale to hundreds of thousands of concurrent users. Which database technology is best suited to hold the session state in this example?**
+
+A.Amazon Relational Database Service (Amazon RDS)
+B.Amazon DynamoDB
+C.Amazon Redshift
+D.Amazon Simple Storage Service (Amazon S3)
+
+
+
+**2.You need to find an item in an Amazon DynamoDB table using an attribute other than the item's primary key. Which of the following operations should you use? (Select the best answer.)**
+
+A.Putltem
+B.Scan
+C.Query
+D.Getltem
+
+
+
+**3.In Amazon DynamoDB, what does the query operation enable you to do? (Select the best answer.)**
+
+A.Query a table using the partition key and an optional sort key filter
+B.Query any secondary indexes that exist for a table
+C.Efficiently retrieve items from a table or secondary index
+D.All of the above
+
+
+
+**4.Which AWS Cloud service is best suited for analyzing your data by using standard structured query language (SQL) and your existing business intelligence (BI) tools? (Select the best answer.)**
+
+A.Amazon Relational Database Service (Amazon RDS)
+B.Amazon Simple Storage Service Glacier
+C.Amazon DynamoDB
+D.Amazon Redshift
+
+
+
+**5.In Amazon DynamoDB, an attribute is.(Select the best answer.)**
+
+A.a fundamental data element
+B.a collection of items
+C.a collection of attributes
+
+
+
+**6.If you are developing an application that requires a database with extremely fast performance, fast scalability, and flexibility in the database schema, which service should you consider?  (Select the best answer.)** 
+
+A.Amazon Relational Database Service (Amazon RDS)
+B.Amazon ElastiCache
+C.Amazon DynamoDB
+D.Amazon Redshift
+
+
+
+**7.Which of the following use cases is appropriate for using Amazon Relational Database Service (Amazon RDS)? (Select the best answer.)**
+
+A.Massive read/write rates
+B.Simple GET or PUT requests
+C.Complex transactions
+D.All of the above
+
+
+
+**8.A company has an application, which consists of a .NET layer that connects to a MySQL database. They want to move this application on to AWS and use AWS features such as high availability and automated backups. Which of the following would be an ideal database for this use case? (Select the best answer)**
+
+A.Amazon DynamoDB
+B.Amazon Aurora
+C.Amazon Redshift
+D.Amazon RDS
+
+
+
+**9.True or false? Amazon RDS automatically patches the database software and backs upyour database, storing the backups for a user-defined retention period and enabling point-in-time recovery.**
+
+True
+False
+
+
+
+**10.What should you consider when choosing a database type? (Select the best answer.)**
+A.Data size
+B.Data access period
+C.Query frequency
+D.Highly available
+E.All of the above
+
+
+
+**Answer**:
+
+1.B
+2.B 
+To find an item in a DynamoDB table other than the item's primary key, you would use the scan operation.
+3.D
+4.D
+5.A
+6.C
+If you are developing an application that requires a database with extremely fast performance, fast scalability, and flexibility in the database schema, consider Amazon DynamoDB.
+
+7.C
+8.B
+9.TRUE
+10.E
+
+
+
+
+
+## Module 10: Automatic Scaling and Monitoring
+
+本模块将讨论以下主题：
+
+- Elastic Load Balancing
+- Amazon CloudWatch
+- Amazon EC2 Auto Scaling
+
+该模块还包括两项活动。一项活动将要求您指出 Elastic Load Balancing 用例。另一项活动将要求您识别 Amazon CloudWatch 示例。
+
+该模块还包括一个实践实验室，您将在其中结合使用 Amazon EC2 Auto Scaling、Elastic Load Balancing 和 Amazon CloudWatch 来创建动态可扩展的架构。
+
+最后，您将被要求完成知识测试，以测试您对本模块中涵盖的关键概念的理解。
+
+
+
+完成本模块后，您应该能够：
+- 指出如何使用 Elastic Load Balancing 在 Amazon Elastic Compute Cloud (Amazon EC2) 实例之间分配流量
+- 确定 Amazon CloudWatch 如何让您实时监控 AWS 资源和应用程序
+- 解释 Amazon EC2 Auto Scaling 如何根据工作负载变化启动和发布服务器
+- 执行扩展和负载平衡任务以改进架构
+
+
+
+### Section 1: Elastic Load  Balancing
+
+![屏幕截图 2024-11-14 161956](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 161956.jpg)
+
+现代高流量网站必须处理来自用户或客户端的数十万甚至数百万个并发请求，然后以快速可靠的方式返回正确的文本、图像、视频或应用程序数据。通常需要额外的服务器来满足这些高流量
+
+Elastic Load Balancing 是一项 AWS 服务，可在单个可用区或多个可用区中跨多个目标（例如 Amazon Elastic Compute Cloud (Amazon EC2) 实例、容器、互联网协议 (IP) 地址和 Lambda 函数）分配传入的应用程序或网络流量。Elastic Load Balancing 会随着应用程序流量随时间变化而扩展您的负载均衡器。它可以自动扩展到大多数工作负载。
+
+![屏幕截图 2024-11-14 162226](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 162226.jpg)
+
+Elastic Load Balancing 有三种类型：
+
+- 应用程序负载均衡器在应用程序级别（开放系统互连，即 OSI，模型第 7 层）运行。它根据请求的内容将流量路由到目标 — Amazon Elastic Compute Cloud (Amazon EC2) 实例、容器、Internet 协议 (IP) 地址和 Lambda 函数。它是超文本传输协议 (HTTP) 和安全 HTTP (HTTPS) 流量的高级负载平衡的理想选择。应用程序负载均衡器提供高级请求路由，旨在交付现代应用程序架构，包括微服务和基于容器的应用程序。应用程序负载均衡器通过确保始终使用最新的安全套接字层/传输层安全性 (SSL/TLS) 密码和协议来简化和提高应用程序的安全性。
+- 网络负载均衡器在网络传输层（OSI 模型第 4 层）运行，根据 IP 协议数据将连接路由到目标（EC2 实例、微服务和容器）。它非常适合对传输控制协议 (TCP) 和用户数据报协议 (UDP) 流量进行负载平衡。网络负载均衡器能够每秒处理数百万个请求，同时保持超低延迟。网络负载均衡器经过优化，可处理突发和不稳定的网络流量模式。
+- Classic Load Balancer 提供跨多个 EC2 实例的基本负载平衡，并在应用程序级别和网络传输级别运行。Classic Load Balancer 支持使用 HTTP、HTTPS、TCP 和 SSL 的应用程序的负载平衡。Classic Load Balancer 是一种较旧的实现。如果可能，AWS 建议您使用专用的应用程序负载均衡器或网络负载均衡器。
+
+![屏幕截图 2024-11-14 162510](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 162510.jpg)
+
+负载均衡器接受来自客户端的传入流量，并将请求路由到一个或多个可用区域中的注册目标（例如 EC2 实例）。
+
+您可以通过指定一个或多个侦听器来配置负载均衡器以接受传入流量。侦听器是一个检查连接请求的过程。它配置了从客户端到负载均衡器的连接的协议和端口号。同样，它配置了从负载均衡器到目标的连接的协议和端口号。
+
+您还可以配置负载均衡器以执行运行状况检查，这些检查用于监控已注册目标的运行状况，以便负载均衡器仅向运行状况良好的实例发送请求。当负载均衡器检测到运行状况不佳的目标时，它会停止将流量路由到该目标。然后，当它检测到目标再次运行正常时，它会恢复将流量路由到该目标。
+
+负载均衡器类型的配置方式存在一个关键差异。使用应用程序负载均衡器和网络负载均衡器，您可以在目标组中注册目标，并将流量路由到目标组。使用传统负载均衡器，您可以向负载均衡器注册实例。
+
+![屏幕截图 2024-11-14 162720](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 162720.jpg)
+
+使用负载均衡器的原因有很多：
+
+- 为您的应用程序实现高可用性和更好的容错能力——Elastic Load Balancing 可在多个可用区的健康目标之间平衡流量。如果单个可用区中的一个或多个目标运行不正常，Elastic Load Balancing 会将流量路由到其他可用区中的健康目标。当目标恢复健康状态后，负载平衡将自动恢复到这些目标的流量。
+- 自动对容器化应用程序进行负载均衡– 借助对 Elastic Load Balancing 的增强容器支持，您现在可以在同一 EC2 实例上的多个端口之间进行负载均衡。您还可以利用与 Amazon Elastic Container Service (Amazon ECS) 的深度集成，它提供了完全托管的容器产品。您只需向负载均衡器注册服务，Amazon ECS 就会透明地管理 Docker 容器的注册和取消注册。负载均衡器会自动检测端口并动态地重新配置自身。
+- 自动扩展您的应用程序 – Elastic Load Balancing 与 Amazon CloudWatch 和 Amazon EC2 Auto Scaling 配合使用，帮助您根据客户需求扩展应用程序。当任何一个 EC2 实例的延迟超过预配置阈值时，Amazon CloudWatch 警报可以触发 EC2 实例队列的自动扩展。然后，Amazon EC2 Auto Scaling 会预置新实例，您的应用程序将准备好满足下一个客户请求。负载均衡器将注册 EC2 实例并根据需要将流量引导至该实例。
+- 在您的虚拟私有云 (VPC) 中使用 Elastic Load Balancing – 您可以使用 Elastic Load Balancing 创建 VPC 的公共入口点，或者在 VPC 内的应用程序层之间路由请求流量。您可以将安全组分配给负载均衡器，以控制哪些端口对允许的源列表开放。由于 Elastic Load Balancing 与您的 VPC 配合使用，因此您现有的所有网络访问控制列表 (网络 ACL) 和路由表将继续提供额外的网络控制。在 VPC 中创建负载均衡器时，您可以指定负载均衡器是公共 (默认) 还是内部。如果选择内部，则无需使用互联网网关即可访问负载均衡器，并且负载均衡器的私有 IP 地址将用于负载均衡器的域名系统 (DNS) 记录中。
+- 启用混合负载平衡– Elastic Load Balancing 可让您使用同一负载平衡器在 AWS 和本地资源之间进行负载平衡。例如，如果您必须在 AWS 和本地资源之间分配应用程序流量，则可以将所有资源注册到同一目标组，并将目标组与负载平衡器关联。或者，您可以使用基于 DNS 的加权负载平衡在 AWS 和本地资源之间进行，方法是使用两个负载平衡器，其中一个负载平衡器用于 AWS，另一个负载平衡器用于本地资源。您还可以使用混合负载平衡来使单独的应用程序受益，其中一个应用程序位于 VPC 中，另一个应用程序位于本地位置。将 VPC 目标放在一个目标组中，将本地目标放在另一个目标组中，然后使用基于内容的路由将流量路由到每个目标组。
+- 通过 HTTP(S) 调用 Lambda 函数 – Elastic Load Balancing 支持调用 Lambda 函数来处理 HTTP(S) 请求。这使用户能够从任何 HTTP 客户端（包括 Web 浏览器）访问无服务器应用程序。您可以将 Lambda 函数注册为目标，并使用 Application Load Balancer 中对基于内容的路由规则的支持将请求路由到不同的 Lambda 函数。您可以将 Application Load Balancer 用作使用服务器和无服务器计算的应用程序的通用 HTTP 终端节点。您可以使用 Lambda 函数构建整个网站，也可以组合 EC2 实例、容器、本地服务器和 Lambda 函数来构建应用程序。
+
+![屏幕截图 2024-11-14 163833](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 163833.jpg)
+
+对于此活动，请命名您将在给定场景中使用的负载均衡器。
+
+![屏幕截图 2024-11-14 163901](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 163901.jpg)
+
+答案已经揭晓
+
+
+
+![屏幕截图 2024-11-14 163932](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 163932.jpg)
+
+您可以使用以下功能来监控负载均衡器、分析流量模式以及解决负载均衡器和目标的问题：
+
+- Amazon CloudWatch 指标 – Elastic Load Balancing 将负载均衡器和目标的数据点发布到 Amazon CloudWatch。CloudWatch 允许您以一组有序的时间序列数据（称为指标）的形式检索有关这些数据点的统计数据。您可以使用指标来验证系统是否按预期运行。例如，您可以创建 CloudWatch 警报来监控指定的指标，并在指标超出您认为的可接受范围时启动操作（例如向电子邮件地址发送通知）。
+- 访问日志–您可以使用访问日志捕获有关对负载均衡器发出的请求的详细信息，并将其作为日志文件存储在 Amazon Simple Storage Service (Amazon S3) 中。您可以使用这些访问日志来分析流量模式并解决目标或后端应用程序的问题。
+- AWS CloudTrail 日志 – 您可以使用 AWS CloudTrail 捕获有关对 Elastic Load Balancing 应用程序编程接口 (API) 进行的调用的详细信息，并将其作为日志文件存储在 Amazon S3 中。您可以使用这些 CloudTrail 日志确定谁进行了调用、进行了哪些调用、调用的时间、调用的源 IP 地址等等。
+
+**Section 1 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- Elastic Load Balancing 在一个或多个可用区域内的多个目标（例如 Amazon EC2 实例、容器、IP 地址和 Lambda 函数）之间分配传入的应用程序或网络流量。
+- Elastic Load Balancing 支持三种类型的负载均衡器：
+  - Application Load Balancer 应用程序负载均衡器
+  - Network Load Balancer 网络负载均衡器
+  - Classic Load Balancer 传统负载均衡器
+- Elastic Load Balancing 提供多种监控工具，用于持续监控和日志记录以供审计和分析。
+
+
+
+### Section 2: Amazon CloudWatch
+
+要高效地使用 AWS，您需要了解您的 AWS 资源。
+
+例如，您可能想知道：
+
+-  何时应启动更多 Amazon EC2 实例？
+-  应用程序的性能或可用性是否因容量不足而受到影响？
+-  您的基础设施实际使用了多少？
+
+您如何获取这些信息？
+
+![屏幕截图 2024-11-14 164413](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 164413.jpg)
+
+您可以使用 Amazon CloudWatch 捕获此信息。
+
+Amazon CloudWatch 是一项监控和可观测性服务，专为 DevOps 工程师、开发人员、站点可靠性工程师 (SRE) 和 IT 经理打造。CloudWatch 可实时监控您的 AWS 资源（以及您在 AWS 上运行的应用程序）。您可以使用 CloudWatch 收集和跟踪指标，这些指标是您可以衡量的资源和应用程序的变量。
+
+您可以创建警报来监控账户中的任何 Amazon CloudWatch 指标，并使用警报自动向 Amazon Simple Notification Service (Amazon SNS) 主题发送通知或执行 Amazon EC2 Auto Scaling 或 Amazon EC2 操作。例如，您可以针对 EC2 实例的 CPU 利用率、Elastic Load Balancing 请求延迟、Amazon DynamoDB 表吞吐量、Amazon Simple Queue Service (Amazon SQS) 队列长度甚至 AWS 账单上的费用创建警报。您还可以针对特定于您的自定义应用程序或基础设施的自定义指标创建警报。
+
+您还可以使用 Amazon CloudWatch Events 定义与传入事件（或 AWS 环境中的更改）匹配的规则，并将其路由到目标进行处理。目标可以包括 Amazon EC2 实例、AWS Lambda 函数、Kinesis 流、Amazon ECS 任务、Step Functions 状态机、Amazon SNS 主题、Amazon SQS 队列和内置目标。CloudWatch Events 会在发生操作更改时感知到这些更改。CloudWatch Events 会响应这些操作更改并根据需要采取纠正措施，方法是发送消息以响应环境、激活函数、进行更改和捕获状态信息。
+
+借助 CloudWatch，您可以全面了解资源利用率、应用程序性能和运行状况。无需预付承诺或最低费用；您只需按实际使用量付费。我们会在月底向您收取实际使用量的费用。
+
+![屏幕截图 2024-11-14 164740](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 164740.jpg)
+
+您可以创建 CloudWatch 警报来监控单个 CloudWatch 指标或基于 CloudWatch 指标的数学表达式的结果。您可以基于静态阈值、异常检测或指标数学表达式创建 CloudWatch 警报。
+
+当您根据静态阈值创建警报时，您可以选择要监视的 CloudWatch 指标以及该指标的阈值。当指标在指定的评估期内超出阈值时，警报将进入 ALARM 状态。
+
+对于基于静态阈值的警报，您必须指定：
+
+- 命名空间—命名空间包含您想要的 CloudWatch 指标，例如 AWS/EC2。
+- 指标—指标是您想要测量的变量，例如 CPU 利用率。
+- 统计数据—统计数据可以是平均值、总和、最小值、最大值、样本数、预定义百分位数或自定义百分位数。
+- 周期—周期是警报的评估期。评估警报时，每个周期都会聚合为一个数据点。
+- 条件 - 指定静态阈值的条件时，您可以指定指标大于、大于或等于、小于或等于或低于阈值的情况，还可以指定阈值。
+- 其他配置信息 - 这包括评估期内必须违反多少个数据点才能触发警报，以及 CloudWatch 在评估警报时应如何处理缺失数据。
+- 操作 - 您可以选择向 Amazon SNS 主题发送通知，或者执行 Amazon EC2 Auto Scaling 操作或 Amazon EC2 操作。
+
+![屏幕截图 2024-11-14 164850](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 164850.jpg)
+
+对于此活动，看看您是否可以确定哪些是正确的 CloudWatch 警报。对于不正确的警报，看看您是否可以确定错误。
+
+![屏幕截图 2024-11-14 164920](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 164920.jpg)
+
+
+
+**Section 2 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- Amazon CloudWatch 可帮助您实时监控您的 AWS 资源以及您在 AWS 上运行的应用程序。
+- CloudWatch 可让您 –
+  - 收集并跟踪标准和自定义指标。
+  - 设置警报以自动向 SNS 主题发送通知，或根据指标或表达式在多个时间段内相对于阈值的值执行 Amazon EC2 Auto Scaling 或 Amazon EC2 操作。
+  - 定义与 AWS 环境中的变化相匹配的规则，并将这些事件路由到目标进行处理。
+
+### Section 3: Amazon EC2 Auto Scaling
+
+在 AWS 上运行应用程序时，您需要确保您的架构能够扩展以应对需求变化。在本节中，您将了解如何使用 Amazon EC2 Auto Scaling 自动扩展您的 EC2 实例。
+
+![屏幕截图 2024-11-14 165155](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165155.jpg)
+
+Scaling (扩展)是指增加或减少应用程序的计算容量的能力。要了解扩展为何如此重要，请考虑这个具有不同资源需求的工作负载示例。在此示例中，星期三需要的资源容量最多，而星期日需要的资源容量最少。
+
+一种选择是分配足够多的容量，以便始终满足最高需求（在本例中为周三）。但是，这种情况意味着您运行的资源在一周中的大多数日子都未得到充分利用。使用此选项，您的成本不会得到优化。
+
+另一种选择是分配较少的容量以降低成本。这种情况意味着您在某些日子容量不足。如果您不解决容量问题，您的应用程序可能会表现不佳，甚至可能无法供用户使用。
+
+![屏幕截图 2024-11-14 165256](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165256.jpg)
+
+在云中，由于计算能力是一种程序化资源，因此您可以采用灵活的方法进行扩展。Amazon EC2 Auto Scaling 是一项 AWS 服务，可帮助您维护应用程序可用性，并使您能够根据定义的条件自动添加或删除 EC2 实例。您可以使用 EC2 Auto Scaling 的队列管理功能来维护队列的运行状况和可用性。
+
+Amazon EC2 Auto Scaling 提供了多种方法来调整扩展，以最好地满足您的应用程序需求。您可以手动、按计划、响应不断变化的需求或与 AWS Auto Scaling 结合使用以进行预测性扩展来添加或删除 EC2 实例。动态扩展和预测性扩展可以一起使用以更快地进行扩展。
+
+![屏幕截图 2024-11-14 165334](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165334.jpg)
+
+自动扩展对于可预测的工作负载很有用 - 例如零售公司 Amazon.com 的每周流量。
+
+![屏幕截图 2024-11-14 165403](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165403.jpg)
+
+自动扩展对于动态按需扩展也很有用。亚马逊在 11 月会经历季节性流量高峰（黑色星期五和网络星期一，即 11 月底美国零售商举行大型促销活动的日子）。如果亚马逊提供固定容量来满足最高使用率，则一年中大部分时间 76% 的资源处于闲置状态。容量扩展对于支持不断变化的服务需求是必不可少的。如果不进行扩展，服务器可能会因饱和而崩溃，企业将失去客户信心。
+
+![屏幕截图 2024-11-14 165435](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165435.jpg)
+
+Auto Scaling 组是 Amazon EC2 实例的集合，这些实例被视为逻辑分组，以便自动扩展和管理。Auto Scaling 组的大小取决于您设置为所需容量的实例数。您可以手动或使用自动扩展来调整其大小以满足需求。
+
+有关 Auto Scaling Groups 的更多信息，请参阅 https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html。
+
+您可以指定每个 Auto Scaling 组中的最小实例数，Amazon EC2 Auto Scaling 旨在防止您的组低于此大小。您可以指定每个 Auto Scaling 组中的最大实例数，Amazon EC2 Auto Scaling 旨在防止您的组高于此大小。如果您在创建组时或之后的任何时间指定所需的容量，Amazon EC2 Auto Scaling 旨在调整您的组的大小，使其具有指定的实例数。如果您指定扩展策略，则 Amazon EC2 Auto Scaling 可以根据应用程序需求的增加或减少来启动或终止实例。
+
+例如，此 Auto Scaling 组的最小大小为 1 个实例，所需容量为 2 个实例，最大大小为 4 个实例。您定义的扩展策略会根据您指定的条件在最小和最大实例数范围内调整实例数。
+
+
+
+![屏幕截图 2024-11-14 165600](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165600.jpg)
+
+使用 Amazon EC2 Auto Scaling，启动实例称为扩展，终止实例称为缩减。
+
+![屏幕截图 2024-11-14 165632](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165632.jpg)
+
+要启动 EC2 实例，Auto Scaling 组需要使用启动配置，即实例配置模板。您可以将启动配置视为您要扩展的内容。创建启动配置时，您需要指定实例的信息。您指定的信息包括 Amazon 系统映像 (AMI) 的 ID、实例类型、AWS 身份和访问管理 (IAM) 角色、额外存储、一个或多个安全组以及任何 Amazon Elastic Block Store (Amazon EBS) 卷。
+
+有关启动配置的更多信息，请参阅https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-configurations.html。
+
+您可以定义 Auto Scaling 组的最小和最大实例数以及所需容量。然后，将其启动到 VPC 内的子网中（您可以将其视为要扩展的位置）。Amazon EC2 Auto Scaling 与 Elastic Load Balancing 集成，使您可以将一个或多个负载均衡器附加到现有的 Auto Scaling 组。附加负载均衡器后，它会自动在组中注册实例并在实例之间分配传入流量。
+
+最后，您可以指定扩展事件发生的时间。您有许多扩展选项：
+
+- 始终保持当前实例级别 – 您可以配置 Auto Scaling 组以始终保持指定数量的正在运行的实例。为了保持当前实例级别，Amazon EC2 Auto Scaling 会对 Auto Scaling 组中正在运行的实例执行定期运行状况检查。当 Amazon EC2 Auto Scaling 发现运行状况不佳的实例时，它会终止该实例并启动一个新实例。
+- 手动扩展 – 使用手动扩展，您只需指定 Auto Scaling 组的最大、最小或所需容量的变化。有关手动扩展的更多信息，请参阅 https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-manual-scaling.html。
+- 计划扩展 – 使用计划扩展，扩展操作将根据日期和时间自动执行。当您确切知道何时增加或减少组中的实例数量时，这对于可预测的工作负载非常有用。例如，假设每周，您的 Web 应用程序的流量在星期三开始增加，在星期四保持高位，并在星期五开始减少。有关计划扩展的更多信息，请参阅 https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scheduled-scaling.html。您可以根据 Web 应用程序的可预测流量模式规划扩展操作。要实施计划扩展，您需要创建计划操作。
+- 扩展资源的更高级方法使您能够定义控制扩展过程的参数。例如，您有一个当前在两个实例上运行的 Web 应用程序，并且您希望 Auto Scaling 组的 CPU 利用率在应用程序负载发生变化时保持接近 50%。当您不知道这些条件何时会发生变化时，此选项对于根据不断变化的条件进行扩展非常有用。动态扩展为您提供了额外的容量来处理流量高峰，而无需维护过多的闲置资源。您可以将 Auto Scaling 组配置为自动扩展以满足此需求。有关动态扩展的更多信息，请访问 https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scale-based-on-demand.html。扩展策略类型决定了如何执行扩展操作。您可以将 Amazon EC2 Auto Scaling 与 Amazon CloudWatch 结合使用，以触发扩展策略来响应警报。请参阅 https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scale-based-on-demand.html#as-scaling-types 中的策略类型。
+- 预测扩展 - 您可以将 Amazon EC2 Auto Scaling 与 AWS Auto Scaling 结合使用来实现预测扩展，其中您的容量根据预测需求进行扩展。预测扩展使用从您的实际 EC2 使用情况中收集的数据，并且这些数据由从我们自己的观察中提取的数十亿个数据点进一步提供信息。然后，AWS 使用训练有素的机器学习模型来预测您的预期流量（和 EC2 使用情况），包括每日和每周模式。该模型需要至少 1 天的历史数据才能开始进行预测。每 24 小时重新评估一次以创建未来 48 小时的预测。预测过程会生成一个扩展计划，该计划可以驱动一组或多组自动扩展的 EC2 实例。
+  https://aws.amazon.com/blogs/aws/new-predictive-scaling-for-ec2-powered-by-machine-learning/
+
+![屏幕截图 2024-11-14 165941](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 165941.jpg)
+
+**Implementing Dynamic scaling(实现动态扩展)** 的一个常见配置是创建基于 EC2 实例或负载均衡器性能信息的 CloudWatch 警报。当超出性能阈值时，CloudWatch 警报会触发自动扩展事件，该事件会扩展或缩减 Auto Scaling 组中的 EC2 实例。
+
+要了解其工作原理，请考虑以下示例：
+
+- 您创建一个 Amazon CloudWatch 警报来监控整个 EC2 实例队列的 CPU 利用率，并在队列的平均 CPU 利用率超过 60% 持续 5 分钟时运行自动扩展策略。
+- AmazonEC2Auto Scaling 根据您创建的启动配置将新的 EC2 实例实例化到您的 Auto Scaling 组中。
+- 添加新实例后，Amazon EC2Auto Scaling 会调用 Elastic Load Balancing 以在该 Auto Scaling 组中注册新的 EC2 实例。
+- 然后，Elastic Load Balancing 执行所需的运行状况检查并开始将流量分发到该实例。Elastic Load Balancing 在 EC2 实例之间路由流量并将指标提供给 Amazon CloudWatch。
+
+Amazon CloudWatch、Amazon EC2 Auto Scaling 和 Elastic Load Balancing 单独使用效果很好。但是，它们结合起来会变得更加强大，并可以提高应用程序处理客户需求时的控制力和灵活性。
+
+![屏幕截图 2024-11-14 170552](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-14 170552.jpg)
+
+到目前为止，您了解了如何使用 Amazon EC2 Auto Scaling 扩展 EC2 实例。您还了解到，您可以将 Amazon EC2 Auto Scaling 与 AWS Auto Scaling 结合使用来执行预测性扩展。
+
+AWS Auto Scaling 是一项单独的服务，用于监控您的应用程序。它会自动调整容量，以尽可能低的成本保持稳定、可预测的性能。该服务提供了一个简单而强大的用户界面，使您能够为资源构建扩展计划，包括：
+
+- Amazon EC2 实例和 Spot 队列
+- Amazon Elastic Container Service (Amazon ECS) 任务
+- Amazon DynamoDB 表和索引
+- Amazon Aurora 副本
+
+如果您已经在使用 Amazon EC2 Auto Scaling 动态扩展您的 EC2 实例，那么您现在可以将其与 AWS Auto Scaling 一起使用来扩展其他 AWS 服务的额外资源。
+
+
+
+**Section 3 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- 扩展使您能够快速响应资源需求的变化。
+- Amazon EC2 Auto Scaling 可帮助您维护应用程序可用性，并使您能够根据工作负载自动添加或删除 EC2 实例。
+- Auto Scaling 组是 EC2 实例的集合。
+- 启动配置是实例配置模板。
+- 您可以使用 Amazon EC2 Auto Scaling、Amazon CloudWatch 和 Elastic Load Balancing 实现动态扩展。
+
+AWS Auto Scaling 是一项单独的服务，可监控您的应用程序并自动调整以下资源的容量：
+
+- Amazon EC2 实例和 Spot 队列
+- Amazon ECS 任务
+- Amazon DynamoDB 表和索引
+- Amazon Aurora 副本
+
+
+
+**Module summary**    
+
+总之，在本模块中，您学习了如何：
+
+-  指出如何使用 Elastic Load Balancing 在 Amazon Elastic Compute Cloud (Amazon EC2) 实例之间分配流量。
+- 确定 Amazon CloudWatch 如何使您能够实时监控 AWS 资源和应用程序
+-  解释 Amazon EC2 Auto Scaling 如何启动和发布服务器以响应工作负载变化。
+- 执行扩展和负载平衡任务以改进架构。
+
+
+
+### Module 8 Knowledge Check
+
+**1.Which of the following AWS tools help your application scale up or down based on demand? (Choose two.)**
+
+A.Availability Zones
+B.Amazon EC2 Auto Scaling
+C.AWS CloudFormation
+D.Elastic Load Balancing
+E.AWS Config
+
+
+
+**2.Which service would you use to send alerts based on Amazon CloudWatch alarms?d (Select the best answer.)**
+
+A.Amazon Simple Notification Service (Amazon SNS)
+B.AWS CloudTrail
+C.AWS Trusted Advisor
+D.Amazon Route 53
+
+
+
+**3.Which of the following are characteristics of Amazon EC2 Auto Scaling? (Choose three.)**
+
+A.Only supports dynamic scaling
+B.Responds to changing conditions by adding or terminating instances
+C.Delivers push notifications
+D.Launches instances from a specified Amazon Machine Image (AMI)
+E.Enforces a minimum number of running Amazon EC2 instances
+
+
+
+**4.Which of the following must be configured on an Elastic Load Balancing load balancer to expect incoming traffic? (Select the best answer.)**
+
+A.A port
+B.A network interface
+C.A listener
+D.An instance
+
+
+
+**5.Which of the following elements are used to create an Amazon EC2 Auto Scaling launch configuration?  (Choose three.)** 
+
+A.Amazon Machine Image (AMI)
+B.Load balancer
+C.Instance type
+D.Virtual private cloud (VPC) and subnets
+E.Amazon Elastic Block Store (Amazon EBS) volumes
+
+
+
+**6.Which of the following services can help you collect important metrics from Amazon Relational Database Service (Amazon RDS) and Amazon Elastic Compute Cloud (Amazon EC2) instances? (Select the best answer.)**
+
+A.Amazon CloudFront
+B.Amazon CloudSearch
+C.Amazon CloudWatch
+D.AWS CloudTrail
+E.Amazon EC2 Auto Scaling
+
+
+
+**7.Which of the following are elements of an Auto Scaling group? (Choose three.)**
+
+A.Minimum size
+B.Health checks
+C.Desired capacity
+D.Maximum size
+
+
+
+**8.There is an audit at your company and they need to have a log of all access to AWS resources in the account. Which of the following services can assist in providing these details? (Select the best answer.)**
+
+A.Amazon Cloud Watch
+B.AWS Cloud Trail
+C.Amazon Elastic Compute Cloud (Amazon EC2)
+D.Amazon Simple Notification Service (Amazon SNS)
+
+
+
+**9.In Elastic Load Balancing, when the load balancer detects an unhealthy target, which of the following are true? (Choose three.)**
+
+A.Stops routing traffic to that target
+B.Triggers an alarm
+C.Resumes routing traffic when it detects that the target is healthy again
+D.Resumes routing traffic when manually restarted
+E.Routes traffic to a healthy target
+
+
+
+**10.What are the three types of load balancers that Elastic Load Balancing'offers?**
+
+A.Internet Load Balancer
+B.Application Load Balancer
+C.Network Load Balancer
+D.Compute Load Balancer
+E.Classic Load Balancer
+F.Auto Scaling Load Balancer
+
+
+
+1.B D
+2.A
+3.B D E
+4.C 
+
+> You configure the load balancer to accept incoming traffic by specifying one or more listeners.
+
+5.A C E 
+
+> You specify the AMI, instance type, and EBS volumes when you create an Auto Scaling launch configuration.
+
+6.C
+7.A C D
+8.C
+9.A C E
+
+> When the load balancer detects an unhealthy target, it stops routing traffic to that target and sends it to a healthy target. It then resumes routing traffic to that target when it detects that the target is healthy again.
+
+10.B C E
+
+> ELB offers three types of load balancers: Application Load Balancer, Network Load Balancer, and Classic Load Balancer.
