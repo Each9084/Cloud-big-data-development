@@ -1345,3 +1345,213 @@ F.Auto Scaling Load Balancer
 10.B C E
 
 > ELB offers three types of load balancers: Application Load Balancer, Network Load Balancer, and Classic Load Balancer.
+
+
+
+
+
+
+
+# Course Assessment
+
+**1.Which IT requirement would lead an architect to choose an infrastructure as a service (laaS) cloud service model?**
+
+A.A company wants to run a managed instance for the marketplace.
+B.A company wants to maintain the highest level of flexibility over its IT resources.
+C.A company wants to maintain control of its applications but avoid maintaining servers and operating systems.
+D.A company wants to use a web-based email solution.
+
+
+
+**2.Which statement describes the business perspective of the AWS Cloud AdoptionFramework?**
+
+A.Stakeholders can evaluate organizational structures and roles, new skill and process requirements, and identify gaps.
+B.Stakeholders can focus on the skills and processes that are needed to align ITstrategy and goals with business strategy and goals.
+C.Stakeholders can create a strong business case for cloud adoption and prioritizecloud adoption initiatives.
+D.Stakeholders can use architectural dimensions and models to understand andcommunicate the nature of IT systems and their relationships.
+
+
+
+**3.Which statement accurately describes how customers can use AWS Support?**
+
+A.Customers must choose one of three support plans: Basic Support, Business Support, and Enterprise Support.
+B.Customers can get AWS Support for both experimental non-production accounts and for business-critical production accounts.
+C.Customers should contact their Support Concierge to provide quick and efficient technical support.
+D.Customers are assigned a Technical Account Manager (TAM) for all AWS Supportd plans.
+
+
+
+**4.Which factors are considered in calculating the total cost of ownership (TCO) for the AWS Cloud? (Select TWO.)**
+
+A.The number of users that need to be migrated to the cloud
+B.The amount of storage that needs to be migrated to the cloud
+C.The number of servers that need to be migrated to the cloud
+D.The number of groups that need to be migrated to the cloud
+E.The number of roles that need to be migrated to the cloud
+
+
+
+**5.Which statement about AWS Regions is true?**
+
+A.Using a Region as close as possible to users can reduce latency.
+B.All available Regions are enabled by default in an AWS account.
+C.All AWS accounts can access all AWS Regions.
+D.Data stored in an AWS Region isn't subject to geographical compliance requirements.
+
+
+
+**6.Which statements about responsibility are accurate based on the AWS shared responsibility model? (Select TWO.)**
+
+A.AWS is responsible for deciding what data to encrypt in customers' Amazon S3 buckets.
+B.AWS is responsible for the physical security of data centers.
+C.Customers are responsible for managing their user data.
+D.AWS is responsible for the configuration of security groups.
+E.Customers are responsible for the installation, maintenance, and decommissioning of the hardware that they use in the AWS data center.
+
+
+
+**7.A company must produce reports of any changes to its Amazon EC2 instance settings. Which AWS service should they use?**
+
+A.Amazon Cloud
+B.WatchAWS Artifact
+C.AWS Config
+D.AWS CloudTrail
+
+
+
+**8.A network administrator wants to run their ecommerce web application on a virtual private cloud (VPC). Which step is part of setting up the VPC? (Select TWO.)**
+
+A.Create the main route table.
+B.Delete the local route in the route table.
+C.Attach the VPC to a security group.
+D.Specify the range of IP addresses for the VPC.
+E.Create private and public subnets.
+
+
+
+**9.Which configuration represents a valid use of security groups in a virtual private cloud (VPC)?**
+
+A.Set a deny rule that prevents outbound traffic from an Amazon EC2 instance in a VPC.
+B.Set a deny rule that prevents access to the subnet from the public internet.
+C.Limit inbound access to the private subnet of the VPC.
+D.Limit outbound traffic from an Amazon EC2 instance in the VPC to a specific database server.
+
+
+
+**10.A company needs to run a short script each time a new item is added to an Amazon S3 bucket. Which compute option meets the need with the least amount of resource provisioning? Container Service (Amazon ECS).**
+
+A.Set up the script to run in a container, and deploy the container on Amazon Elastic
+B.Create an AWS Lambda function to run the script whenever a new item is added tothe bucket.
+C.Write a batch job to run the script on all new items overnight when there's lesscompetition for resources. Run the batch job on Spot Instances.
+D.Set up a small Amazon EC2 instance that runs code to check for new uploads to thebucket and runs the script.
+
+
+
+**11.A company has a set of big data processing jobs in Amazon Simple Queue Service (Amazon SQS) that need a lot of compute. Which Amazon EC2 instancing pricing model would meet the need at the lowest possible cost?**
+
+A.Spot Instance
+B.On-Demand Instance
+C.Reserved Instance
+D.Scheduled Reserved Instance
+
+
+
+**12.Which statement about Amazon Elastic Block Store (Amazon EBS) is true?**
+
+A.Amazon EBS volumes persist independently from the Amazon EC2 instances that they're attached to.
+B.Amazon EBS volumes aren't recommended for storage that requires frequent updating.
+C.Amazon EBS volumes can't be resized.
+D.Amazon EBS volumes are automatically replicated across multiple Availability Zones.
+
+
+
+**13.A company needs to store long-lived data. They need the data to be available immediately, but access patterns are unpredictable. Which Amazon S3 storage class would be most cost-effective?**
+
+A.Amazon S3 Glacier
+B.Amazon S3 One Zone-Infrequent Access
+C.Amazon S3 Standard
+D.Amazon S3 Intelligent-Tiering
+
+
+
+**14.Which scenario describes a good use case for Amazon S3 Standard storage?**
+
+A.Sharing an NFS file system
+B.Hosting website images
+C.Running a relational database
+D.Act as an EC2 instance store.
+
+
+
+**15.Which option is a company's responsibility when running Amazon RDS?**
+
+A.Database software patching
+B.Application optimization
+C.Operating system patching
+D.Operating system installation
+
+
+
+**16.Which scenario is a good fit for Amazon Redshift?**
+
+A.A company needs a data warehouse to support analytics applications.
+B.A company needs to store large volumes of mixed media image and video files.
+C.A company needs a database for managing unstructured data.
+D.A company needs a relational database for a line-of-business transactional database.
+
+
+
+**17.Which statement reflects a design principle of the Security pillar of the AWS WellArchitected Framework?**
+
+A.Decentralize permissions management.
+B.Ensure that staff are actively monitoring potential risks manually.
+C.Apply security at all layers of an architecture.
+D.Don't deploy a solution to production until you're certain that there are no security risks.
+
+
+
+**18.For which type of use case is it usually OK to have 2 nines of availability (99%)?**
+
+A.Internet of Things (loT) applications
+B.ATM transactions
+C.Batch processing
+D.Online commerce
+
+
+
+**19.A company has an application running on two Amazon EC2 instances. They want to reduce idle EC2 capacity. The application load is difficult to forecast, and they want to keep the CPU utilization close to 40 percent on all instances. Which type of Amazon EC2 Auto Scaling should they configure?**
+
+A.Dynamic scaling
+B.Scheduled scaling
+C.Predictive scaling
+D.Manual scaling
+
+
+
+**20.Which statement accurately describes how Amazon EC2 Auto Scaling is used?**
+
+A.Amazon EC2 Auto Scaling is useful for dynamic, unpredictable workloads but doesn't add much value for predictable workloads.
+B.Amazon EC2 Auto scaling is useful for predictable workloads.
+C.The size of an Amazon EC2 Auto Scaling group will scale up and down automatically based on its configuration and the number of instances can't be manually adjusted.
+D.Amazon EC2 Auto scaling allows an application to automatically add resources, but it can't automatically scale them back down.
+
+1.B
+2.NOT A
+3.B
+4.B C 
+5.A
+6.B C
+7.C
+8.D E
+9.D
+10.B
+11.A
+12.A
+13.D
+14.B
+15.NOT A
+16.A
+17.C
+18.B
+19.A
+20.NOT A
