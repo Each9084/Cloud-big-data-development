@@ -279,11 +279,248 @@ AWS 云采用框架 (AWS CAF) 提供指导和最佳实践，帮助组织识别�
 
 ## Module 2: Cloud Economics and Billing
 
+本模块将讨论以下主题：
+
+- 定价基础知识
+- 总拥有成本
+- AWS 组织
+- AWS 账单和成本管理
+- 技术支持
+
+该模块还包括一个由讲师指导的演示，向您展示如何与计费仪表板进行交互。该模块还包括一项活动，要求您使用 AWS 定价计算器估算公司的成本。最后，您将被要求完成知识测试，该测试将用于测试您对本模块中涵盖的关键概念的理解。
 
 
 
+完成本模块后，您应该能够：
+
+- 解释 AWS 定价理念
+- 识别基本定价特征
+- 指出总拥有成本的要素
+- 讨论 AWS 定价计算器的结果
+- 确定如何设置简化计费和账户可见性的组织结构以查看成本数据。
+- 识别 AWS 计费仪表板中的功能•描述如何使用 AWS 账单、AWS 成本资源管理器、AWS 预算以及 AWS 成本和使用情况报告
+- 识别各种 AWS 技术支持计划和功能
 
 
+
+### Section 1: Fundamentals of pricing
+
+![屏幕截图 2024-11-16 214810](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 214810.jpg)
+
+AWS 的成本主要由三个因素决定：**compute计算**、**storage**存储和**outbound data transfer出站数据传输**。这些特性略有不同，具体取决于您选择的 AWS 产品和定价模型。
+
+在大多数情况下，入站数据传输或同一 AWS 区域内其他 AWS 服务之间的数据传输均免费。但也有一些例外，因此在开始使用 AWS 服务之前，请务必验证数据传输费率。
+
+出站数据传输在服务间进行汇总，然后按出站数据传输费率收费。此费用在月结单上显示为*AWS Data Transfer Out.*
+
+![屏幕截图 2024-11-16 215026](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215026.jpg)
+
+这一理念是 AWS 定价的基础。虽然 AWS 提供的服务数量和类型急剧增加，但我们的定价理念始终未变。每个月末，您按实际使用量付费。您可以随时开始或停止使用产品。无需签订长期合同。
+
+AWS 提供一系列云计算服务。对于每项服务，您支付的费用都与您实际需要的资源量相符。这种实用型定价模式包括：
+
+- Pay for what you use 按使用量付费
+- Pay less when you reserve 预留时付费更少
+- Pay less when you use more 使用量越多付费更少
+- Pay even less as AWS grows 随着 AWS 的增长，付费更少
+
+![屏幕截图 2024-11-16 215148](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215148.jpg)
+
+除非您以建设数据中心为生，否则您可能已经花费了太多的时间和金钱来建设它们。使用 AWS，您只需为您使用的服务付费，无需支付大笔前期费用。您可以降低可变成本，因此您不再需要投入宝贵的资源来建设昂贵的基础设施，包括购买服务器、软件许可证或租赁设施。
+
+只需按实际使用量付费，即可快速适应不断变化的业务需求，并将重点放在创新和发明上。所有 AWS 服务均可按需使用，无需长期合同，也没有复杂的许可依赖关系。
+
+
+
+![屏幕截图 2024-11-16 215256](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215256.jpg)
+
+对于某些服务（例如 AmazonElastic Compute Cloud (Amazon EC2) 和 Amazon Relational Database Service (Amazon RDS)），您可以投资预留容量。使用预留实例，您可以节省高达 75% 的等效按需容量。预留实例有三种选择：
+
+- All Upfront Reserved Instance 全额预付预留实例 (or AURI)
+- Partial Upfront Reserved Instance 部分预付预留实例(or PURI)
+- No Upfront Payments Reserved Instance 无预付款预留实例(or NURI)
+
+当您购买预留实例时，预付款越多，折扣越大。为了最大限度地节省开支，您可以全额预付并获得最大折扣。部分预付预留实例提供的折扣较低，但可以让您选择减少预付款。最后，您可以选择不预付任何费用并获得较小的折扣，这使您能够释放资金用于其他项目。
+
+通过使用预留容量，您的组织可以最大限度地降低风险，更有预见性地管理预算，并遵守需要长期承诺的政策。
+
+![屏幕截图 2024-11-16 215513](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215513.jpg)
+
+使用 AWS，您可以获得基于数量的折扣，并随着使用量的增加实现重大节省。对于 Amazon Simple StorageService (Amazon S3) 等服务，定价是分级的，这意味着您使用越多，每 GB 支付的费用就越少。此外，数据传输始终是免费的。多种存储服务可根据您的需求提供更低的存储成本。因此，随着 AWS 使用需求的增加，您将受益于规模经济，从而能够提高采用率并控制成本。
+
+随着组织的发展，AWS 还为您提供了获取可帮助您满足业务需求的服务的选项。例如，AWS 存储服务产品组合提供了一些选项，可帮助您根据访问数据的频率和检索数据所需的性能来降低价格。为了优化您的节省，您可以选择正确的存储解决方案组合，帮助您降低成本，同时保持性能、安全性和耐用性
+
+
+
+![屏幕截图 2024-11-16 215551](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215551.jpg)
+
+AWS 始终致力于降低数据中心硬件成本、提高运营效率、降低电力消耗并降低整体业务成本。
+
+这些优化以及 AWS 不断增长的规模经济将为您带来更低的价格。自 2006 年以来，AWS 已降价 75 次（截至 2019 年 9 月）。
+
+AWS 增长的另一个好处是，未来性能更佳的资源可以取代当前的资源，且无需支付额外费用。
+
+
+
+![屏幕截图 2024-11-16 215637](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215637.jpg)
+
+
+
+AWS 意识到每个客户的需求都不同。如果 AWS 定价模型都不适合您的项目，您可以为具有独特要求的大批量项目提供自定义定价。
+
+![屏幕截图 2024-11-16 215705](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215705.jpg)
+
+为了帮助新的 AWS 客户开始使用云，AWS 为新客户提供了长达 1 年的免费使用套餐（AWS 免费套餐）。AWS 免费套餐适用于某些服务和选项。如果您是新的 AWS 客户，您可以免费运行 Amazon Elastic Compute Cloud (Amazon EC2) T2 微型实例一年，同时还可以使用 Amazon S3、Amazon Elastic Block Store (Amazon EBS)、Elastic Load Balancing、AWS 数据传输和其他 AWS 服务的免费使用套餐。
+
+![屏幕截图 2024-11-16 215735](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215735.jpg)
+
+
+
+AWS 还提供各种不收取额外费用的服务。
+
+- **Amazon Virtual Private Cloud (Amazon VPC)** 使您能够配置 AWS 云的逻辑隔离部分，您可以在其中定义的虚拟网络中启动 AWS 资源。
+- **AWS Identity and Access Management (IAM)** 控制您的用户对 AWS 服务和资源的访问。
+- **Consolidated Billing (合并账单)** 是 AWS Organizations 中的一项账单功能，用于合并多个 AWS 账户或多个 Amazon Internet Services Private Limited (AISPL) 账户的付款*。合并账单提供：
+  - One bill for multiple accounts.
+  - 能够轻松追踪每个帐户的费用。
+  - 通过合并使用获得批量定价折扣，可以降低费用。
+  - 您可以使用合并账单整合所有账户，并获得分级优惠。
+- **AWS Elastic Beanstalk** 是一种更简单的方法，可让您在 AWS 云中快速部署和管理应用程序。
+- **AWS CloudFormation** 为开发人员和系统管理员提供了一种简单的方法来创建相关 AWS 资源集合并以有序且可预测的方式配置它们。
+- **Automatic Scaling**会根据您定义的条件自动添加或删除资源。您使用的资源会在需求高峰期间无缝增加以保持性能，并在需求低迷期间自动减少以最大限度地降低成本。
+- **AWS OpsWorks** 是一项应用程序管理服务，可以轻松部署和操作各种形状和大小的应用程序。
+
+虽然这些服务是免费的，但与这些服务一起使用的其他 AWS 服务可能会产生费用。例如，当您自动扩展其他 EC2 实例时，这些实例将产生费用。
+
+**Key takeaways**
+
+总而言之，虽然 AWS 提供的服务数量和类型急剧增加，但我们的定价理念并未改变。每个月末，您只需按实际使用量付费，并且可以随时开始或停止使用产品。无需签订长期合同。
+
+估算成本的最佳方法是检查每项 AWS 服务的基本特性，估算每项特性的使用量，然后将使用量与 AWS 网站上公布的价格进行对比。服务定价策略让您可以灵活地选择每个项目所需的服务，并只为您使用的服务付费。
+
+有几种免费的 AWS 服务，包括：
+
+- Amazon VPC
+- Elastic Beanstalk
+- AWS CloudFormation
+- IAM
+- Automatic scaling services
+- AWS OpsWorks
+- Consolidated Billing
+
+虽然这些服务本身是免费的，但它们提供的资源可能不是免费的。在大多数情况下，入站数据传输或同一 AWS 区域内其他 AWS 服务之间的数据传输均免费。但也有一些例外，因此在开始使用 AWS 服务之前，请务必验证数据传输费率。出站数据传输费用是分级的。
+
+### Section 2: Total Cost of Ownership
+
+![屏幕截图 2024-11-16 215735](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 215735.jpg)
+
+许多企业都会问到选择本地部署还是云端部署的问题。这两个选项的区别在于部署方式。
+
+本地基础设施安装在公司自己的计算机和服务器上。传统基础设施涉及多项固定成本，也称为资本支出。资本支出包括设施、硬件、许可证和维护人员。扩大规模可能既昂贵又耗时。缩小规模不会降低固定成本。
+
+云基础设施是从服务提供商处购买的，服务提供商负责构建和维护设施、硬件和维护人员。
+
+客户只需为使用的内容付费。扩大或缩小规模很简单。成本很容易估算，因为它们取决于服务的使用情况。
+
+很难将本地 IT 交付模型与 AWS 云进行比较。
+
+两者不同，因为它们使用不同的概念和术语。使用本地 IT 涉及基于资本支出、长期规划周期和多个组件的讨论，这些组件需要随着时间的推移购买、构建、管理和刷新资源。
+
+使用 AWS 云涉及关于灵活性、敏捷性和基于消费的成本的讨论。
+
+那么，您如何确定最佳选择？
+
+![屏幕截图 2024-11-16 221352](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 221352.jpg)
+
+您可以通过将本地解决方案与云解决方案进行比较来确定最佳选项。Total Cost of Ownership 总拥有成本 (TCO) 是一种财务估算，旨在帮助买家和所有者确定产品或系统的直接和间接成本。TCO 包括服务成本以及拥有该服务相关的所有成本。
+
+您可能希望比较在本地或托管设施中为特定工作负载运行整个基础架构环境的成本与在基于云的基础架构上运行相同工作负载的成本。进行此比较是为了制定预算或为最佳部署解决方案的业务决策构建业务案例。
+
+![屏幕截图 2024-11-16 221452](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 221452.jpg)与数据中心管理相关的一些成本包括：
+
+- **Server** 服务器硬件和软件成本，以及安置设备的设施成本。
+- **Storage** 存储硬件、管理和设施成本。
+- **Network** 网络硬件、管理和设施成本。
+-  **IT labor** 以及管理整个解决方案所需的 IT 劳动力成本。
+
+当您将本地解决方案与云解决方案进行比较时，准确评估这两种方案的真实成本非常重要。使用云，大多数成本都是预付的，并且很容易计算。例如，云提供商根据不同的使用指标（例如 RAM、存储和带宽等）提供透明的定价。定价通常按单位时间固定。
+
+客户可以确定价格，然后能够根据几种不同的使用情况估算轻松计算成本。
+
+将此过程与内部部署技术进行比较。虽然有时很难确定，但内部成本的计算必须考虑所有因素：
+
+- Direct costs :运行服务器所产生的直接成本 - 例如电力、占地面积、存储以及管理这些资源的 IT 运营。
+- Indirect costs 运行服务器的间接成本，如网络和存储基础设施。
+
+此图是概念性的，并不包括所有成本项目。例如，根据您正在实施的解决方案，软件成本可能包括数据库、管理和中间层成本。设施成本可能包括升级、维护、建筑安全、税费等。IT 劳动力成本可能包括安全管理和应用程序管理成本。此图包含一个简略列表，以展示数据中心维护所涉及的成本类型。
+
+![屏幕截图 2024-11-16 221736](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 221736.jpg)
+
+以下是成本比较示例。此示例显示了 3 年内本地解决方案和云解决方案的成本比较。为了进行此比较，构建了两个类似的环境来代表本地和 AWS 环境。不包括与本地解决方案相关的其他直接和间接成本。本地解决方案的组件包括：
+
+- 1 个虚拟机，配备 4 个 CPU、16 GB RAM 和 Linux 操作系统
+- 平均利用率为 100%
+- 通过 RAM 进行优化
+
+
+
+类似 AWS 环境的组件包括：
+
+- 1 个 m4.xlarge 实例，配备 4 个 CPU、16 GB RAM
+- 实例类型为 3 年期部分预付预留实例
+
+本地部署 3 年总成本为 167,422 美元。AWS 云 3 年总成本为 7,509 美元，比本地部署解决方案节省了 96%。因此，云基础设施 3 年总节省额将达到 159,913 美元。此比较有助于企业清楚地了解替代方案之间的差异。
+
+成本有什么不同？请记住，本地解决方案是可预测的。无论是否使用容量，它都会继续产生成本。
+
+相比之下，AWS 解决方案在需要时投入使用，在资源不再使用时退役，从而降低总体成本。
+
+可访问性：图表比较了本地部署和 AWS 的三年总拥有成本。本地部署成本为 167,422 美元，AWS 成本为 7,509 美元。可访问性描述结束。
+
+![屏幕截图 2024-11-16 221912](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 221912.jpg)
+
+AWS 提供 AWS 定价计算器，帮助您估算每月 AWS 账单。您可以使用此工具探索 AWS 服务并估算 AWS 上用例的成本。您可以在构建解决方案之前对其进行建模，探索估算背后的价格点和计算，并找到满足您需求的可用实例类型和合同条款。这使您能够就使用 AWS 做出明智的决策。您可以规划 AWS 成本和使用情况，或为设置一组新实例和服务定价。
+
+AWS 定价计算器可帮助您：
+
+- 估算 AWS 服务的每月成本
+- 确定降低成本的机会
+- 在构建解决方案之前对其进行建模
+- 探索估算背后的价格点和计算
+- 查找满足您需求的可用实例类型和合同条款
+
+AWS 定价计算器可让您命名估算并创建和命名服务组。组是您添加服务以组织和构建估算的容器。您可以按成本中心、部门、产品架构等组织您的组和服务。
+
+![屏幕截图 2024-11-16 222004](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 222004.jpg)
+
+AWS 定价计算器估算分为：
+
+- 前 12 个月的总额 – 您当前组以及当前组内的所有服务和组的总估算。它结合了预付款和月度估算。
+- 您的预付款总额 – 在您设置 AWS 堆栈时，预计您需要预付多少费用。
+- 您的月度总额 – 在您运行 AWS 堆栈时，预计您每月需要花费多少费用。
+
+在组中，您可以查看每项服务的预计成本。如果您想要为构建 AWS 设置的不同方式定价，则可以为设置的每种变体使用不同的组，并比较不同设置的估算值。
+
+![屏幕截图 2024-11-16 222122](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 222122.jpg)
+
+硬性优势包括减少计算、存储、网络和安全方面的支出。它们还包括减少硬件和软件购买；减少运营成本、备份和灾难恢复；以及减少运营人员。
+
+**Cloud Total Cost of Ownership 云总拥有成本**定义了采用该技术后将花费多少钱，或者运行该解决方案的成本。通常，TCO 分析会查看现有的本地基础架构，并将其与云中未来基础架构状态的成本进行比较。虽然这种差异可能很容易计算，但它可能只能提供迁移到云的总体财务影响的狭隘视角。
+
+**return on investment 投资回报率 (ROI)** 分析可用于确定在考虑支出和储蓄时产生的价值。该分析首先确定直接和可见的成本降低和效率提高方面的硬性利益。
+
+接下来，**soft savings 确定软性节约**。软性节约是难以准确量化的价值点，但它们可能比硬性节约更有价值。了解硬性和软性优势对于理解云的全部价值非常重要。软性优势包括：
+
+- 重用服务和应用程序，使您能够使用相同的云服务定义（和重新定义）解决方案
+- 提高开发人员的工作效率
+
+- 提高客户满意度 
+- 敏捷的业务流程，可以快速响应新出现的机会 
+- 扩大全球影响力
+
+
+
+### Section 3: AWS Organizations
 
 
 
