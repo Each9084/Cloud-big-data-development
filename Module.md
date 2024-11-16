@@ -1,3 +1,300 @@
+## Module 1: Cloud Concepts Overview
+
+本模块涉及以下主题：
+
+- 云计算简介
+- 云计算的优势
+- 亚马逊网络服务 (AWS) 简介
+- AWS 云采用框架 (AWS CAF)最后，您将被要求完成知识测试，该测试将用于测试您对本模块所涵盖的关键概念的理解。
+
+
+
+完成本模块后，您应该能够：
+
+- 定义不同类型的云计算
+- 描述云计算的六个优势
+- 识别主要的 AWS 服务类别和核心服务
+- 查看 AWS 云采用框架 (AWS CAF)
+
+
+
+### Section 1: Introduction to cloud computing
+
+Cloud computing 是通过互联网按需提供计算能力、数据库、存储、应用程序和其他 IT 资源，采用按使用量付费的定价方式。这些资源在位于世界各地不同位置的大型数据中心的服务器计算机上运行。当您使用 AWS 等云服务提供商时，该服务提供商拥有您正在使用的计算机。这些资源可以像构建块一样一起使用，以构建有助于实现业务目标和满足技术要求的解决方案。
+
+
+
+![屏幕截图 2024-11-16 201013](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 201013.jpg)
+
+在传统的计算模型中，基础设施被视为硬件。硬件解决方案是物理的，这意味着它们需要空间、人员、物理安全、规划和资本支出。
+
+除了大量的前期投资外，传统计算的另一个令人望而却步的方面是漫长的硬件采购周期，其中包括获取、配置和维护内部基础设施。
+
+对于硬件解决方案，您必须询问是否有足够的资源容量或足够的存储空间来满足您的需求，并且您可以通过猜测理论上的最大峰值来配置容量。如果您没有达到预计的最大峰值，那么您将为闲置的昂贵资源付费。如果超出预计的最大峰值，那么您就没有足够的容量来满足您的需求。如果您的需求发生变化，那么您必须花费实施新解决方案所需的时间、精力和金钱。
+
+例如，如果你想要配置一个新网站，你需要购买硬件，将其安装到机架上，然后将其放在数据中心，然后管理它或让其他人来管理它。这种方法既昂贵又耗时。
+
+![屏幕截图 2024-11-16 201124](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 201124.jpg)
+
+相比之下，云计算使您可以将基础架构视为软件。软件解决方案非常灵活。您可以选择最符合您需求的云服务，按需配置和终止这些资源，并按使用量付费。您可以以自动化方式弹性地扩展和缩减资源。使用云计算模型，您可以将资源视为临时和可抛弃的。云计算提供的灵活性使企业能够快速实施新解决方案，并且前期成本较低。
+
+与硬件解决方案相比，软件解决方案可以更快、更轻松地进行更改，并且更具成本效益。
+
+云计算帮助开发人员和 IT 部门避免采购、维护和容量规划等无差别的工作，从而使他们能够专注于最重要的事情。
+
+随着云计算的普及，出现了多种不同的服务模型和部署策略，以满足不同用户的特定需求。每种类型的云服务模型和部署策略都为您提供不同级别的控制、灵活性和管理。了解这些云服务模型和部署策略之间的差异可以帮助您确定哪组服务适合您的需求。
+
+![屏幕截图 2024-11-16 201241](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 201241.jpg)
+
+
+
+云服务模式主要有三种。每种模式代表云计算堆栈的不同部分，并为您提供不同级别的 IT 资源控制：
+
+- **Infrastructure as a service 基础设施即服务 (IaaS)**：此类别中的服务是云 IT 的基本构建块，通常为您提供对网络功能、计算机（虚拟或专用硬件）和数据存储空间的访问。IaaS 为您提供对 IT 资源的最高级别的灵活性和管理控制。它与当今许多 IT 部门和开发人员熟悉的现有 IT 资源最为相似。
+- **Platform as a service 平台即服务 (PaaS)**：此类别中的服务减少了您管理底层基础设施（通常是硬件和操作系统）的需要，使您能够专注于应用程序的部署和管理。
+- **Software as a service 软件即服务 (SaaS)**：此类别的服务为您提供由服务提供商运行和管理的完整产品。在大多数情况下，软件即服务是指最终用户应用程序。使用 SaaS 产品，您不必考虑如何维护服务或如何管理底层基础设施。您只需考虑计划如何使用该特定软件。SaaS 应用程序的一个常见示例是基于 Web 的电子邮件，您可以在其中发送和接收电子邮件，而无需管理电子邮件产品的功能添加或维护运行电子邮件程序的服务器和操作系统。
+
+
+
+![屏幕截图 2024-11-16 201440](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 201440.jpg)
+
+云计算部署模型主要有三种，它们代表了您的应用程序可以部署到的云环境：
+
+- **Cloud**：基于云的应用程序完全部署在云中，应用程序的所有部分都在云中运行。云中的应用程序要么是在云中创建的，要么是从现有基础设施迁移而来，以利用云计算的优势（请参阅 https://aws.amazon.com/what-is-cloud-computing/）。基于云的应用程序可以构建在低级基础设施上，也可以使用更高级别的服务，这些服务可以从核心基础设施的管理、架构和扩展要求中抽象出来。
+- **Hybrid**：混合部署是一种将基于云的资源与不在云中的现有资源之间的基础架构和应用程序连接起来的方法。最常见的混合部署方法是在云和现有的本地基础架构之间进行。此模型使组织能够将其基础架构扩展并扩展到云中，同时将云资源连接到内部系统。
+- **On-premises**：使用虚拟化和资源管理工具在本地部署资源有时被称为私有云。虽然本地部署无法提供云计算的许多优势，但有时人们会寻求它来提供专用资源。在大多数情况下，这种部署模型与传统 IT 基础设施相同，但它也可能使用应用程序管理和虚拟化技术来提高资源利用率。
+
+![屏幕截图 2024-11-16 202151](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 202151.jpg)
+
+AWS 与传统的本地 IT 领域有许多相似之处：
+
+- AWS security groups、 network access control lists（network ACL）和 AWS Identity and Access Management (IAM) 类似于防火墙、访问控制列表 (ACL) 和管理员。
+- Elastic Load Balancing 和 Amazon Virtual Private Cloud (Amazon VPC) 类似于路由器、网络管道和交换机。
+- Amazon Machine Images (AMI) 和 Amazon Elastic Compute Cloud (Amazon EC2) 实例类似于本地服务器。
+- Amazon Elastic Block Store (Amazon EBS)、Amazon Elastic File System (Amazon EFS)、Amazon Simple Storage Service (Amazon S3) 和 Amazon Relational Database Service (Amazon RDS) 类似于Direct attached storage (DAS)、storage area networks (SAN)、network attached storage (NAS) 和 relational database management service (RDBMS)。
+
+借助 AWS 服务和功能，您几乎可以完成使用传统数据中心想要完成的所有工作。
+
+
+
+**Section 1 key takeaways**
+
+Some key takeaways from this section of the module include:
+
+- 云计算是通过互联网按需交付 IT 资源，采用即用即付定价。
+- 云计算使您可以将基础设施视为（并使用）软件。
+- 有三种云服务模型：IaaS、PaaS 和 SaaS。
+- 有三种云部署模型：云、混合和本地或私有云。
+- 有许多 AWS 服务模拟传统的本地 IT 空间
+
+
+
+
+
+### **Section 2: Advantages of cloud computing**
+
+为什么这么多公司对迁移到云感兴趣？本节介绍云计算的六个优势。
+
+**Advantage #1—Trade capital expense for variable expense 用可变费用取代资本支出**:
+资本支出 (Capital expenses 亦称capex) 是公司用于购买、升级和维护实物资产（如房地产、工业建筑或设备）的资金。您还记得传统计算模型中的数据中心示例吗？您需要将硬件架起来并堆叠起来，然后管理所有硬件。无论您是否使用数据中心，您都必须支付所有费用。
+
+相比之下，*variable expense* (可变费用)是承担费用的人可以轻松改变或避免的费用。您不必在知道如何使用数据中心和服务器之前就对其进行大量投资，而是只需在消耗资源时付费，并且只为消耗的量付费。因此，您可以节省技术成本。它还使您能够在几分钟内（而不是几周或几天）适应新的应用程序，并根据需要提供尽可能多的空间。维护工作减少了，因此您可以将更多精力放在业务的核心目标上。
+
+![屏幕截图 2024-11-16 202740](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 202740.jpg)
+
+
+
+**Advantage #2—Benefit from massive economies of scale (受益于大规模经济):** 
+
+通过使用云计算，您可以实现比自己更低的可变成本。由于数十万客户的使用情况都汇总在云中，AWS 等提供商可以实现更高的规模经济，从而降低即用即付价格。
+
+![屏幕截图 2024-11-16 202953](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 202953.jpg)
+
+**Advantage #3—Stop guessing capacity ():** 
+
+无需猜测您的基础设施容量需求。在部署应用程序之前做出容量决策时，您通常要么拥有昂贵的闲置资源，要么处理有限的容量。使用云计算，这些问题就消失了。您可以根据需要访问尽可能多的资源，并根据需要进行扩展和缩减，只需几分钟即可通知。
+
+![屏幕截图 2024-11-16 203039](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203039.jpg)
+
+**Advantage #4—Increase speed and agility 提高速度和敏捷性:** 
+
+在云计算环境中，只需单击一下即可获得新的 IT 资源，这意味着您可以将向开发人员提供这些资源所需的时间从几周缩短到几分钟。结果是组织的敏捷性显著提高，因为实验和开发所需的成本和时间显著降低.
+
+![屏幕截图 2024-11-16 203143](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203143.jpg)
+
+**Advantage #5—Stop spending money on running and maintaining data centers(不再花钱运行和维护数据中心):** 
+
+专注于使您的业务与众不同的项目，而不是专注于基础设施。云计算使您能够专注于自己的客户，而不是繁重的服务器架设、堆叠和供电工作。
+
+![屏幕截图 2024-11-16 203230](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203230.jpg)
+
+**Advantage #6—Go global in minutes (优势 6 — 数分钟内实现全球化)：**
+
+只需单击几下，您就可以在全球多个 AWS 区域部署您的应用程序。这样，您就可以以最低的成本为您的客户提供更低的延迟和更好的体验。
+
+**Section 2 key takeaways**
+
+本模块此部分的关键内容包括云计算的六大优势：
+
+- 用可变费用取代资本费用
+- 大规模经济
+- 停止猜测容量
+- 提高速度和灵活性
+- 停止花钱运行和维护数据中心
+- 几分钟内走向全球
+
+
+
+### Section 3: Introduction to Amazon Web Services (AWS)
+
+![屏幕截图 2024-11-16 203415](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203415.jpg)
+
+一般而言，Web 服务是任何可通过互联网或私有（内部网）网络访问的软件。Web 服务使用标准化格式（例如可扩展标记语言 (XML) 或 JavaScript 对象表示法 (JSON)）来请求和响应应用程序编程接口 (API) 交互。它不依赖于任何一种操作系统或编程语言。它通过接口定义文件进行自我描述，并且可被发现。
+
+![屏幕截图 2024-11-16 203452](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203452.jpg)
+
+Amazon Web Services (AWS) 是一个安全的云平台，提供一系列全球云产品。由于这些产品是通过互联网交付的，因此您可以按需访问项目可能需要的计算、存储、网络、数据库和其他 IT 资源以及管理这些资源的工具。您可以立即配置和启动 AWS 资源。这些资源只需几分钟即可供您使用。
+
+AWS 提供灵活性。您的 AWS 环境可以根据需求重新配置和更新，自动扩大或缩小以满足使用模式并优化支出，或者暂时或永久关闭。AWS 服务的计费将成为运营费用，而不是资本支出。
+
+AWS 服务旨在协同工作，以支持几乎任何类型的应用程序或工作负载。您可以将这些服务视为构建块，快速组装它们以构建复杂、可扩展的解决方案，然后根据需求的变化进行调整。
+
+![屏幕截图 2024-11-16 203548](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203548.jpg)
+
+
+
+AWS 服务分为不同的类别，每个类别包含一个或多个服务。您可以从这些不同的类别中选择所需的服务来构建解决方案。
+
+![屏幕截图 2024-11-16 203614](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203614.jpg)
+
+例如，假设您正在构建一个数据库应用程序。您的客户可能会将数据发送到您的 Amazon Elastic Compute Cloud (Amazon EC2) 实例，这是计算类别中的一项服务。这些 EC2 服务器以一分钟为增量对数据进行批处理，并将每个客户的对象添加到您选择使用的 AWS 存储服务 Amazon Simple Storage Service (Amazon S3)。然后，您可以使用非关系数据库（如 Amazon DynamoDB）为您的应用程序提供支持，例如，构建索引，以便您可以找到在特定时间段内收集的给定客户的所有对象。您可能决定在 Amazon Virtual Private Cloud (Amazon VPC) 中运行这些服务，这是网络类别中的一项服务。
+
+这个简单示例的目的是说明您可以从不同的类别中选择 Web 服务，并将它们一起使用来构建解决方案（在本例中为数据库应用程序）。当然，您构建的解决方案可能非常复杂。
+
+![屏幕截图 2024-11-16 203936](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 203936.jpg)
+
+您选择使用哪种服务取决于您的业务目标和技术要求。在您刚刚查看的示例中，该解决方案使用 Amazon EC2 作为计算服务。但是，这只是 AWS 提供的众多计算服务之一。以下是您可能选择用于以下示例用例的一些其他 AWS 计算产品：
+
+- Amazon EC2 (https://aws.amazon.com/ec2/)：您希望完全控制您的 AWS 计算资源。
+- AWS Lambda (https://aws.amazon.com/lambda/)：您希望运行代码而不是管理或配置服务器。
+- AWS Elastic Beanstalk (https://aws.amazon.com/elasticbeanstalk/)：您需要一项为您部署、管理和扩展 Web 应用程序的服务。
+- Amazon Lightsail (https://aws.amazon.com/lightsail/)：您需要一个用于简单 Web 应用程序的轻量级云平台。
+- AWS Batch (https://aws.amazon.com/batch/)：您需要运行数十万个批处理工作负载。
+- AWS Outposts (https://aws.amazon.com/outposts/)：您希望在本地数据中心运行 AWS 基础设施。
+- Amazon Elastic Container Service (Amazon ECS) (https://aws.amazon.com/ecs/)
+- Amazon Elastic Kubernetes Service (Amazon EKS) (https://aws.amazon.com/eks/)
+- AWS Fargate(https://aws.amazon.com/fargate/)：您想要实现容器或微服务架构。
+- VMware Cloud on AWS (https://aws.amazon.com/vmware/)：您有一个想要迁移到 AWS 的本地服务器虚拟化平台。
+
+![屏幕截图 2024-11-16 210409](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 210409.jpg)
+
+当您开始使用云时，AWS 服务的种类可能令人望而生畏。本课程重点介绍以下服务类别中的一些较常见的服务：计算、存储、数据库、网络和内容交付、安全、身份和合规性、管理和治理以及 AWS 成本管理。
+
+图例：
+
+- Amazon Elastic Block Store (Amazon EBS)
+- Amazon Elastic Compute Cloud (Amazon EC2)
+- Amazon Elastic Container Registry (Amazon ECR)•Amazon Elastic Container Service (Amazon ECS)
+- Amazon Elastic File System (Amazon EFS)•Amazon Elastic Kubernetes Service (Amazon EKS)
+- Amazon Relational Database Service (Amazon RDS)
+- Amazon Simple Storage Service (Amazon S3)
+- Amazon Virtual Private Cloud (Amazon VPC)
+- AWS Identity and Access Management (IAM)
+- AWS Key Management Service (AWS KMS)
+
+
+
+您可能想知道如何访问 AWS 提供的广泛服务。有三种方法可以在 AWS 云上创建和管理资源：
+
+- **AWS Management Console(AWS 管理控制台)**：控制台为 AWS 提供的大多数功能提供了丰富的图形界面。（注意：有时，新功能在首次启动时可能不会在控制台中包含其所有功能。）
+- **AWS Command Line Interface AWS 命令行界面 (AWS CLI)**：AWS CLI 提供了一套实用程序，可以从 Linux、macOS 或 Microsoft Windows 中的命令脚本启动。
+- **Software development kits  软件开发工具包 (SDK)**：AWS 提供了允许使用各种流行编程语言访问 AWS 的软件包。这让您可以轻松地在现有应用程序中使用 AWS，并且还使您能够创建完全通过代码部署和监控复杂系统的应用程序。
+
+所有这三个选项均建立在作为 AWS 基础的通用 REST 类 API 上。
+
+**Section 3 key takeaways**
+
+本模块此部分的关键要点包括：
+
+- AWS 是一个安全的云平台，提供一系列旨在协同工作的全球云产品（称为服务）。
+- AWS 服务有很多类别，每个类别都有许多服务可供选择。
+- 根据您的业务目标和技术要求选择服务。
+- 有三种方法可以与 AWS 服务交互。
+
+
+
+### Section 4: Moving to the AWS Cloud –The AWS Cloud Adoption Framework (AWS CAF)
+
+正如您在本模块中到目前为止所学到的，云计算比传统模式具有许多优势。但是，对于大多数组织而言，云采用并非一蹴而就。技术是一回事，但组织也由人员和流程组成，这三个要素必须协调一致才能成功采用云。云计算在技术获取、使用和管理方式方面带来了重大转变。它还改变了组织预算和支付技术服务的方式。云采用要求在整个组织内讨论和考虑根本性变革。它还要求所有组织部门（IT 内部和外部）的利益相关者支持这些新变化。在最后一节中，您将了解 AWS CAF，它旨在帮助组织设计和走上成功采用云的快速之路。
+
+![屏幕截图 2024-11-16 210811](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 210811.jpg)
+
+每个组织的云采用历程都是独一无二的。但是，任何组织要想成功地将其 IT 产品组合迁移到云中，必须将三个要素（即人员、流程和技术）保持一致。组织中的业务和技术领导者必须了解组织的当前状态、目标状态以及实现目标状态所需的过渡，以便他们能够为员工设定目标并创建流程。
+
+AWS 云采用框架 (AWS CAF) 提供指导和最佳实践，帮助组织识别技能和流程方面的差距。它还可以帮助组织在整个组织和整个 IT 生命周期内构建全面的云计算方法，以加速成功的云采用。
+
+在最高级别，AWS CAF 将指导分为六个重点领域，称为视角。视角涵盖人员、流程和技术。每个视角由一组功能组成，涵盖由功能相关的利益相关者拥有或管理的不同职责。
+
+每个视角内的功能可用于确定组织需要关注的领域。通过确定差距，可以创建规范的工作流来支持成功的云之旅。
+
+![屏幕截图 2024-11-16 210906](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 210906.jpg)
+
+一般来说，业务、人员和治理视角侧重于业务能力，而平台、安全和运营视角则侧重于技术能力。
+
+![屏幕截图 2024-11-16 210935](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 210935.jpg)
+
+从业务角度来看，利益相关者（例如业务经理、财务经理、预算所有者和战略利益相关者）可以使用 AWS CAF 为云采用创建强有力的业务案例，并确定云采用计划的优先级。利益相关者应确保组织的业务战略和目标与其 IT 战略和目标保持一致。
+
+![屏幕截图 2024-11-16 211018](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 211018.jpg)
+
+从治理角度来看，利益相关者（例如首席信息官或 CIO、项目经理、企业架构师、业务分析师和投资组合经理）可以使用 AWS CAF 来专注于将 IT 战略和目标与业务战略和目标保持一致所需的技能和流程。这种关注有助于组织最大限度地提高其 IT 投资的业务价值并最大限度地降低业务风险。
+
+![屏幕截图 2024-11-16 211056](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-16 211056.jpg)
+
+平台视角的利益相关者（例如首席技术官或 CTO、IT 经理和解决方案架构师）使用各种架构维度和模型来理解和传达 IT 系统的性质及其关系。他们必须能够详细描述目标状态环境的架构。AWS CAF 包括在云上实施新解决方案以及将本地工作负载迁移到云的原则和模式。
+
+安全视角的利益相关者（例如首席信息安全官或 CISO、IT 安全经理和 IT 安全分析师）必须确保组织满足可见性、可审计性、控制力和敏捷性的安全目标。安全视角的利益相关者可以使用 AWS CAF 来构建满足组织需求的安全控制的选择和实施。
+
+从运营角度来看的利益相关者（例如，IT 运营经理和 IT 支持经理）定义如何开展日常、季度和年度业务。从运营角度来看的利益相关者与业务运营保持一致并为其提供支持。AWS CAF 可帮助这些利益相关者定义当前的运营程序。它还帮助他们确定实施成功云采用所需的流程变更和培训
+
+**Section 4 key takeaways**
+
+本模块此部分的关键要点包括：
+
+- 对于大多数组织而言，云采用并非瞬间完成，需要整个组织制定深思熟虑的策略和协调。
+- AWS CAF 旨在帮助组织为其云采用之旅制定高效且有效的计划。
+- AWS CAF 将指导分为六个重点领域（称为观点）。
+- 观点由主要利益相关者负责的一系列业务或技术能力组成。
+
+
+
+总之，在本模块中，您学习了如何：
+
+- 定义不同类型的云计算
+- 描述云计算的六个优势
+- 识别主要的 AWS 服务类别和核心服务
+- 查看 AWS 云采用框架
+
+
+
+## Module 2: Cloud Economics and Billing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Module 7: Storage
 
 **Module overview**
