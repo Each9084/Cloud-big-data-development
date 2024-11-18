@@ -1319,23 +1319,242 @@ AWS 与外部认证机构和独立审计师合作，为客户提供有关 AWS �
 
 
 
+## Module 5: Networking and Content Delivery
+
+本模块讨论以下主题：
+
+- 网络基础知识
+- Amazon Virtual Private Cloud (Amazon VPC)
+- VPC 网络
+- VPC 安全
+- Amazon Route 53
+- Amazon CloudFront
+
+本模块包含一些活动，要求您标记网络图并设计基本的 VPC 架构。
+
+您将观看录制的演示，以了解如何使用 VPC 向导创建具有公有子网和私有子网的 VPC。
 
 
 
+完成本模块后，您应该能够：
+
+- 认识网络基础知识
+- 使用 Amazon VPC 描述云中的虚拟网络
+- 标记网络图
+- 设计基本的 VPC 架构
+- 指出构建 VPC 的步骤•识别安全组
+- 创建自己的 VPC 并向其中添加其他组件以生成自定义网络
+- 识别 Amazon Route 53 的基础知识
+- 认识 Amazon CloudFront 的优势
 
 
 
+### Section 1: Networking basics
+
+在本节中，您将回顾一些基本的网络概念，这些概念为您理解 AWS 网络服务 Amazon Virtual Private Cloud (Amazon VPC) 提供了必要的基础。
+
+计算机网络是连接在一起以共享资源的两台或多台客户端计算机。网络可以逻辑地划分为子网。联网需要网络设备（如路由器或交换机）将所有客户端连接在一起并实现它们之间的通信。
+
+![屏幕截图 2024-11-18 203028](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203028.jpg)
+
+网络中的每个客户端计算机都有一个唯一的 Internet 协议 (IP) 地址来标识它。IP 地址是十进制格式的数字标签。计算机将该十进制数转换为二进制格式。
+
+在此示例中，IP 地址为 192.0.2.0。IP 地址的四个以点 (.) 分隔的数字中的每一个都代表八进制数字格式的 8 位。这意味着四个数字中的每一个都可以是 0 到 255 之间的任何数字。IP 地址的四个数字的总和为二进制格式的 32 位。
+
+| IPv4 和 IPv6 地址   |                                         |
+| ------------------- | --------------------------------------- |
+| IPv4（32 位）地址:  | 192.0.2.0                               |
+| IPv6（128 位）地址: | 2600:1f18:22ba:8c00:ba86:a05e:a5ba:00FF |
+
+32 位 IP 地址称为 IPv4 地址。还有 128 位的 IPv6 地址。
+
+IPv6 地址可以容纳更多用户设备。
+
+IPv6 地址由八组四个字母和数字组成，这些字母和数字以冒号 (:) 分隔。在此示例中，IPv6 地址为 2600:1f18:22ba:8c00:ba86:a05e:a5ba:00FF。IPv6 地址的八个以冒号分隔的组中的每一个都代表十六进制数字格式的 16 位。这意味着八个组中的每一个都可以是从 0 到 FFFF 的任意值。IPv6 地址的八个组的总和为二进制格式的 128 位。
+
+![屏幕截图 2024-11-18 203248](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203248.jpg)
+
+描述网络的常用方法是无类别域间路由 (CIDR)。CIDR 地址的表示方法如下：
+
+- IP 地址（即网络的第一个地址）
+- 接下来是斜杠字符 (/)
+- 最后是一个数字，表示必须为网络标识符固定或分配多少位路由前缀
+
+不固定的位允许改变。CIDR 是一种表达一组彼此连续的 IP 地址的方式。
+
+在此示例中，CIDR 地址为 192.0.2.0/24。最后一个数字（24）表示前 24 位必须是固定的。最后 8 位是灵活的，这意味着网络可以使用 28 个（或 256 个）IP 地址，范围从 192.0.2.0 到 192.0.2.255。第四个十进制数字允许从 0 变为 255。
+
+如果 CIDR 为 192.0.2.0/16，最后一个数字 (16) 表示前 16 位必须是固定的。后 16 位是灵活的，这意味着网络有 216 个（或 65,536 个）IP 地址可用，范围从 192.0.0.0 到 192.0.255.255。第三和第四个十进制数字可以分别从 0 变为 255。
+
+有两种特殊情况：
+
+- 固定 IP 地址，其中每一位都是固定的，代表单个 IP 地址（例如，192.0.2.0/32）。当您想要设置防火墙规则并授予特定主机访问权限时，这种类型的地址很有用。
+- 互联网中每个比特都是灵活的，表示为 0.0.0.0/0
+
+![屏幕截图 2024-11-18 203413](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203413.jpg)
+
+Open Systems Interconnection 开放系统互连 (OSI) 模型是一种概念模型，用于解释数据如何在网络上传输。它由七层组成，并显示了在每一层发送数据时使用的通用协议和地址。例如，集线器和交换机在第 2 层（数据链路层）工作。路由器在第 3 层（网络层）工作。OSI 模型还可用于了解虚拟私有云 (VPC) 中的通信方式，您将在下一节中了解这一点。
 
 
 
+### Section 2: Amazon VPC
+
+本地网络的许多概念都适用于基于云的网络，但设置网络的大部分复杂性已被抽象化，同时又不牺牲控制、安全性和可用性。在本节中，您将了解 Amazon VPC 以及 VPC 的基本组件。
+
+![屏幕截图 2024-11-18 203542](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203542.jpg)
+
+Amazon Virtual Private Cloud (Amazon VPC) 是一种服务，可让您预置 AWS 云中逻辑隔离的部分（称为虚拟私有云或 VPC），您可以在其中启动 AWS 资源。
+
+Amazon VPC 让您可以控制虚拟网络资源，包括选择自己的 IP 地址范围、创建子网以及配置路由表和网络网关。您可以在 VPC 中使用 IPv4 和 IPv6 来安全访问资源和应用程序。
+
+您还可以自定义 VPC 的网络配置。例如，您可以为可以访问公共互联网的 Web 服务器创建一个公共子网。您可以将后端系统（例如数据库或应用程序服务器）放置在没有公共互联网访问权限的私有子网中。
+
+最后，您可以使用多层安全性，包括安全组和网络访问控制列表 (networkACL)，以帮助控制对每个子网中 Amazon Elastic Compute Cloud (Amazon EC2) 实例的访问。
+
+![屏幕截图 2024-11-18 203638](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203638.jpg)
+
+Amazon VPC 可让您配置虚拟私有云 (VPC)。VPC 是逻辑上与 AWS 云中的其他虚拟网络隔离的虚拟网络。VPC 专用于您的账户。VPC 属于单个 AWS 区域，可以跨越多个可用区。创建 VPC 后，您可以将其划分为一个或多个子网。子网是 VPC 中的 IP 地址范围。子网属于单个可用区。
+
+您可以在不同的可用区中创建子网以实现高可用性。子网通常分为公共子网和私有子网。公共子网可以直接访问互联网，但私有子网则不能。
+
+![屏幕截图 2024-11-18 203723](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203723.jpg)
+
+IP 地址使 VPC 中的资源能够通过互联网相互通信并与资源通信。创建 VPC 时，会为其分配一个 IPv4 CIDR 块（一系列私有 IPv4 地址）。创建 VPC 后，您无法更改地址范围，因此务必谨慎选择。IPv4 CIDR 块可能大到 /16（即 216，即 65,536 个地址），也可能小到 /28（即 24，即 16 个地址）。
+
+您可以选择将 IPv6 CIDR 块与您的 VPC 和子网关联，并将该块中的 IPv6 地址分配给 VPC 中的资源。IPv6 CIDR 块具有不同的块大小限制。
+
+子网的 CIDR 块可以与 VPC 的 CIDR 块相同。在这种情况下，VPC 和子网的大小相同（VPC 中的单个子网）。此外，子网的 CIDR 块可以是 VPC 的 CIDR 块的子集。此结构允许定义多个子网。如果您在 VPC 中创建多个子网，则子网的 CIDR 块不能重叠。您不能在同一个 VPC 中有重复的 IP 地址。
+
+![屏幕截图 2024-11-18 203939](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 203939.jpg)
+
+当您创建子网时，它需要自己的 CIDR 块。对于您指定的每个 CIDR 块，AWS 会在该块内保留五个 IP 地址，这些地址不可用。AWS 保留这些 IP 地址用于：
+
+- 网络地址
+- VPC 本地路由器（内部通信）
+- 域名系统 (DNS) 解
+- 未来使用
+- 网络广播地址
+
+例如，假设您创建一个 IPv4 CIDR 块为 10.0.0.0/24 的子网（总共有 256 个 IP 地址）。该子网有 256 个 IP 地址，但只有 251 个可用，因为有 5 个被保留。
+
+![屏幕截图 2024-11-18 204025](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204025.jpg)
+
+当您创建 VPC 时，该 VPC 中的每个实例都会自动获得一个私有 IP 地址。您还可以通过修改子网的自动分配公有 IP 地址属性，在创建实例时请求分配一个公有 IP 地址。
+
+弹性 IP 地址是专为动态云计算而设计的静态公共 IPv4 地址。您可以将弹性 IP 地址与您账户中任何 VPC 的任何实例或网络接口关联。使用弹性 IP 地址，您可以通过快速将地址重新映射到 VPC 中的另一个实例来掩盖实例故障。将弹性 IP 地址与网络接口关联比将其直接与实例关联具有优势。您只需一步即可将网络接口的所有属性从一个实例移动到另一个实例。
+
+使用弹性 IP 地址时可能会产生额外费用，因此当不再需要它们时释放它们非常重要。
+
+![屏幕截图 2024-11-18 204133](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204133.jpg)
 
 
 
+弹性网络接口是一种虚拟网络接口，您可以将其附加到 VPC 中的实例或从中分离。当网络接口重新附加到另一个实例时，其属性将随之改变。当您将网络接口从一个实例移动到另一个实例时，网络流量将重定向到新实例。
+
+VPC 中的每个实例都有一个默认网络接口（主网络接口），该接口分配有 VPC IPv4 地址范围内的私有 IPv4 地址。您无法将主网络接口与实例分离。您可以创建附加网络接口并将其附加到 VPC 中的任何实例。您可以附加的网络接口数量因实例类型而异。
+
+![屏幕截图 2024-11-18 204217](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204217.jpg)
+
+路由表包含一组规则（称为路由），用于引导来自子网的网络流量。每个路由都指定一个目的地和一个目标。目的地是您希望子网中的流量流向的目标 CIDR 块。目标是发送目标流量的目标。默认情况下，您创建的每个路由表都包含用于 VPC 中通信的本地路由。您可以通过添加路由来自定义路由表。您无法删除用于内部通信的本地路由条目。
+
+您的 VPC 中的每个子网都必须与一个路由表关联。主路由表是自动分配给您的 VPC 的路由表。它控制所有未明确与任何其他路由表关联的子网的路由。一个子网一次只能与一个路由表关联，但您可以将多个子网与同一个路由表关联。
+
+**Section 2 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- VPC 是 AWS 云的逻辑隔离部分。
+- VPC 属于一个区域并需要一个 CIDR 块。
+- VPC 细分为子网。
+- 子网属于一个可用区并需要一个 CIDR 块。
+- 路由表控制子网的流量。
+- 路由表具有内置本地路由。
+- 您向表中添加其他路由
+- 无法删除本地路由。
 
 
 
+### Section 3: VPC networking
 
+![屏幕截图 2024-11-18 204502](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204502.jpg)
 
+**internet gateway 互联网网关**是一种可扩展、冗余且高度可用的 VPC 组件，可实现 VPC 中的实例与互联网之间的通信。互联网网关有两个用途：在 VPC 路由表中为可路由互联网的流量提供目标，并为分配了公有 IPv4 地址的实例执行网络地址转换。
+
+要使子网公开，您需要将互联网网关连接到您的 VPC，并向路由表添加路由，以通过互联网网关将非本地流量发送到互联网 (0.0.0.0/0)。
+
+![屏幕截图 2024-11-18 204630](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204630.jpg)
+
+**network address translation 网络地址转换 (NAT)** 网关允许私有子网中的实例连接到互联网或其他 AWS 服务，但阻止互联网与这些实例建立连接。
+
+要创建 NAT 网关，您必须指定 NAT 网关应驻留在的公有子网。您还必须在创建 NAT 网关时指定要与该网关关联的弹性 IP 地址。创建 NAT 网关后，您必须更新与一个或多个私有子网关联的路由表，以将 Internet 绑定流量指向 NAT 网关。这样，私有子网中的实例就可以与 Internet 通信。
+
+您还可以使用 VPC 中公有子网中的 NAT 实例来代替 NAT 网关。但是，NAT 网关是一种托管 NAT 服务，可提供更好的可用性、更高的带宽和更少的管理工作。对于常见用例，AWS 建议您使用 NAT 网关而不是 NAT 实例。
+
+![屏幕截图 2024-11-18 204755](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 204755.jpg)
+
+**VPC sharing**使客户能够与 AWS Organizations 中同一组织内的其他 AWS 账户共享子网。VPC 共享使多个 AWS 账户能够将其应用程序资源（例如 Amazon EC2 实例、Amazon Relational Database Service (Amazon RDS) 数据库、Amazon Redshift 集群和 AWS Lambda 函数）创建到共享的、集中管理的 VPC 中。在此模型中，拥有 VPC 的账户（所有者）与 AWS Organizations 中属于同一组织的其他账户（参与者）共享一个或多个子网。共享子网后，参与者可以在与其共享的子网中查看、创建、修改和删除其应用程序资源。参与者无法查看、修改或删除属于其他参与者或 VPC 所有者的资源。
+
+VPC 共享具有多种优势：
+
+- 职责分离 – 集中控制的 VPC 结构、路由、IP 地址分配
+- 所有权 – 应用程序所有者继续拥有资源、账户和安全
+- 安全组 – VPC 共享参与者可以引用彼此的安全组 ID
+- 效率 – 子网密度更高，有效使用 VPN 和 AWS Direct Connect
+- 没有硬性限制 – 可以避免硬性限制 — 例如，通过简化的网络架构，每个 AWS Direct Connect 连接有 50 个虚拟接口
+- 优化成本 – 可以通过重用 NAT 网关、VPC 接口终端节点和可用区内流量来优化成本
+
+VPC 共享可让您解耦账户和网络。您可以拥有更少、更大、集中管理的 VPC。高度互连的应用程序会自动受益于这种方法。
+
+![屏幕截图 2024-11-18 205020](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205020.jpg)
+
+**VPC peering connection**是两个 VPC 之间的网络连接，可让您私下路由它们之间的流量。任一 VPC 中的实例都可以相互通信，就像它们位于同一网络中一样。您可以在自己的 VPC 之间、与另一个 AWS 账户中的 VPC 或与不同 AWS 区域中的 VPC 之间创建 VPC 对等连接。
+
+设置对等连接时，您可以在路由表中创建规则，以允许 VPC 通过对等资源相互通信。例如，假设您有两个 VPC。在 VPC A 的路由表中，您将目的地设置为 VPC B 的 IP 地址，将目标设置为对等资源 ID。在 VPC B 的路由表中，您将目的地设置为 VPC A 的 IP 地址，将目标设置为对等资源 ID。
+
+VPC 对等连接有一些限制：
+
+- IP 地址范围不能重叠。
+- 不支持传递对等连接。例如，假设您有三个 VPC：A、B 和 C。VPC A 连接到 VPC B，VPC A 连接到 VPC C。但是，VPC B 未隐式连接到 VPC C。要将 VPC B 连接到 VPC C，您必须明确建立该连接。
+- 在相同的两个 VPC 之间只能有一个对等连接资源。
+
+![屏幕截图 2024-11-18 205252](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205252.jpg)
+
+默认情况下，您在 VPC 中启动的实例无法与远程网络通信。要将您的 VPC 连接到远程网络（即创建虚拟专用网络或 VPN 连接），您需要：
+
+1.创建一个新的虚拟网关设备（称为虚拟专用网络 (VPN) 网关）并将其连接到您的 VPC。
+
+2.定义 VPN 设备或客户网关的配置。客户网关不是设备，而是一种 AWS 资源，可向 AWS 提供有关您的 VPN 设备的信息。
+
+3.创建自定义路由表以将企业数据中心绑定的流量指向 VPN 网关。您还必须更新安全组规则。（您将在下一节中了解安全组。）
+
+4.建立 AWS 站点到站点 VPN（站点到站点 VPN）连接以将两个系统链接在一起。
+
+5.配置路由以通过连接传递流量。
+
+![屏幕截图 2024-11-18 205333](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205333.jpg)
+
+网络通信面临的挑战之一是网络性能。如果您的数据中心距离 AWS 区域较远，则性能可能会受到负面影响。对于这种情况，AWS 提供 AWS Direct Connect，简称 DX。AWS Direct Connect 使您能够在您的网络和其中一个 DX 位置之间建立专用的私有网络连接。此私有连接可以降低您的网络成本、增加带宽吞吐量并提供比基于互联网的连接更一致的网络体验。DX 使用开放标准 802.1q 虚拟局域网 (VLAN)。
+
+![屏幕截图 2024-11-18 205426](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205426.jpg)
+
+VPC **endpoint**是一种虚拟设备，可让您私下将您的 VPC 连接到受支持的 AWS 服务和由 AWS PrivateLink 提供支持的 VPC 终端节点服务。连接到这些服务不需要互联网网关、NAT 设备、VPN 连接或 AWS Direct Connect 连接。您的 VPC 中的实例不需要公共 IP 地址即可与服务中的资源进行通信。您的 VPC 与其他服务之间的流量不会离开 Amazon 网络。
+
+有两种类型的 VPC 终端节点：
+
+- 接口 VPC 终端节点（接口终端节点）使您能够连接到由 AWS PrivateLink 支持的服务。这些服务包括一些 AWS 服务、由其他 AWS 客户和 AWS 合作伙伴网络 (APN) 合作伙伴在其自己的 VPC 中托管的服务（称为终端节点服务）以及受支持的 AWS Marketplace APN 合作伙伴服务。服务的所有者是服务提供商，而您（作为创建接口终端节点的委托人）是服务使用者。您需要为创建和使用服务的接口终端节点付费。适用小时使用费率和数据处理费率。请参阅 AWS 文档以获取受支持的接口终端节点列表以及有关此处显示的示例的更多信息，网址为 https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html。
+- 网关终端节点：使用网关终端节点无需额外付费。适用数据传输和资源使用的标准费用。
+
+![屏幕截图 2024-11-18 205614](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205614.jpg)
+
+您可以通过多种方式配置 VPC，并利用众多连接选项和网关。这些选项和网关包括 AWS Direct Connect（通过 DX 网关）、NAT 网关、互联网网关、VPC 对等连接等。AWS 客户拥有数百个 VPC，分布在 AWS 账户和区域中，为多个业务线、团队、项目等提供服务，这种情况并不罕见。当客户开始在其 VPC 之间建立连接时，事情会变得更加复杂。所有连接选项都是严格点对点的，因此 VPC 到 VPC 连接的数量可以快速增长。随着 AWS 上运行的工作负载数量的增长，您必须能够跨多个账户和 VPC 扩展网络以跟上增长的步伐。
+
+虽然您可以使用 VPC 对等连接来连接多对 VPC，但如果无法集中管理连接策略，则管理多个 VPC 之间的点对点连接在运营上成本高昂且困难重重。对于本地连接，您必须将 VPN 连接到每个单独的 VPC。当 VPC 数量增加到数百个时，此解决方案的构建可能非常耗时且难以管理。
+
+要解决此问题，您可以使用 AWS Transit Gateway 简化网络模型。使用 AWS Transit Gateway，您只需创建和管理从中央网关到网络中的每个 VPC、本地数据中心或远程办公室的单个连接。Transit Gateway 充当枢纽，控制流量在所有连接的网络（如辐条 spokes）之间的路由方式。这种枢纽辐射模型显著简化了管理并降低了运营成本，因为每个网络只需连接到 Transit Gateway，而不必连接到其他每个网络。任何新的 VPC 都连接到 Transit Gateway，然后自动可供连接到 Transit Gateway 的其他每个网络使用。这种轻松的连接性使您能够更轻松地随着业务的增长扩展网络。
+
+![屏幕截图 2024-11-18 205814](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205814.jpg)
+
+通过标记此网络图，看看您是否可以识别出您学到的不同 VPC 网络组件。
 
 
 
