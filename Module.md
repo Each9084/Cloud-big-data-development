@@ -887,6 +887,452 @@ AWS 管理和治理服务包括此处列出的服务及其他服务。
 
 
 
+## Module 4: AWS Cloud Security
+
+安全性是 Amazon WebServices (AWS) 的首要任务。AWS 提供可扩展的云计算环境，旨在实现高可用性和可靠性，同时提供可让您运行各种应用程序的工具。帮助保护系统和数据的机密性、完整性和可用性对 AWS 至关重要，维护客户的信任和信心也是如此。本模块介绍了 AWS 的安全方法，其中包括 AWS 环境中的控制措施以及客户可以用来实现其安全目标的一些 AWS 产品和功能。
+
+本模块将讨论以下主题：
+
+- AWS 共享责任模型
+- AWS 身份和访问管理 (IAM)
+- 保护新 AWS 账户
+- 保护账户
+- 保护 AWS 上的数据
+- 努力确保合规性
+- 其他安全服务和资源
+
+第一部分包括由教育工作者主导的有关 AWS 共享责任模型的活动。
+
+第二部分包括录制的 IAM 演示，同一部分的末尾包括一个动手实验室，可让您练习使用 AWS 管理控制台配置 IAM。
+
+完成本模块后，您应该能够：
+
+-  识别共享责任模型
+- 确定客户和 AWS 的责任
+- 识别 IAM 用户、组和角色
+- 描述 IAM 中的不同类型的安全凭证• 确定保护新 AWS 账户的步骤
+-  探索 IAM 用户和组
+-  识别如何保护 AWS 数据
+-  识别 AWS 合规性计划
+
+
+
+### Section 1: AWS shared responsibility model
+
+![屏幕截图 2024-11-18 191055](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191055.jpg)
+
+安全性和合规性是 AWS 和客户共同承担的责任。这种共同责任模式旨在帮助减轻客户的运营负担。同时，为了提供灵活性和客户控制，以便在 AWS 上部署客户解决方案，客户仍需负责整体安全性的某些方面。谁负责通常称为“云的”安全性与“云中的”安全性的区别。
+
+AWS 运营、管理和控制从软件虚拟化层到 AWS 服务运行设施的物理安全的各个组件。AWS 负责保护运行 AWS 云中提供的所有服务的基础设施。该基础设施由运行 AWS 云服务的硬件、软件、网络和设施组成。
+
+客户负责静态数据和传输中数据的加密。客户还应确保网络配置安全，并安全管理安全凭证和登录。此外，客户还负责配置安全组和在其启动的计算实例上运行的操作系统（包括更新和安全补丁）。
+
+![屏幕截图 2024-11-18 191158](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191158.jpg)
+
+AWS 负责云的安全。但这意味着什么呢？
+
+在 AWS 共享责任模型下，AWS 运营、管理和控制从裸机主机操作系统和虚拟机管理程序虚拟化层到服务运行设施的物理安全等组件。这意味着 AWS 负责保护运行 AWS 云中提供的所有服务的全球基础设施。全球基础设施包括 AWS 区域、可用区和边缘位置
+
+AWS 负责托管您的资源的物理基础设施，包括：
+
+- **Physical security of data centers 数据中心的物理安全**，具有受控的、基于需求的访问权限；位于不起眼的设施中，配备全天候保安；双因素身份验证；访问记录和审查；视频监控；以及磁盘消磁和销毁。
+- **Hardware infrastructure 硬件基础设施**，例如 AWS 所依赖的服务器、存储设备和其他设备。
+- **Software infrastructure 软件基础设施**，托管操作系统、服务应用程序和虚拟化软件。
+- **Network infrastructure 网络基础设施**，例如路由器、交换机、负载均衡器、防火墙和电缆。AWS 还会持续监控外部边界的网络，保护接入点，并提供具有入侵检测功能的冗余基础设施。
+
+保护这一基础设施是 AWS 的首要任务。虽然您无法访问 AWS 数据中心或办公室来亲眼见证这种保护，但亚马逊提供了多份来自第三方审计师的报告，这些审计师已验证我们遵守了各种计算机安全标准和法规
+
+![屏幕截图 2024-11-18 191339](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191339.jpg)
+
+虽然云基础设施由 AWS 保护和维护，但客户仍需对他们放入云中的所有内容的安全负责。
+
+客户负责使用 AWS 服务实施的内容以及连接到 AWS 的应用程序。您必须采取的安全步骤取决于您使用的服务和系统的复杂性。
+
+客户的责任包括选择和保护任何实例操作系统、保护在 AWS 资源上启动的应用程序、安全组配置、防火墙配置、网络配置和安全账户管理。
+
+当客户使用 AWS 服务时，他们可以完全控制其内容。客户负责管理关键内容安全要求，包括：
+
+- 他们选择在 AWS 上存储哪些内容
+- 内容使用哪些 AWS 服务
+- 内容存储在哪个国家/地区
+- 内容的格式和结构以及是否经过屏蔽、匿名化或加密
+- 谁有权访问内容以及如何授予、管理和撤销这些访问权限
+
+客户可以控制他们选择实施的安全措施来保护他们自己的数据、环境、应用程序、IAM 配置和操作系统。
+
+![屏幕截图 2024-11-18 191457](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191457.jpg)
+
+
+
+**基础设施即服务 (IaaS)** 是指为云 IT 提供基本构建块的服务，通常包括访问配置网络、计算机（虚拟或专用硬件）和数据存储空间。可以归类为 IaaS 的云服务为客户提供**最高级别的灵活性**和对 IT 资源的管理控制。IaaS 服务与当今许多 IT 部门熟悉的现有本地计算资源最为相似。
+
+AWS 服务（例如 **Amazon EC2**）可归类为 IaaS，因此要求客户执行所有必要的安全配置和管理任务。部署 EC2 实例的客户负责管理客户操作系统（包括更新和安全补丁）、实例上安装的任何应用程序软件以及 AWS 提供的安全组的配置。
+
+**平台即服务 (PaaS)** 是指客户无需管理底层基础设施（硬件、操作系统等）的服务。PaaS 服务使客户能够完全专注于部署和管理应用程序。客户无需担心资源采购、容量规划、软件维护或修补。
+
+**AWS Lambda** 和 **Amazon RDS** 等 AWS 服务可以归类为 **PaaS**，因为 **AWS** **运营基础设施层、操作系统和平台**。客户只需访问终端即可存储和检索数据。使用 PaaS 服务，客户负责管理其数据、分类其资产并应用适当的权限。但是，这些服务更像是托管服务，AWS 处理大部分安全需求。对于这些服务，AWS 处理基本的安全任务，例如操作系统和数据库修补、防火墙配置和灾难恢复。
+
+![屏幕截图 2024-11-18 191736](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191736.jpg)
+
+**软件即服务 (SaaS)** 是指提供集中托管软件的服务，这些软件通常可通过 Web 浏览器、移动应用或应用程序编程接口 (API) 访问。SaaS 产品的许可模式通常是订阅或按使用量付费。使用 SaaS 产品，客户无需管理支持该服务的基础设施。鉴于 **AWS Trusted Advisor**、**AWS Shield** 和 **Amazon Chime** 等 AWS 服务的特点，它们可以归类为 SaaS 产品。
+
+**AWS Trusted Advisor** 是一款在线工具，可分析您的 AWS 环境并提供实时指导和建议，帮助您按照 AWS 最佳实践配置资源。Trusted Advisor 服务是 AWS Support 计划的一部分。部分 Trusted Advisor 功能可供所有账户免费使用，但商业支持和企业支持客户可以访问全套 Trusted Advisor 检查和建议。
+
+**AWS Shield** 是一种托管的分布式拒绝服务 (DDoS) 防护服务，可保护在 AWS 上运行的应用程序。它提供始终在线的检测和自动内联缓解措施，可最大限度地减少应用程序停机时间和延迟，因此无需联系 AWS Support 即可享受 DDoS 防护。AWS Shield Advanced 可供所有客户使用。但是，要联系 DDoS 响应团队，客户必须拥有 AWS Support 的企业支持或商业支持。
+
+**Amazon Chime** 是一种通信服务，可让您使用单个应用程序在组织内部和外部进行会议、聊天和拨打商务电话。它是一种即用即付的通信服务，无需预付费用、承诺或长期合同。
+
+在这个由教师主导的活动中，您将看到两个场景。对于每个场景，您将被问到几个问题，关于谁的责任（AWS 或客户）来确保相关物品的安全。教师将带领全班讨论每个问题，并逐一揭晓正确答案。
+
+![屏幕截图 2024-11-18 191918](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 191918.jpg)
+
+考虑客户使用此处显示的 AWS 服务和资源的情况。谁负责维护安全？AWS 还是客户？
+
+![屏幕截图 2024-11-18 192007](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192007.jpg)
+
+客户使用 Amazon Simple Storage Service(AmazonS3) 来存储数据。客户使用 Amazon Virtual Private Cloud (Amazon VPC) 配置了一个虚拟私有云 (VPC)。他们创建的 EC2 实例和 Oracle 数据库实例都在 VPC 中运行。
+
+在此示例中，客户必须管理在 EC2 实例上运行的客户操作系统 (OS)。随着时间的推移，客户操作系统将需要升级并应用安全补丁。此外，客户在 Amazon EC2 实例上安装的任何应用软件或实用程序也必须维护。客户负责配置应用于 Amazon EC2 实例的 AWS 防火墙（或安全组）。客户还负责指定 Amazon EC2 实例运行的网络条件的 VPC 配置。这些任务与 IT 人员执行的安全任务相同，无论他们的服务器位于何处。
+
+本例中的 Oracle 实例在 AWS 或客户责任方面提供了一个有趣的案例研究。如果数据库在 EC2 实例上运行，则应用 Oracle 软件升级和补丁是客户的责任。但是，如果数据库作为 Amazon RDS 实例运行，则应用 Oracle 软件升级和补丁是 AWS 的责任。由于 Amazon RDS 是一种托管数据库产品，因此耗时的数据库管理任务（包括配置、备份、软件修补、监控和硬件扩展）由 AWS 处理。要了解更多信息，请参阅 https://docs.aws.amazon.com/whitepapers/latest/oracle-database-aws-best-practices/oracle-database-aws-best-practices.html 上的“在 AWS 上运行 Oracle 数据库的最佳实践”了解详情。
+
+![屏幕截图 2024-11-18 192128](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192128.jpg)
+
+现在，考虑这个额外的案例，其中客户使用此处显示的 AWS 服务和资源。谁负责维护安全？AWS 还是客户？
+
+![屏幕截图 2024-11-18 192219](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192219.jpg)
+
+客户使用 Amazon S3 存储数据。客户使用 Amazon VPC 配置了虚拟私有云 (VPC)，并在 VPC 中的 EC2 实例上运行 Web 服务器。客户将 Internet 网关配置为 VPC 的一部分，以便可以使用 AWS 管理控制台或 AWS 命令行界面 (AWS CLI) 访问 Web 服务器。当客户使用 AWS CLI 时，连接需要使用安全 Shell (SSH) 密钥。
+
+**Section 1 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- AWS 和客户共同承担安全责任
+  - AWS 负责 security **of** the cloud
+  - 客户负责security **in** the cloud
+- **AWS 负责保护运行 AWS 云服务的基础设施**（包括硬件、软件、网络和设施）
+- 对于归类为基础设施即服务 (IaaS) 的服务，**客户负责执行必要的安全配置和管理任务**
+  - 例如，客户操作系统更新和安全补丁、防火墙、安全组配置
+
+
+
+
+
+### Section 2: AWS Identity and Access Management (IAM)
+
+![屏幕截图 2024-11-18 192545](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192545.jpg)
+
+**AWS Identity and Access Management (IAM)** 允许您控制对 AWS 云中的计算、存储、数据库和应用程序服务的访问。IAM 可用于处理身份验证以及指定和执行授权策略，以便您可以指定哪些用户可以访问哪些服务。
+
+IAM 是一种工具，可集中管理对 AWS 账户中资源的启动、配置、管理和终止的访问权限。它提供对资源访问权限的精细控制，包括能够精确指定用户有权对每项服务进行哪些 **API** 调用。无论您使用 AWS 管理控制台、AWS CLI 还是 AWS 软件开发工具包 (SDK)，对 AWS 服务的每次调用都是一次 API 调用。
+
+使用 IAM，您可以管理哪些资源可供谁访问以及如何访问这些资源。您可以向不同的人授予不同资源的不同权限。例如，您可以允许某些用户完全访问 Amazon EC2、Amazon S3、Amazon DynamoDB、Amazon Redshift 和其他 AWS 服务。但是，对于其他用户，您可能只允许其对几个 S3 存储桶进行只读访问。同样，您可以向其他用户授予仅管理特定 EC2 实例的权限。您还可以允许一些用户仅访问账户账单信息，而不允许访问其他任何内容。
+
+IAM 是您的 AWS 账户的一项功能，无需额外付费。
+
+![屏幕截图 2024-11-18 192707](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192707.jpg)
+
+要了解如何使用 IAM 保护您的 AWS 账户，了解四个 IAM 组件各自的作用和功能非常重要。
+
+**IAM user**是在 AWS 账户中定义的人员或应用程序，必须对 AWS 产品进行 API 调用。每个用户在 AWS 账户中都必须具有唯一的名称（名称中不能有空格），并且必须拥有一组不与其他用户共享的安全凭证。这些凭证不同于 AWS 账户根用户安全凭证。每个用户只能在一个 AWS 账户中定义。
+
+**IAM group**是 IAM 用户的集合。您可以使用 IAM 组来简化为多个用户指定和管理权限的过程。
+
+**IAM policy**是定义权限的文档，用于确定用户可以在 AWS 账户中执行哪些操作。策略通常授予对特定资源的访问权限，并指定用户可以对这些资源执行哪些操作。策略还可以明确拒绝访问。
+
+**IAM role**是用于授予对 AWS 账户中特定 AWS 资源的临时访问权限的工具。
+
+![屏幕截图 2024-11-18 192957](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 192957.jpg)
+
+**Authentication**是一个基本的计算机安全概念：用户或系统必须首先证明自己的身份。想象一下，当您去机场并希望通过机场安检以便赶上航班时，您如何验证自己的身份。在这种情况下，您必须向安检人员出示某种形式的身份证明，以证明您是谁，然后才能进入禁区。类似的概念适用于获取对云中 AWS 资源的访问权限。
+
+定义 IAM 用户时，您可以选择允许用户使用哪种类型的访问权限来访问 AWS 资源。您可以为用户分配两种不同类型的访问权限：编程访问权限和 AWS 管理控制台访问权限。您可以仅分配编程访问权限、仅分配控制台访问权限，也可以分配两种类型的访问权限。
+
+如果您授予**programmatic access**权限，则 IAM 用户在使用 AWS CLI、AWS SDK 或其他开发工具进行 AWS API 调用时，将需要提供访问**access key ID** 和**secret access key**。
+
+如果您授予 **AWS Management Console access**权限，则 IAM 用户将需要填写浏览器登录窗口中显示的字段。系统将提示用户提供 12 位账户 ID 或相应的账户别名。用户还必须输入其 IAM 用户名和密码。如果为用户启用了**multi-factor authentication** (MFA)，系统还将提示他们输入身份验证代码。
+
+
+
+![屏幕截图 2024-11-18 193231](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 193231.jpg)
+
+可以使用 AWS 管理控制台、AWS CLI 或通过 SDK 和 API 访问 AWS 服务和资源。为了提高安全性，我们建议启用 MFA。
+
+使用 MFA，用户和系统除了提供常规登录凭证之外，还必须提供 **MFA token**，然后才能访问 AWS 服务和资源。
+
+生成 MFA 身份验证令牌的选项包括**virtual MFA-compliant applications**（例如 Google Authenticator 或 Authy 2-Factor Authentication）、**U2F security key devices**和**hardware MFA devices**。
+
+![屏幕截图 2024-11-18 193429](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 193429.jpg)
+
+
+
+**Authorization**是确定应授予用户、服务或应用程序哪些权限的过程。用户通过身份验证后，必须获得授权才能访问 AWS 服务。
+
+默认情况下，IAM 用户无权访问 AWS 账户中的任何资源或数据。相反，您必须通过创建策略（JavaScript 对象表示法 (JSON) 格式的文档）明确向用户、组或角色授予权限。策略列出了允许或拒绝访问 AWS 账户中资源的权限。
+
+![image-20241118193522017](C:\Users\EACH\AppData\Roaming\Typora\typora-user-images\image-20241118193522017.png)
+
+要将权限分配给用户、组或角色，您必须创建 IAM 策略（或在账户中找到现有策略）。没有默认权限。默认情况下，除非明确允许，否则账户中的所有操作都会被拒绝（隐式拒绝）。任何您未明确允许的操作都会被拒绝。任何您明确拒绝的操作都会被拒绝。
+
+**principle of least privilege 最小权限原则**是计算机安全中的一个重要概念。它提倡您根据用户的需求，仅向用户授予所需的最小用户权限。创建 IAM 策略时，最佳做法是遵循授予最小权限的安全建议。确定用户需要能够执行的操作，然后为他们制定策略，使用户仅执行这些任务。从一组最小权限开始，并根据需要授予其他权限。这样做比从太宽泛的权限开始，然后尝试锁定授予的权限更安全。
+
+请注意，IAM 服务配置的范围是全球性的。这些设置不是在 AWS 区域级别定义的。IAM 设置适用于所有 AWS 区域
+
+![image-20241118193807305](C:\Users\EACH\AppData\Roaming\Typora\typora-user-images\image-20241118193807305.png)
+
+IAM 策略是授予实体的权限的正式声明。策略可以附加到任何 IAM 实体。实体包括用户、组、角色或资源。例如，您可以将策略附加到 AWS 资源，该策略将阻止所有不是来自已批准的 Internet 协议 (IP) 地址范围的请求。策略指定允许哪些操作、允许对哪些资源执行操作以及当用户请求访问资源时会产生什么效果。
+
+评估策略的顺序对评估结果没有影响。所有策略都会被评估，结果始终是允许或拒绝请求。当发生冲突时，将应用限制性最强的策略。
+
+IAM 策略有两种类型。**Identity-based policies**是您可以附加到主体（或身份）（例如 IAM 用户、角色或组）的权限策略。这些策略控制身份可以执行哪些操作、对哪些资源执行哪些操作以及在什么条件下执行。基于身份的策略可以进一步分类为：
+
+- **Managed policies** – 基于身份的独立策略，可将其附加到 AWS 账户中的多个用户、组和角色
+- **Inline policies **– 您创建和管理的策略，直接嵌入到单个用户组或角色中。
+
+**Resource-based policies** 是附加到资源（例如 S3 存储桶）的 JSON 策略文档。这些策略控制指定主体可以对该资源执行哪些操作以及在什么条件下执行。
+
+![屏幕截图 2024-11-18 194145](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 194145.jpg)
+
+如前所述，IAM 策略文档是用 JSON 编写的。
+
+示例 IAM 策略仅授予用户对以下资源的访问权限：
+
+- DynamoDB 表，其名称由 table-name 表示。
+- AWS 账户的 S3 存储桶，其名称由 bucket-name 表示，以及其中包含的所有对象。
+
+IAM 策略还包含显式拒绝 ("Effect":"Deny") 元素。**NotResource** 元素有助于确保用户无法使用除策略中指定的操作和资源之外的任何其他 DynamoDB 或 S3 操作或资源 — 即使已在另一个策略中授予权限。显式拒绝语句优先于允许语句。
+
+![屏幕截图 2024-11-18 194238](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 194238.jpg)
+
+基于身份的策略附加到用户、组或角色，而基于资源的策略附加到资源，例如 S3 存储桶。这些策略指定谁可以访问资源以及他们可以对资源执行哪些操作。
+
+基于资源的策略仅以**inline内联**方式定义，这意味着您在资源本身上定义策略，而不是创建附加的单独 IAM 策略文档。例如，要在 S3 存储桶上创建 S3 存储桶策略（一种基于资源的策略），请导航到存储桶，单击**Permissions权限**选项卡，单击**Bucket Policy存储桶**策略按钮，然后在那里定义 JSON 格式的策略文档。Amazon S3 访问控制列表 (ACL) 是基于资源的策略的另一个示例。
+
+该图显示了授予用户 MaryMajor 访问名为 photos 的 S3 存储桶中对象的两种不同方式。在左侧，您会看到一个基于身份的策略示例。授予对 S3 存储桶访问权限的 IAM 策略已附加到 MaryMajor 用户。在右侧，您会看到一个基于资源的策略示例。photosbucket 的 S3 存储桶策略指定允许用户 MaryMajor 列出和读取存储桶中的对象。
+
+请注意，您可以在存储桶策略中定义拒绝语句，以限制特定 IAM 用户的访问，即使用户在单独的基于身份的策略中获得访问权限。显式拒绝语句始终优先于任何允许语句。
+
+IAM 策略使您能够微调授予 IAM 用户、组和角色的权限。
+
+当 IAM 确定是否允许某项权限时，IAM 首先检查是否存在任何适用的**explicit denial policy显式拒绝策略**。如果不存在显式拒绝，则检查是否存在任何适用的**explicit allow policy显式允许策略**。如果既不存在显式拒绝也不存在显式允许策略，则 IAM 将恢复默认设置，即拒绝访问。此过程称为**implicit deny隐式拒绝**。仅当请求的操作未被显式拒绝且被显式允许时，用户才被允许执行该操作。
+
+当您制定 IAM 策略时，很难确定是否将授予 IAM 实体对资源的访问权限。https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html 上的 IAM 策略模拟器是用于测试和排除 IAM 策略故障的有用工具。
+
+![屏幕截图 2024-11-18 194538](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 194538.jpg)
+
+ 
+
+**IAM group组**是 IAM 用户的集合。IAM 组提供了一种为用户集合指定权限的便捷方式，可以更轻松地管理这些用户的权限。
+
+例如，您可以创建一个名为 Developers 的 IAM 组，并将一个或多个 IAM 策略附加到 Developers 组，以授予开发人员通常需要的 AWS 资源访问权限。您随后添加到 Developer 组的任何用户都将自动拥有分配给该组的权限。在这种情况下，您无需将一个或多个 IAM 策略直接附加到用户。如果新用户加入您的组织并应被授予开发人员权限，您只需将该用户添加到 Developers 组即可。同样，如果某人在您的组织中换了工作，您无需编辑该用户的权限，只需将该用户从组中删除即可
+
+IAM 组的重要特征：
+
+- 一个组可以包含多个用户，一个用户可以属于多个组。
+- 组不能嵌套。一个组只能包含用户，一个组不能包含其他组。
+- 没有默认组会自动包含 AWS 账户中的所有用户。如果您想要一个包含所有账户用户的组，则需要创建该组并将每个新用户添加到其中。
+
+**IAM role**是您可以在账户中创建具有特定权限的 IAM 身份。IAM 角色类似于 IAM 用户，因为它也是您可以附加权限策略的 AWS 身份，并且这些权限决定了该身份在 AWS 中可以做什么和不能做什么。但是，角色并非唯一地与一个人相关联，而是由任何需要它的人担任。此外，角色没有与之关联的标准长期凭证（例如密码或访问密钥）。相反，当您担任角色时，该角色会为您的角色会话提供临时安全凭证。
+
+您可以使用角色将访问权限委托给通**常无权访问您的 AWS 资源的用户、应用程序或服务**。例如，您可能希望授予 AWS 账户中的用户访问他们通常没有的资源的权限，或授予一个 AWS 账户中的用户访问另一个账户中的资源的权限。或者，您可能希望允许移动应用程序使用 AWS 资源，但您不想在应用程序中嵌入 AWS 密钥（密钥可能难以轮换，并且用户可能会提取密钥并滥用它们）。此外，有时您可能希望向已拥有在 AWS 之外定义的身份（例如在您的公司目录中）的用户授予 AWS 访问权限。或者，您可能希望向第三方授予对您账户的访问权限，以便他们可以对您的资源进行审计。
+
+对于所有这些示例用例，IAM 角色都是实施云部署的重要组成部分。
+
+![屏幕截图 2024-11-18 194816](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 194816.jpg)
+
+在图中，开发人员在 EC2 实例上运行应用程序，该应用程序需要访问名为照片的 S3 存储桶。管理员创建 IAM 角色并将该角色附加到 EC2 实例。该角色包括授予对指定 S3 存储桶的只读访问权限的权限策略。它还包括允许 EC2 实例承担角色并检索临时凭证的信任策略。当应用程序在实例上运行时，它可以使用角色的临时凭证访问照片存储桶。管理员无需授予应用程序开发人员访问照片存储桶的权限，开发人员也无需共享或管理凭证。
+
+**Section 2 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- **IAM policies**使用 JavaScript 对象表示法 (JSON) 构建并定义权限。
+  - AM 策略可以附加到任何 **IAM entity**。
+  - 实体包括 IAM 用户、IAM 组和 IAM 角色。
+- **IAM user**为个人、应用程序或服务提供了一种向 AWS 进行身份验证的方法。
+- **IAM group**是一种将相同策略附加到多个用户的简单方法。
+- **IAM role**可以附加权限策略，并且可用于将临时访问权限委托给用户或应用程序。
+
+
+
+### Section 3: Securing a new AWS account
+
+![屏幕截图 2024-11-18 195252](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 195252.jpg)
+
+首次创建 AWS 账户时，您首先要拥有一个可以完全访问账户中所有 AWS 服务和资源的单点登录身份。此身份称为 AWS 账户**root user**，可以使用创建账户时使用的电子邮件地址和密码登录 AWS 管理控制台来访问此身份。AWS 账户根用户拥有（并保留）对账户中所有资源的**完全**访问权限。因此，AWS 强烈建议您不要使用账户根用户凭证与账户进行日常交互。
+
+相反，AWS 建议您使用 IAM 创建其他用户并按照最小权限原则为这些用户分配权限。例如，如果您需要管理员级权限，则可以创建一个 IAM 用户，授予该用户完全访问权限，然后使用这些凭证与账户进行交互。稍后，如果您需要撤销或修改您的权限，则可以删除或修改与该 IAM 用户关联的任何策略。
+
+此外，如果您有多个用户需要访问该账户，您可以为每个用户创建唯一的凭证，并定义哪个用户有权访问哪些资源。例如，您可以创建对 AWS 账户中的资源具有只读访问权限的 IAM 用户，并将这些凭证分发给需要读取访问权限的用户。您应避免与多个用户共享相同的凭证。
+
+虽然不应使用账户根用户执行常规任务，但有些任务只能通过以账户根用户身份登录才能完成。这些任务的完整列表在需要根用户凭证的任务 AWS 文档页面中详细说明，网址为 https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html#aws_tasks-that-require-root。
+
+![屏幕截图 2024-11-18 195432](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 195432.jpg)
+
+要停止使用账户根用户，请执行以下步骤：
+
+1.登录账户根用户后，为自己创建一个启用 AWS 管理控制台访问权限的 IAM 用户（但不要向该用户附加任何权限）。如果需要，请保存 IAM 用户访问密钥。
+
+2.接下来，创建一个 IAM 组，为其命名（例如 FullAccess），并将 IAM 策略附加到该组，以授予对您将使用的至少一些服务的完全访问权限。接下来，将 IAM 用户添加到该组。
+
+3.禁用并删除您的账户根用户访问密钥（如果存在）。
+
+4.为所有用户启用密码策略。从 IAM 控制面板页面复制 **IAM users sign-in link**。然后，以账户根用户身份注销。
+
+5.浏览到您复制的 IAM 用户登录链接，然后使用您的新 IAM 用户凭证登录账户。
+
+6.将您的账户根用户凭证存储在安全的地方。
+
+另一个建议的保护新 AWS 账户安全的步骤是要求账户根用户登录和所有其他 IAM 用户登录进行多重身份验证 (MFA)。
+
+您还可以使用 MFA 来控制编程访问。有关详细信息，请参阅配置受 MFA 保护的 API 访问，网址为 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_configure-api-require.html。您有几种选项可用于检索启用 MFA 后登录所需的 MFA 令牌。选项包括虚拟 MFA 兼容应用程序（例如 Google Authenticator 和 AuthyAuthenticator）、U2F 安全密钥设备和提供密钥卡或显示卡的硬件 MFA 选项。
+
+AWS CloudTrail 是一项服务，可记录您账户中所有资源的 API 请求。通过这种方式，它可对您的账户进行操作审计。
+
+默认情况下，所有 AWS 账户在创建账户时都会启用 AWS CloudTrail，它会记录过去 90 天的账户管理事件活动。您可以查看和下载过去 90 天的账户活动，以创建、修改和删除 CloudTrail 支持的服务的操作，而无需手动创建另一个跟踪。有关受支持服务的更多信息，请访问 https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-aws-service-specific-topics.html。
+
+要启用过去 90 天以外的 CloudTrail 日志保留，并在发生指定事件时启用警报，请创建一个新跟踪（幻灯片中以高级别描述）。有关如何在 AWS CloudTrail 中创建跟踪的详细分步说明，请参阅 AWS 文档中的创建跟踪，网址为 https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-a-trail-using-the-console-first-time.html。
+
+为保护新 AWS 账户，建议采取的另一个步骤是启用账单报告，例如 AWS 成本和使用情况报告。账单报告提供有关您对 AWS 资源的使用情况以及该使用情况的估计成本的信息。AWS 将报告发送到您指定的 Amazon S3 存储桶，并且 AWS 每天至少更新一次报告。
+
+AWS 成本和使用情况报告跟踪 AWS 账户中的使用情况并提供按小时或按天估算的费用。
+
+有关如何创建 AWS 成本和使用情况报告的详细信息，请参阅 AWS 文档：https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html。
+
+**Section 3 key takeaways**
+
+本模块此部分的关键要点均与保护 AWS 账户的最佳实践有关。这些最佳实践建议包括：
+
+- 使用多因素身份验证 (MFA) 保护登录。
+- 删除账户根用户访问密钥。
+- 创建单个 IAM 用户并根据最小特权原则授予权限。
+- 使用组为 IAM 用户分配权限。
+- 配置强密码策略。
+- 使用角色而不是共享凭证进行委派。•使用 AWS CloudTrail 监控账户活动。
+
+
+
+### Section 4: Securing accounts
+
+![屏幕截图 2024-11-18 195751](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 195751.jpg)
+
+**AWS Organizations** 是一项账户管理服务，可让您将多个 AWS 账户整合到您创建并集中管理的组织中。这里重点介绍 AWS Organizations 提供的安全功能。
+
+一个有用的安全功能是，您可以**group accounts into organizational units** **(OU)**，并将不同的访问策略附加到每个 OU。例如，如果您的账户只应被允许访问符合某些监管要求的 AWS 服务，则可以将这些账户放入一个 OU。然后，您可以定义一个策略来阻止 OU 访问不符合这些监管要求的服务，然后将该策略附加到 OU。
+
+另一个安全功能是 **AWS Organizations integrates with and supports IAM**。AWS Organizations 通过让您控制账户或账户组中的用户和角色可以执行的操作，将该控制扩展到账户级别。生成的权限是 AWS Organizations 策略设置允许的内容与 IAM 在该用户或角色的账户中明确授予的权限的逻辑交集。用户只能访问 AWS Organizations 策略和 IAM 策略**都**允许的内容。
+
+最后，AWS Organizations **provides service control policies (SCP)**，使您能够指定组织中成员账户可以拥有的最大权限。在 SCP 中，您可以限制每个成员账户中的用户和角色可以访问哪些 AWS 服务、资源和单个操作。**这些限制甚至会覆盖成员账户的管理员**。当 AWS Organizations 阻止对服务、资源或 API 操作的访问时，该账户中的用户或角色无法访问它，即使成员账户的管理员明确授予此类权限。
+
+
+
+![屏幕截图 2024-11-18 200030](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200030.jpg)
+
+以下是对 AWS Organizations 的服**Service control policies (SCP)** 功能的详细信息。
+
+SCP 可集中控制组织中所有账户的**最大可用权限**，使您能够确保您的账户符合组织的访问控制准则。SCP 仅在启用了所有功能（包括整合账单）的组织中可用。有关启用功能的更多信息，请参阅 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html。
+
+如果您的组织仅启用了整合账单功能，则 SCP 不可用。有关启用 SCP 的说明，请参阅 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html#enable_policies_on_root 上的启用和禁用根上的策略类型。
+
+**SCP 类似于 IAM 权限策略**，它们使用几乎相同的语法。但是，SCP 从不授予权限。相反，SCP 是 JSON 策略，用于指定组织或 OU 的最大权限。将 SCP 附加到组织根或组织单位 (OU) 可为组织根或 OU 中的账户可以执行的操作定义保护措施。但是，它不能替代每个账户内管理良好的 IAM 配置。您仍必须将 IAM 策略附加到组织账户中的用户和角色，以实际向他们授予权限。有关 IAM 策略的更多信息，请参阅 https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html。
+
+![屏幕截图 2024-11-18 200241](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200241.jpg)
+
+**AWS Key Management Service (AWS KMS)** 是一项服务，可让您创建和管理加密密钥，并控制各种 AWS 服务和应用程序中加密的使用。AWS KMS 是一项安全且有弹性的服务，它使用根据**Federal Information ProcessingStandards (FIPS) 140-2** 验证的硬件安全模块 (HSM)（或正在验证中）来保护您的密钥。AWS KMS 还与 AWS CloudTrail 集成，为您提供所有密钥使用情况的日志，以帮助满足您的监管和合规性需求。
+
+**Customer master keys (CMKs)** 用于控制对加密和解密数据的数据加密密钥的访问。您可以随时创建新密钥，并管理谁有权访问这些密钥以及谁可以使用它们。您还可以将密钥从您自己的密钥管理基础设施导入 AWS KMS。
+
+AWS KMS 与大多数 AWS 服务集成，这意味着您可以使用 AWS KMS CMK 来控制存储在这些服务中的数据的加密。要了解更多信息，请参阅 AWS Key Management Service 功能：https://aws.amazon.com/kms/features/。
+
+![屏幕截图 2024-11-18 200410](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200410.jpg)
+
+Amazon Cognito 提供解决方案来控制从应用程序访问 AWS 资源。您可以定义角色并将用户映射到不同的角色，以便您的应用程序只能访问每个用户授权的资源。
+
+Amazon Cognito 使用常见的身份管理标准，例如**Security Assertion Markup Language (SAML) 2.0**。SAML 是与应用程序和服务提供商交换身份和安全信息的开放标准。支持 SAML 的应用程序和服务提供商允许您使用公司目录凭证（例如 Microsoft Active Directory 中的用户名和密码）登录。借助 SAML，您可以使用单点登录 (SSO) 使用一组凭证登录所有启用 SAML 的应用程序。
+
+Amazon Cognito 可帮助您满足多项安全性与合规性要求，包括医疗保健公司和商家等受到严格监管的组织的要求。Amazon Cognito 符合美国《健康保险流通与责任法案》（HIPAA）的使用要求，有关 HIPAA 的更多信息，请访问 https://aws.amazon.com/compliance/hipaa-compliance/。它还可用于符合以下标准的工作负载：支付卡行业数据安全标准 (PCI DSS)，有关 PCI DSS 的更多信息，请访问 https://aws.amazon.com/compliance/pci-dss-level-1-faqs/；美国注册会计师协会 (AICPA) 服务组织控制 (SOC)，有关 SOC 的更多信息，请访问 https://aws.amazon.com/compliance/soc-faqs/；国际标准化组织 (ISO) 和国际电工委员会 (IEC) 标准。有关 ISO/IEC 27001 的更多信息，请访问 https://aws.amazon.com/compliance/iso-27001-faqs/；有关 ISO/IEC 27017 的更多信息，请访问 https://aws.amazon.com/compliance/iso-27017-faqs/；有关 ISO/IEC 27018 的更多信息，请访问 https://aws.amazon.com/compliance/iso-27018-faqs/；有关 ISO 9001 的更多信息，请访问 https://aws.amazon.com/compliance/iso-9001-faqs/。
+
+![屏幕截图 2024-11-18 200520](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200520.jpg)
+
+**AWS Shield** 是一种托管的分布式拒绝服务 (DDoS) 防护服务，可保护在 AWS 上运行的应用程序。它提供始终在线的检测和自动内联缓解措施，可最大限度地减少应用程序停机时间和延迟，因此无需联系 AWS Support 即可享受 DDoS 防护。
+
+AWS Shield 可帮助保护您的网站免受所有类型的 DDoS 攻击，包括基础设施层攻击（如用户数据报协议或 UDP 洪水）、状态耗尽攻击（如 TCP SYN 洪水）和应用程序层攻击（如 HTTP GET 或 POST 洪水）。有关示例，请参阅 AWS WAF 开发人员指南，网址为 https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html。
+
+**AWS Shield Standard** 会自动为所有 AWS 客户启用，无需额外付费。
+
+**AWS Shield Advanced** 是一项可选的付费服务。 AWS Shield Advanced 为在 Amazon EC2、Elastic Load Balancing、Amazon CloudFront、AWS Global Accelerator 和 Amazon Route 53 上运行的应用程序提供针对更复杂、更大规模攻击的额外保护。 AWS Shield Advanced 可供所有客户使用。但是，要联系 DDoS 响应团队，客户需要获得 AWS Support 的企业支持或业务支持。
+
+### Section 5: Securing data on AWS
+
+![屏幕截图 2024-11-18 200653](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200653.jpg)
+
+当您的目标是保护数字数据时，**Data encryption**是必不可少的工具。数据加密将可读数据编码，使任何无法访问可用于解码的密钥的人都无法读取数据。因此，即使攻击者获得了您的数据的访问权限，他们也无法理解它。
+
+**Data at rest 静态数据**是指物理存储在磁盘或磁带上的数据。
+
+您可以在 AWS 上创建加密文件系统，以便使用开放标准高级加密标准 (AES)-256 加密算法对所有数据和元数据进行静态加密。使用 AWS KMS 时，加密和解密将自动且透明地处理，因此您无需修改应用程序。如果您的组织受公司或监管政策的约束，需要对静态数据和元数据进行加密，AWS 建议在存储数据的所有服务上启用加密。您可以加密存储在 AWS KMS 支持的任何服务中的数据。请参阅 AWS 服务如何使用 AWS KMS，获取受支持服务的列表，网址为 https://docs.aws.amazon.com/kms/latest/developerguide/service-integration.html。
+
+![屏幕截图 2024-11-18 200811](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 200811.jpg)
+
+**Data in transit 传输中的数据**是指在网络上移动的数据。传输中的数据加密是通过使用传输层安全性 (TLS) 1.2 和开放标准 AES-256 密码来实现的。TLS 以前称为安全套接字层 (SSL)。
+
+**AWS Certificate Manager AWS 证书管理器**是一项服务，可让您预置、管理和部署 SSL 或 TLS 证书，以用于 AWS 服务和内部连接的资源。SSL 或 TLS 证书用于保护网络通信并建立互联网上网站的身份以及私有网络上的资源。使用 AWS 证书管理器，您可以请求证书，然后将其部署在 AWS 资源（例如负载均衡器或 CloudFront 分发）上。AWS 证书管理器还处理证书续订。
+
+通过 HTTP 运行的 Web 流量并不安全。但是，通过**Secure 安全 HTTP (HTTPS)** 运行的流量使用 TLS 或 SSL 进行加密。由于通信的双向加密，HTTPS 流量可防止窃听和中间人攻击。
+
+第二个示例展示了如何使用 AWS Storage Gateway，这是一种混合云存储服务，可提供对 AWS 云存储的本地访问。在此示例中，存储网关通过互联网连接到 Amazon S3，并且该连接会对传输中的数据进行加密。
+
+![屏幕截图 2024-11-18 201005](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 201005.jpg)
+
+默认情况下，所有 Amazon S3 存储桶都是私有的，只有明确授予访问权限的用户才能访问。管理和控制对 Amazon S3 数据的访问至关重要。AWS 提供了许多工具和选项来控制对 S3 存储桶或对象的访问，包括：
+
+- 使用 **Amazon S3 Block Public Access** 阻止公共访问。这些设置会覆盖任何其他策略或对象权限。为所有您不希望公开访问的存储桶启用阻止公共访问。此功能提供了一种避免意外暴露 Amazon S3 数据的简单方法。
+- 编写 **IAM policies**，指定可以访问特定存储桶和对象的用户或角色。此方法已在本模块前面详细讨论过。
+- 编写**bucket policies**，定义对特定存储桶或对象的访问权限。此选项通常在用户或系统无法使用 IAM 进行身份验证时使用。存储桶策略可以配置为授予跨 AWS 账户的访问权限或授予对 Amazon S3 数据的公开或匿名访问权限。如果使用存储桶策略，则应仔细编写并进行全面测试。您可以在存储桶策略中指定拒绝语句来限制访问。即使用户拥有附加到用户的基于身份的策略中授予的权限，访问也会受到限制。
+- 在您的存储桶和对象上设置**access control lists (ACLs)** 。ACL 不太常用（ACL 早于 IAM）。如果您确实使用 ACL，请不要设置过于开放或宽松的访问权限
+- **AWS Trusted Advisor** 提供了存储桶权限检查功能，该功能是一种有用的工具，可用于发现您账户中的任何存储桶是否具有授予全局访问权限的权限。
+
+
+
+### Section6: Working to ensure compliance
+
+![屏幕截图 2024-11-18 201251](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 201251.jpg)
+
+AWS 与外部认证机构和独立审计师合作，为客户提供有关 AWS 建立和运营的政策、流程和控制的信息。
+
+作为您可以使用 AWS 服务实现合规性目标的认证示例，请考虑 ISO/IEC 27001:2013 认证。它指定了建立、实施、维护和持续改进信息安全管理系统的要求。此认证的基础是制定和实施严格的安全计划，其中包括制定和实施信息安全管理系统。信息安全管理系统定义了 AWS 如何以整体、全面的方式永久管理安全性。
+
+
+
+**Module summary**   
+
+总之，在本模块中，您学习了如何：
+
+- 识别共享责任模型• 确定客户和 AWS 的责任
+- 识别 IAM 用户、组和角色
+-  描述 IAM 中的不同类型的安全凭证
+-  确定保护新 AWS 账户的步骤
+-  探索 IAM 用户和组
+-  了解如何保护 AWS 数据
+-  识别 AWS 合规性计划
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
