@@ -705,17 +705,183 @@ AWS 使用来自**multiple original device manufacturers**多家原始设备制�
 
 ![屏幕截图 2024-11-18 142713](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 142713.jpg)
 
+**Amazon CloudFront** 是一种**content delivery network** 内容分发网络 (CDN)，用于将内容分发给最终用户以减少延迟。**Amazon Route 53** 是一种域名系统 (DNS) 服务。发送到其中任一服务的请求将自动路由到最近的边缘位置**edge location**，以降低延迟。
+
+AWS **Points of Presence**  接入点遍布全球大部分主要城市。通过持续测量互联网连接、性能和计算以找到路由请求的最佳方式，接入点可提供更好的近乎实时的用户体验。许多 AWS 服务都使用它们，包括 Amazon CloudFront、Amazon Route 53、AWS Shield 和 AWS Web 应用程序防火墙 (AWS WAF) 服务。
+
+Amazon CloudFront 默认使用 **Regional edge caches 区域边缘缓存**。当您的内容访问频率不够高而无法保留在边缘站点时，将使用区域边缘缓存。区域边缘缓存吸收这些内容，并提供必须从源服务器获取这些内容的替代方案。	
+
+![屏幕截图 2024-11-18 143914](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 143914.jpg)
+
+
+
+现在您已经充分了解了组成 AWS 全球基础设施的主要组件，让我们来考虑一下该基础设施提供的优势。
+
+AWS 全球基础设施具有多项宝贵功能：
+
+- 首先，它具有弹性和可扩展性。这意味着资源可以根据容量需求的增加或减少进行动态调整。它还可以快速调整以适应增长。
+- 其次，该基础设施具有容错能力，这意味着它具有内置组件冗余，即使某个组件发生故障，它仍可继续运行。
+- 最后，它几乎不需要人工干预，同时提供高可用性和最短的停机时间。
+
+
+
+**Key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- AWS 全球基础设施由区域和可用区组成。
+- 您对区域的选择通常基于合规性要求或为了减少延迟。
+- 每个可用区在物理上都与其他可用区分开，并具有冗余电源、网络和连接。
+- 边缘位置和区域边缘缓存通过将内容缓存到更靠近用户的位置来提高性能。
+
+
+
+### Section 2: AWS services and service category overview
+
+简介第 2 部分：AWS 服务和服务类别概述。AWS 提供一系列全球云产品，可用作常见云架构的构建块。
+
+下面介绍这些云产品的组织方式。
+
+![屏幕截图 2024-11-18 144106](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 144106.jpg)
+
+
+
+如前所述，AWS 全球基础设施可分为三个要素：区域、可用区和接入点（包括边缘位置）。该基础设施为一系列广泛的服务（如网络、存储、计算服务和数据库）提供了平台，这些服务以按需实用程序的形式提供，可在几秒钟内使用，并采用按使用量付费的定价方式。
+
+对于可访问性：营销图显示底部的基础设施，包括区域、可用区和边缘位置。下一个级别标记为基础服务，包括计算、网络和存储的图形。该级别已突出显示。下一个级别是平台服务，包括数据库、分析、应用服务、部署和管理以及移动服务。顶层标记为应用程序，包括虚拟桌面以及协作和共享。可访问性描述结束。
+
+![屏幕截图 2024-11-18 144200](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 144200.jpg)
+
+AWS 提供广泛的基于云的服务。有 23 种不同的产品或服务类别，每个类别包含一项或多项服务。本课程不会尝试向您介绍每项服务。相反，本课程的重点是使用最广泛且为 AWS 云提供最佳介绍的服务。本课程还重点介绍 AWS Certified Cloud Practitioner 考试中更有可能涉及的服务。
+
+本课程将讨论的类别在幻灯片上突出显示：计算、成本管理、数据库、管理和治理、网络和内容交付、安全、身份和合规性以及存储。
+
+要了解有关 AWS 产品的更多信息，请参阅 https://aws.amazon.com/products/ 上的云产品。所有 AWS 产品都按此处显示的服务类别进行组织。例如，如果您单击计算，您将看到 Amazon Elastic Compute Cloud (Amazon EC2) 位列列表首位。计算类别还列出了许多其他产品和服务。
+
+如果您单击 Amazon EC2，它将带您进入 Amazon EC2 页面。每个产品页面都提供了产品的详细描述并列出了它的一些优点。
+
+探索不同的服务组，了解其中的类别和服务。现在您知道如何查找有关不同服务的信息，本模块将讨论突出显示的服务类别。**接下来的七张幻灯片列出了本课程将讨论的上述每个类别中的各项服务。**
+
+![屏幕截图 2024-11-18 144327](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 144327.jpg)
+
+AWS 存储服务包括此处列出的服务以及许多其他服务。
+
+**Amazon Simple Storage Service (Amazon S3)** 是一种对象存储服务，可提供可扩展性、数据可用性、安全性和性能。使用它来存储和保护网站、移动应用程序、备份和恢复、存档、企业应用程序、物联网 (IoT) 设备和大数据分析的任意数量的数据。
+
+**Amazon Elastic Block Store (Amazon EBS)** 是一种高性能数据块存储，专为与 Amazon EC2 配合使用而设计，适用于吞吐量和事务密集型工作负载。它可用于各种工作负载，例如关系数据库和非关系数据库、企业应用程序、容器化应用程序、大数据分析引擎、文件系统和媒体工作流。
+
+**Amazon Elastic File System (Amazon EFS)** 提供可扩展、完全托管的弹性网络文件系统 (NFS) 文件系统，可与 AWS 云服务和本地资源配合使用。它可按需扩展到 PB 级，并随着您添加和删除文件而自动增加和缩小。它减少了配置和管理容量以适应增长的需求。
+
+**Amazon Simple Storage Service Glacier** 是一种安全、耐用且成本极低的 Amazon S3 云存储类，用于数据存档和长期备份。它旨在提供 11 个 9 的耐用性，并提供全面的安全性和合规性功能，以满足严格的监管要求。
+
+![屏幕截图 2024-11-18 144500](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 144500.jpg)
+
+AWS 计算服务包括此处列出的服务以及许多其他服务。
+
+**Amazon Elastic Compute Cloud (Amazon EC2)** 作为云中的虚拟机提供可调整大小的计算容量。
+
+**Amazon EC2 Auto Scaling** 使您能够根据定义的条件自动添加或删除 EC2 实例。
+
+**Amazon Elastic Container Service (Amazon ECS)** 是一种高度可扩展、高性能的容器编排服务，支持 Docker 容器。
+
+**Amazon Elastic Container Registry (Amazon ECR)** 是一个完全托管的 Docker 容器注册表，可让开发人员轻松存储、管理和部署 Docker 容器映像。
+
+**AWS Elastic Beanstalk** 是一种在熟悉的服务器（例如 Apache 和 Microsoft Internet Information Services (IIS)）上部署和扩展 Web 应用程序和服务的服务。
+
+**AWS Lambda** 让您无需预置或管理服务器即可运行代码。您只需为您使用的计算时间付费。当您的代码未运行时，则不收取任何费用。
+
+**Amazon Elastic Kubernetes Service (Amazon EKS)** 让您能够轻松部署、管理和扩展在 AWS 上使用 Kubernetes 的容器化应用程序。
+
+**AWS Fargate** 是 Amazon ECS 的计算引擎，允许您运行容器而无需管理服务器或集群。
+
+![屏幕截图 2024-11-18 145657](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 145657.jpg)
+
+AWS 数据库服务包括此处列出的服务以及许多其他服务。
+
+**Amazon Relational Database Service (Amazon RDS)** 让您能够轻松地在云中设置、操作和扩展关系数据库。它提供可调整大小的容量，同时自动执行耗时的管理任务，例如硬件配置、数据库设置、修补和备份。
+
+**Amazon Aurora** 是与 MySQL 和 PostgreSQL 兼容的关系数据库。它比标准 MySQL 数据库快五倍，比标准 PostgreSQL 数据库快三倍。
+
+**Amazon Redshift** 可让您针对本地存储在 Amazon Redshift 中的 PB 级数据以及直接针对存储在 Amazon S3 中的 EB 级数据运行分析查询。它在任何规模下都能提供快速的性能。
+
+**Amazon DynamoDB** 是一个键值和文档数据库，可以在任何规模下提供个位数毫秒的性能，具有内置安全性、备份和恢复以及内存缓存功能。
+
+![屏幕截图 2024-11-18 145841](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 145841.jpg)
+
+
+
+AWS 网络和内容交付服务包括此处列出的服务以及许多其他服务。
+
+**Amazon Virtual Private Cloud (Amazon VPC)** 使您能够配置 AWS 云的逻辑隔离部分。
+
+**Elastic Load Balancing** 自动在多个目标（例如 Amazon EC2 实例、容器、IP 地址和 Lambda 函数）之间分配传入的应用程序流量。
+
+**Amazon CloudFront** 是一种快速内容分发网络 (CDN) 服务，可以安全地向全球客户分发数据、视频、应用程序和应用程序编程接口 (API)，具有低延迟和高传输速度。
+
+**AWS Transit Gateway** 是一项服务，可让客户将其 Amazon Virtual Private Clouds (VPC) 及其本地网络连接到单个网关。
+
+**Amazon Route 53** 是一种可扩展的云域名系统 (DNS) Web 服务，旨在为您提供一种可靠的方式将最终用户路由到互联网应用程序。它将名称（如 www.example.com）转换为计算机用于相互连接的数字 IP 地址（如 192.0.2.1）。
+
+**AWS Direct Connect** 提供了一种从您的数据中心或办公室到 AWS 建立专用私有网络连接的方法，可以降低网络成本并提高带宽吞吐量。
+
+**AWS VPN** 提供从您的网络或设备到 AWS 全球网络的安全专用隧道。
+
+![屏幕截图 2024-11-18 150043](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 150043.jpg)
+
+AWS 安全、身份和合规性服务包括此处列出的服务以及许多其他服务。
+
+**AWS Identity and Access Management (IAM)** 使您能够安全地管理对 AWS 服务和资源的访问。通过使用 IAM，您可以创建和管理 AWS 用户和组。您可以使用 IAM 权限允许和拒绝用户和组对 AWS 资源的访问。
+
+**AWS Organizations** 允许您限制您的账户中允许的服务和操作。
+
+**Amazon Cognito** 可让您向 Web 和移动应用程序添加用户注册、登录和访问控制。
+
+**AWS Artifact** 提供对 AWS 安全性和合规性报告以及选择在线协议的按需访问。
+
+**AWS Key Management Service (AWS KMS)** 可让您创建和管理密钥。您可以使用 AWS KMS 控制各种 AWS 服务和应用程序中加密的使用。
+
+**AWS Shield** 是一种托管的分布式拒绝服务 (DDoS) 防护服务，可保护在 AWS 上运行的应用程序。
+
+![屏幕截图 2024-11-18 150220](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 150220.jpg)
+
+AWS 成本管理服务包括此处列出的服务以及其他服务。
+
+**AWS Cost and Usage Report**包含最全面的 AWS 成本和使用情况数据，包括有关 AWS 服务、定价和预留的其他元数据。
+
+**AWS Budgets**可让您设置自定义预算，当您的成本或使用量超出（或预计超出）预算金额时，系统会向您发出警报。
+
+**AWS Cost Explorer** 具有易于使用的界面，可让您直观地了解和管理您的 AWS 成本和随时间变化的使用情况。
+
+![屏幕截图 2024-11-18 150349](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 150349.jpg)
+
+AWS 管理和治理服务包括此处列出的服务及其他服务。
+
+**AWS Management Console**提供了基于 Web 的用户界面，用于访问您的 AWS 账户。
+
+**AWS Config** 提供可帮助您跟踪资源清单和变化的服务。
+
+**Amazon CloudWatch** 可让您监控资源和应用程序。
+
+**AWS Auto Scaling** 提供可让您扩展多种资源以满足需求的功能。
+
+**AWS Command Line Interface**提供了统一的工具来管理 AWS 服务。
+
+**AWS Trusted Advisor** 可帮助您优化性能和安全性。
+
+**AWS Well-Architected Tool** 可帮助您审查和改进工作负载。
+
+**AWS CloudTrail** 可跟踪用户活动和 API 使用情况。
 
 
 
 
 
+**Module summary**    
 
+总之，在本模块中，您学习了如何：
 
-
-
-
-
+- 识别 AWS 区域、可用区和边缘位置之间的差异
+- 识别 AWS 服务和服务类别
 
 
 
