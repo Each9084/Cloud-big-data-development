@@ -522,6 +522,205 @@ AWS 定价计算器估算分为：
 
 ### Section 3: AWS Organizations
 
+AWS Organizations 是一项免费的账户管理服务，可让您将多个 AWS 账户整合到您创建并集中管理的组织中。AWS Organizations 包括整合的账单和账户管理功能，可帮助您更好地满足业务的预算、安全性和合规性需求。AWS Organizations 的主要优势包括：
+
+-  集中管理跨多个 AWS 账户的访问策略。
+- 控制对 AWS 服务的访问。
+- 自动创建和管理 AWS 账户。
+-  跨多个 AWS 账户整合账单。
+
+
+
+![屏幕截图 2024-11-18 133539](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 133539.jpg)
+
+这里有一些术语可以帮助您了解 AWS 组织的结构。
+
+该图显示了一个基本组织或根，它由七个账户组成，这些账户被组织成四个**organizational units 组织单位 (OU)**。OU 是根内账户的容器。OU 还可以包含其他 OU。此结构使您能够创建一个层次结构，该层次结构看起来像一棵倒置的树，根位于顶部。分支由子 OU 组成，它们向下移动，直到它们以账户结尾，这些账户就像树的叶子一样。
+
+当您将策略附加到层次结构中的一个节点时，它会向下流动并影响所有分支和叶子。此示例组织有几项策略附加到某些 OU 或直接附加到账户。
+
+一个 OU 只能有一个父级，目前每个账户只能是一个 OU 的成员。账户是包含您的 AWS 资源的标准 AWS 账户。您可以将策略附加到账户，以仅对该账户应用控制。
+
+![屏幕截图 2024-11-18 133832](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 133832.jpg)
+
+AWS Organizations 可让您：
+
+- 创建**service control policies 服务控制策略 (SCP)**，以集中控制跨多个 AWS 账户的 AWS 服务
+- 创建**groups of accounts 账户组**，然后将策略附加到组，以确保在各个账户中应用正确的策略。
+- 通过使用**application programming interfaces 应用程序编程接口 (API)** 自动创建和管理新的 AWS 账户，简化账户管理。
+- 通过为组织中的所有 AWS 账户设置**consolidated billing 单一付款方式**，简化计费流程。通过整合账单，您可以查看所有账户产生的费用的综合视图，并可以利用汇总使用量的定价优势。整合账单提供了一个集中位置来管理所有 AWS 账户的账单，并能够从批量折扣中获益。
+
+![屏幕截图 2024-11-18 134202](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 134202.jpg)
+
+AWS Organizations 不会取代将 **AWS Identity and Access Management (IAM)** 策略与 AWS 账户内的用户、组和角色关联起来。
+
+使用 IAM 策略，您可以允许或拒绝对 AWS 服务（例如 Amazon S3）、单个 AWS 资源（例如特定 S3 存储桶）或单个 API 操作（例如 s3:CreateBucket）的访问。IAM 策略只能应用于 IAM 用户、组或角色，并且永远无法限制 AWS 账户根用户。
+
+相比之下，使用组织，您可以使用 **service control policies 服务控制策略 (SCP)** 允许或拒绝单个 AWS 账户或 OU 中的账户组访问特定 AWS 服务。附加 SCP 中的指定操作会影响账户的所有 IAM 用户、组和角色，包括 AWS 账户根用户。
+
+![屏幕截图 2024-11-18 134822](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 134822.jpg)
+
+请记住，此过程假设您可以访问两个现有的 AWS 账户，并且可以以管理员身份登录每个账户。
+
+查看以下步骤以设置 AWS Organizations：
+
+- 步骤 1 是创建您的组织，将您当前的 AWS 账户作为主账户。您还可以邀请一个 AWS 账户加入您的组织，并创建另一个账户作为成员账户。
+- 步骤 2 是在您的新组织中创建两个组织单位，并将成员账户放在这些 OU 中。
+- 步骤 3 是创建服务控制策略，这些策略使您能够限制可以委托给成员账户中的用户和角色的操作。服务控制策略是一种组织控制策略。
+- 步骤 4 是测试您组织的策略。以每个角色（例如 OU1 或 OU2）的用户身份登录，并查看服务控制策略如何影响账户访问。或者，您可以使用 IAM 策略模拟器来测试和排除 IAM 和基于资源的策略的故障，这些策略附加到您的 AWS 账户中的 IAM 用户、组或角色。
+
+![屏幕截图 2024-11-18 134936](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 134936.jpg)
+
+您可以在 AWS Organizations 中创建的名称受到限制，其中包括账户、OU、根和策略的名称。
+
+名称必须由 Unicode 字符组成，且长度不得超过 250 个字符。
+
+AWS Organizations 对于实体有几个最大值和最小值。
+
+对于可访问性：AWS Organizations 限制列表，包括名称、账户数量（各不相同）、根数量（1）、OU 数量（1,000）、策略数量（1,000）、控制策略文档的最大大小（5,120 字节）、BU 的最大嵌套（根下有 5 级 BU）、每天发送的邀请数（20）、同时创建的成员账户数（5）以及可以附加策略的实体数（无限制）。可访问性描述结束。
+
+![屏幕截图 2024-11-18 135047](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 135047.jpg)
+
+AWS Organizations 可以通过不同的界面进行管理。
+
+AWS **Management Console**管理控制台是一个基于浏览器的界面，可用于管理您的组织和 AWS 资源。您可以使用控制台在组织中执行任何任务。
+
+AWS 命令行界面 (AWS CLI) 工具可让您在系统的命令行中发出命令来执行 AWS Organizations 任务和 AWS 任务。此方法比使用控制台更快捷、更方便。
+
+您还可以使用 AWS 软件开发工具包 (SDK) 来处理诸如对请求进行加密签名、管理错误以及自动重试请求等任务。AWS SDK 包含适用于各种编程语言和平台的库和示例代码，例如 Java、Python、Ruby、.NET、iOS 和 Android。
+
+AWS Organizations HTTPS 查询 API 为您提供对 AWS Organizations 和 AWS 的编程访问。您可以使用该 API 直接向服务发出 HTTPS 请求。使用 HTTPS API 时，您必须包含代码以使用您的凭证对请求进行数字签名。
+
+
+
+### Section 4: AWS Billing and Cost Management
+
+**AWS Billing and Cost Management** 账单和成本管理是您用来支付 AWS 账单、监控使用情况和预算成本的服务。账单和成本管理使您能够预测并更好地了解未来的成本和使用情况，以便提前规划。
+
+您可以设置自定义时间段，并确定是否要按月度或每日粒度查看数据。
+
+借助筛选和分组功能，您可以使用各种可用维度进一步分析数据。AWS Cost and Usage Report Tool** 成本和使用情况报告工具可让您了解成本和使用情况数据趋势以及您如何使用 AWS 实施，从而确定优化机会。
+
+AWS Billing and Cost Management console 账单和成本管理控制台包含 Cost Explorer 页面，可用于以图表形式查看您的 AWS 成本数据。
+
+使用 Cost Explorer，您可以直观地了解和管理一段时间内的 AWS 成本和使用情况。
+
+Cost Explorer 包含一份默认报告，该报告直观地显示了您最耗费的 AWS 服务的成本和使用情况。每月运行成本报告为您提供了过去 3 个月所有成本的概览。它还提供下个月的预测数字以及相应的置信区间。
+
+Cost Explorer 是一款免费工具，可让您：
+
+- 查看成本图表。
+- 查看过去 13 个月的成本数据。•预测未来 3 个月可能花费的金额。
+- 发现您在一段时间内在 AWS 资源上花费的模式并确定成本问题区域。
+- 确定您使用最多的服务
+- 查看指标，例如哪些可用区拥有最多流量或哪个链接的 AWS 账户使用最多。
+
+
+
+![屏幕截图 2024-11-18 140127](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 140127.jpg)
+
+**AWS Budgets** 使用 Cost Explorer 提供的成本可视化功能向您显示预算状态并提供估计成本的预测。
+
+您还可以使用 AWS 预算创建通知，以便在超出当月预算或预估成本超出预算时发出通知。您可以按月、季度或年度跟踪预算，并自定义开始和结束日期。预算警报可以通过电子邮件或 **Amazon Simple Notification Service (Amazon SNS)** 发送。
+
+可访问性：AWS 账单预算面板显示预算名称、当前和未来成本和使用情况，以及当前和预测预算的标题。可访问性描述结束。
+
+![屏幕截图 2024-11-18 140236](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 140236.jpg)
+
+**AWS Cost and Usage Report** 成本和使用情况报告是访问有关 AWS 成本和使用情况的综合信息的单一位置。此工具以每小时或每日明细项目的形式列出账户（及其用户）使用的每个服务类别的使用情况，以及您为税务分配目的激活的任何税费。
+
+您可以选择让 AWS 将账单报告发布到 S3 存储桶。这些报告可以每天更新一次。
+
+
+
+## Module 3: AWS Global Infrastructure Overview
+
+本模块将讨论以下主题：
+
+- AWS 全球基础设施
+- AWS 服务和服务类别概述
+
+该模块包括由教育工作者主导的演示，重点介绍 AWS 全球基础设施的细节。该模块还包括一个动手实践活动，您将在其中探索 AWS 管理控制台。
+
+完成本模块后，您应该能够：
+
+- 识别 AWS 区域、可用区和边缘位置之间的差异
+- 识别 AWS 服务和服务类别
+
+### Section 1: AWS Global Infrastructure
+
+![屏幕截图 2024-11-18 141912](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 141912.jpg)
+
+
+
+AWS 云基础设施围绕区域构建。AWS 在全球拥有 22 个区域。AWS 区域是具有一个或多个可用区的物理地理位置。可用区又由一个或多个数据中心组成。
+
+为了实现容错和稳定性，区域之间是相互隔离的。一个区域中的资源不会自动复制到其他区域。当您将数据存储在特定区域时，该数据不会复制到该区域之外。
+
+如果您的业务需求需要，您有责任跨区域复制数据。
+
+2019 年 3 月 20 日之前推出的 AWS 区域默认处于启用状态。2019 年 3 月 20 日之后推出的区域（例如亚太地区（香港）和中东（巴林））默认处于禁用状态。您必须先启用这些区域，然后才能使用它们。您可以使用 AWS 管理控制台启用或禁用区域。
+
+部分区域有访问限制。Amazon AWS（中国）账户仅提供对北京和宁夏区域的访问。要了解有关中国 AWS 的更多信息，请参阅：https://www.amazonaws.cn/en/about-aws/china/。独立的 AWS GovCloud（美国）区域旨在允许美国政府机构和客户通过满足其特定的监管和合规性要求将敏感工作负载迁移到云中。
+
+可访问性：来自 Infrastructure.aws 网站的快照，显示伦敦市中心的图片，包括塔桥和碎片大厦。它指出伦敦地区有三个可用区。可访问性描述结束。
+
+![屏幕截图 2024-11-18 142200](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 142200.jpg)
+
+
+
+在选择存储数据和使用 AWS 服务的最佳区域时，您应该考虑一些因素。
+
+一个重要的考虑因素是数据管理和法律要求。当地法律可能要求将某些信息保留在地理边界内。这些法律可能会限制您可以提供内容或服务的地区。例如，考虑欧盟 (EU) 数据保护指令。
+
+在其他条件相同的情况下，通常最好在尽可能靠近用户和访问它们的系统的区域运行应用程序并将数据存储起来。这将有助于您减少延迟。CloudPing 是一个可用于测试您所在位置与所有 AWS 区域之间的延迟的网站。要了解有关 CloudPing 的更多信息，请参阅：http://www.cloudping.info/请记住，并非所有服务都可在所有区域使用。要了解更多信息，请参阅：https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/?p=tgi&loc=4。最后，运行服务的成本会有所不同，这取决于您选择的区域。例如，截至撰写本文时，在美国东部（俄亥俄）区域运行按需 t3.medium 大小的 Amazon Elastic Compute Cloud (Amazon EC2) Linux 实例的成本为每小时 0.0416 美元，但在亚太地区（东京）区域运行相同实例的成本为每小时 0.0544 美元。
+
+![屏幕截图 2024-11-18 142308](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 142308.jpg)
+
+每个 AWS 区域都有多个隔离位置，称为**可用区Availability Zones**。
+
+每个可用区都能够运行比单个数据中心更高可用性、容错性和可扩展性的应用程序和数据库。每个可用区可以包含多个数据中心（通常为三个），在全面扩展时，它们可以包含数十万台服务器。它们是 AWS 全球基础设施的完全隔离分区。可用区拥有自己的电力基础设施，并且它们与其他可用区在物理上相隔数公里 — — 尽管所有可用区之间的距离都在 100 公里以内。
+
+所有可用区均通过高带宽、低延迟网络通过完全冗余的专用光纤互连，从而在可用区之间提供高吞吐量。该网络在可用区之间实现同步复制。
+
+可用区有助于构建高可用性应用程序。当应用程序跨可用区进行分区时，公司可以更好地隔离并免受雷电、龙卷风、地震等问题的影响。
+
+您负责选择系统所在的可用区。系统可以跨多个可用区。AWS 建议跨可用区进行复制以实现弹性。您应设计系统以在发生灾难时承受可用区的临时或长期故障。
+
+![屏幕截图 2024-11-18 142442](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 142442.jpg)
+
+AWS 基础设施的基础是数据中心。客户不会指定数据中心来部署资源。相反，可用区域是客户可以进行的最精细的规范级别。但是，数据中心是实际数据所在的位置。亚马逊运营着最先进的高可用性数据中心。虽然很少见，但可能会发生影响同一位置实例可用性的故障。如果您将所有实例托管在受此类故障影响的单个位置，则您的所有实例都将不可用。
+
+数据中心的安全设计考虑了以下几个因素：
+
+每个位置都经过仔细评估，以减轻环境风险。
+
+- 数据中心采用冗余设计，可预测和容忍故障，同时保持服务水平。
+- 为确保可用性，关键系统组件在多个可用区中备份。
+- 为确保容量，AWS 持续监控服务使用情况，以部署基础设施来支持可用性承诺和要求。
+- 数据中心位置不公开，所有访问均受到限制。
+- 发生故障时，自动化流程会将数据流量移出受影响区域。
+
+AWS 使用来自**multiple original device manufacturers**多家原始设备制造商 (ODM) 的**custom network equipment**定制网络设备。ODM 根据第二家公司的规格设计和制造产品。然后，第二家公司重新包装产品以供销售。
+
+![屏幕截图 2024-11-18 142713](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 142713.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
