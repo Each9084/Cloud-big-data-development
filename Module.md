@@ -1092,7 +1092,7 @@ IAM 策略有两种类型。**Identity-based policies**是您可以附加到主�
 
 **Resource-based policies** 是附加到资源（例如 S3 存储桶）的 JSON 策略文档。这些策略控制指定主体可以对该资源执行哪些操作以及在什么条件下执行。
 
-![屏幕截图 2024-11-18 194145](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 194145.jpg)
+![屏幕截图 2024-11-18 194145](F:\Github_Workspace\Self_Study\Study-Supervision-Plan\asset\image\24.11.18.1)
 
 如前所述，IAM 策略文档是用 JSON 编写的。
 
@@ -1555,6 +1555,290 @@ VPC **endpoint**是一种虚拟设备，可让您私下将您的 VPC 连接到�
 ![屏幕截图 2024-11-18 205814](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-18 205814.jpg)
 
 通过标记此网络图，看看您是否可以识别出您学到的不同 VPC 网络组件。
+
+![屏幕截图 2024-11-19 090341](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 090341.jpg)
+
+**Section 3 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- 有几种 VPC 网络选项，其中包括：
+  - 互联网网关：将您的 VPC 连接到互联网
+  - NAT 网关：使私有子网中的实例能够连接到互联网
+  - VPC 终端节点：将您的 VPC 连接到受支持的 AWS 服务
+  - VPC peering对等：将您的 VPC 连接到其他 VPC
+  - VPC sharing共享：允许多个 AWS 账户将其应用程序资源创建到共享的、集中管理的 Amazon VPC 中
+  - AWS Site to Site 站点到站点 VPN：将您的 VPC 连接到远程网络
+  - AWS Direct Connect：使用专用网络连接将您的 VPC 连接到远程网络
+  - AWS Transit Gateway：VPC 对等的星型连接替代方案
+
+
+
+### Section 4: VPC security
+
+您可以通过多种方式在 VPC 架构中构建安全性，以便完全控制传入和传出流量。在本节中，您将了解可用于保护 VPC 的两个 Amazon VPC 防火墙选项：security groups and network access control lists 安全组和网络访问控制列表（network 网络 ACL）。
+
+![屏幕截图 2024-11-19 090659](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 090659.jpg)
+
+
+
+安全组充当实例的虚拟防火墙，控制入站和出站流量。安全组在实例级别而不是子网级别起作用。因此，VPC 中子网中的每个实例都可以分配给一组不同的安全组。
+
+从最基本的层面上讲，安全组是一种过滤实例流量的方式。
+
+![屏幕截图 2024-11-19 090751](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 090751.jpg)
+
+安全组具有控制入站和出站流量的规则。当您创建安全组时，它没有入站规则。因此，除非您向安全组添加入站规则，否则不允许来自其他主机到您的实例的入站流量。默认情况下，安全组包含允许所有出站流量的出站规则。您可以删除该规则并添加仅允许特定出站流量的出站规则。如果您的安全组没有出站规则，则不允许来自您的实例的出站流量。
+
+安全组是有状态的，这意味着即使在处理请求后，状态信息也会保留。因此，如果您从实例发送请求，则无论入站安全组规则如何，该请求的响应流量都可以流入。无论出站规则如何，允许的入站流量的响应都可以流出。
+
+![屏幕截图 2024-11-19 091047](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091047.jpg)
+
+创建自定义安全组时，您可以指定允许规则，但不能指定拒绝规则。在决定允许流量之前，会评估所有规则。
+
+![屏幕截图 2024-11-19 091117](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091117.jpg)
+
+网络访问控制列表 (网络 ACL) 是 Amazon VPC 的可选安全层。它充当防火墙，用于控制进出一个或多个子网的流量。要为 VPC 添加另一层安全保护，您可以设置具有与安全组类似的规则的网络 ACL。
+
+您的 VPC 中的每个子网都必须与网络 ACL 关联。如果您未明确将子网与网络 ACL 关联，则子网将自动与默认网络 ACL 关联。您可以将一个网络 ACL 与多个子网关联；但是，一个子网一次只能与一个网络 ACL 关联。当您将网络 ACL 与子网关联时，先前的关联将被删除。
+
+![屏幕截图 2024-11-19 091215](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091215.jpg)
+
+网络 ACL 具有单独的入站和出站规则，每个规则都可以允许或拒绝流量。您的 VPC 自动附带可修改的默认网络 ACL。默认情况下，它允许所有入站和出站 IPv4 流量以及（如果适用）IPv6 流量。下表显示了默认网络 ACL。
+
+网络 ACL 是无状态的，这意味着在处理请求后不会维护有关请求的任何信息。
+
+![屏幕截图 2024-11-19 091249](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091249.jpg)
+
+您可以创建自定义网络 ACL 并将其与子网关联。默认情况下，每个自定义网络 ACL 都会拒绝所有入站和出站流量，直到您添加规则。
+
+网络 ACL 包含按顺序评估的编号规则列表，从编号最低的规则开始。目的是确定是否允许流量进出与网络 ACL 关联的任何子网。规则可以使用的最大编号是 32,766。AWS 建议您以增量（例如，以 10 或 100 为增量）创建规则，以便您稍后可以在需要的地方插入新规则。
+
+![屏幕截图 2024-11-19 091430](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091430.jpg)
+
+以下是安全组和网络 ACL 之间的差异总结：
+
+- 安全组作用于实例级别，而网络 ACL 作用于子网级别。
+- 安全组仅支持允许规则，而网络 ACL 同时支持允许和拒绝规则。
+- 安全组是有状态的，而网络 ACL 是无状态的。
+- 对于安全组，在决定允许流量之前会评估所有规则。对于网络 ACL，在决定允许流量之前会按数字顺序评估规则
+
+![屏幕截图 2024-11-19 091519](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091519.jpg)
+
+现在轮到你了！在这种情况下，你是一家小企业主，你的网站托管在 AmazonElastic Compute Cloud (Amazon EC2) 实例上。你的客户数据存储在后端数据库中，你想将这些数据存储为私密数据。
+
+看看您是否可以设计一个满足以下要求的 VPC：
+
+- 您的 Web 服务器和数据库服务器必须位于不同的子网中。
+- 您的网络的第一个地址必须是 10.0.0.0。每个子网必须有 256 个 IPv4 地址。
+- 您的客户必须始终能够访问您的 Web 服务器。
+- 您的数据库服务器必须能够访问互联网以进行补丁更新。
+- 您的架构必须具有高可用性并使用至少一个自定义防火墙层。
+
+**Section 4 key takeaways**
+
+本模块此部分的重点是：
+
+- 在您的 VPC 架构中构建安全性。
+- 安全组和网络 ACL 是您可以用来保护您的 VPC 的防火墙选项。
+
+
+
+
+
+### Section 5: Amazon Route 53
+
+![屏幕截图 2024-11-19 091930](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 091930.jpg)
+
+Amazon Route 53 是一种高度可用且可扩展的云域名系统 (DNS) Web 服务。它旨在为开发人员和企业提供一种可靠且经济高效的方式，将用户路由到互联网应用程序，方法是将名称（如 www.example.com）转换为计算机用于相互连接的数字 IP 地址（如 192.0.2.1）。此外，Amazon Route 53 完全符合 IPv6 标准。有关域名系统的更多信息，请访问 https://aws.amazon.com/route53/what-is-dns/。
+
+Amazon Route 53 可有效地将用户请求连接到 AWS 中运行的基础设施（例如 Amazon EC2 实例、Elastic Load Balancing 负载均衡器或 Amazon S3 存储桶），也可用于将用户路由到 AWS 之外的基础设施。
+
+您可以使用 Amazon Route 53 配置 DNS 运行状况检查，以便将流量路由到健康的终端节点或独立监控应用程序及其终端节点的运行状况。
+
+Amazon Route 53 流量流可帮助您通过多种路由类型在全球范围内管理流量，这些路由类型可与 DNS 故障转移相结合，以实现各种低延迟、容错架构。您可以使用 Amazon Route 53 流量流的简单可视化编辑器来管理如何将用户路由到应用程序的终端节点 — 无论是在单个 AWS 区域还是分布在全球各地。
+
+Amazon Route 53 还提供域名注册 - 您可以购买和管理域名（如 example.com），Amazon Route 53 将自动为您的域配置 DNS 设置。
+
+![屏幕截图 2024-11-19 092128](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 092128.jpg)
+
+192.0.2.0这是用户发起 DNS 请求时 Amazon Route 53 遵循的基本模式。DNS 解析器会在 Route 53 中检查您的域，获取 IP 地址并将其返回给用户。
+
+![屏幕截图 2024-11-19 092201](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 092201.jpg)
+
+Amazon Route 53 支持多种类型的路由策略，这些策略决定了 Amazon Route 53 如何响应查询：
+
+- Simple routing 简单路由（round robin 循环）– 用于为您的域执行给定功能的单个资源（例如为 example.com 网站提供内容的 Web 服务器）。
+- Weighted round  robin routing 加权循环路由 – 用于按您指定的比例将流量路由到多个资源。使您能够为资源记录集分配权重，以指定提供不同响应的频率。您可能希望使用此功能进行 A/B 测试，即将一小部分流量发送到您进行了软件更改的服务器。例如，假设您有两个与一个 DNS 名称关联的记录集：一个权重为 3，另一个权重为 1。在这种情况下，75% 的时间，Amazon Route 53 将返回权重为 3 的记录集，25% 的时间，Amazon Route 53 将返回权重为 1 的记录集。权重可以是 0 到 255 之间的任意数字。
+- Latency routing 延迟路由 (LBR) – 当您在多个 AWS 区域中拥有资源并且想要将流量路由到提供最佳延迟的区域时使用。延迟路由的工作原理是根据运行应用程序的不同 AWS 区域的实际性能测量，将您的客户路由到提供最快体验的 AWS 终端节点（例如，Amazon EC2 实例、弹性 IP 地址或负载均衡器）。
+- Geolocation routing 地理位置路由 – 当您想要根据用户的位置路由流量时使用。使用地理位置路由时，您可以本地化您的内容并以用户的语言呈现部分或全部网站。您还可以使用地理位置路由将内容分发限制在您拥有分发权的位置。另一个可能的用途是以可预测、易于管理的方式在端点之间平衡负载，以便每个用户位置都一致地路由到同一个端点。
+- Geoproximity routing 地理邻近度路由 – 当您想要根据资源位置路由流量，并可选择将流量从一个位置的资源转移到另一个位置的资源时使用。
+- Failover routing 故障转移路由（DNS  failover故障转移） – 当您想要配置主动-被动故障转移时使用。Amazon Route 53 可以帮助检测您网站的中断并将您的用户重定向到您的应用程序正常运行的其他位置。启用此功能后，Amazon Route 53 运行状况检查代理将监控您应用程序的每个位置或终端节点以确定其可用性。您可以利用此功能来提高面向客户的应用程序的可用性。
+- Multivalue answer routing 多值答案路由 – 当您希望 Route53 使用随机选择的最多八个健康记录来响应 DNS 查询时使用。您可以将 Amazon Route53 配置为在响应 DNS 查询时返回多个值（例如 Web 服务器的 IP 地址）。您可以为几乎任何记录指定多个值，但多值答案路由还使您能够检查每个资源的运行状况，以便 Route53 仅返回健康资源的值。它不能替代负载均衡器，但返回多个可检查健康状态的 IP 地址的能力是使用 DNS 来提高可用性和负载平衡的一种方法。
+
+![屏幕截图 2024-11-19 092517](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 092517.jpg)
+
+多区域部署是 Amazon Route 53 的一个示例用例。使用 Amazon Route 53，用户会自动定向到距离用户最近的 Elastic Load Balancing 负载均衡器。
+
+Route 53 多区域部署的优势包括：
+
+- 基于延迟的区域路由
+- 负载平衡路由到可用区
+
+
+
+
+
+![屏幕截图 2024-11-19 092628](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 092628.jpg)
+
+Amazon Route 53 可让您通过以下方式提高在 AWS 上运行的应用程序的可用性：
+
+- 为您自己的应用程序配置备份和故障转移方案。
+- 在 AWS 上启用高可用性多区域架构。
+- 创建运行状况检查以监控 Web 应用程序、Web 服务器和其他资源的运行状况和性能。您创建的每个运行状况检查都可以监控以下任一内容：指定资源（例如 Web 服务器）的运行状况；其他运行状况检查的状态；以及 Amazon CloudWatch 警报的状态。
+
+![屏幕截图 2024-11-19 092708](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 092708.jpg)
+
+此图显示了 DNSfailover 在多层 Web 应用程序的典型架构中的工作方式。Route 53 将流量传递到负载均衡器，然后负载均衡器将流量分发到一组 EC2 实例。
+
+您可以使用 Route 53 执行以下任务以确保高可用性：
+
+1. 使用故障转移路由的路由策略为规范名称记录 (CNAME) www 创建两个 DNS 记录。第一个记录是主路由策略，它指向您的 Web 应用程序的负载均衡器。第二个记录是辅助路由策略，它指向您的静态 Amazon S3 网站。
+2. 使用 Route 53 运行状况检查来确保主路由正在运行。如果是，则所有流量默认流向您的 Web 应用程序堆栈。如果 Web 服务器发生故障（或停止响应）或数据库实例发生故障，则会触发到静态备份站点的故障转移。
+
+
+
+**Section 5 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- Amazon Route 53 是一种高度可用且可扩展的云 DNS Web 服务，可将域名转换为数字 IP 地址。
+- Amazon Route 53 支持多种类型的路由策略。
+- 多区域部署可提高您的应用程序在全球范围内的性能。
+- 您可以使用 Amazon Route 53 故障转移来提高应用程序的可用性。
+
+
+
+### Section 6: Amazon CloudFront
+
+联网的目的是在连接的资源之间共享信息。到目前为止，在本模块中，您了解了使用 Amazon VPC 的 VPC 联网。您了解了将您的 VPC 连接到互联网、远程网络、其他 VPC 和 AWS 服务的不同选项。
+
+内容交付也通过网络进行 — 例如，当您从您最喜欢的流媒体服务流式传输电影时。在最后一节中，您将了解 Amazon CloudFront，它是一种 content delivery network 内容交付网络 (CDN) 服务。
+
+![屏幕截图 2024-11-19 093109](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 093109.jpg)
+
+正如本模块前面您学习 AWS Direct Connect 时所解释的那样，网络通信的挑战之一是网络性能。当您浏览网站或流式传输视频时，您的请求将通过许多不同的网络路由以到达源服务器。源服务器（或源）存储对象（网页、图像和媒体文件）的原始、最终版本。网络跳数和请求必须传输的距离会显著影响网站的性能和响应能力。此外，不同地理位置的网络延迟也不同。出于这些原因，内容分发网络可能是解决方案。
+
+![屏幕截图 2024-11-19 093351](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 093351.jpg)
+
+内容分发网络 (CDN) 是一个全球分布的缓存服务器系统。CDN 缓存托管在应用程序源服务器上的常见请求文件（静态内容，例如超文本标记语言或 HTML、层叠样式表或 CSS、JavaScript 和图像文件）的副本。CDN 从缓存边缘或接入点提供所请求内容的本地副本，从而以最快的速度向请求者提供内容
+
+CDN 还交付请求者独有且不可缓存的动态内容。使用 CDN 交付动态内容可提高应用程序性能和扩展性。CDN 建立并维护更靠近请求者的安全连接。如果 CDN 与源站位于同一网络上，则路由回源站以检索动态内容的速度会加快。此外，表单数据、图像和文本等内容可以被提取并发送回源站，从而利用 PoP 的低延迟连接和代理行为。
+
+![屏幕截图 2024-11-19 093433](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 093433.jpg)
+
+Amazon CloudFront 是一种快速 CDN 服务，可以安全地向全球客户提供数据、视频、应用程序和应用程序编程接口 (API)，具有低延迟和高传输速度。它还提供了开发人员友好的环境。Amazon CloudFront 通过全球边缘站点网络和区域边缘缓存向用户提供文件。Amazon CloudFront 与传统的内容交付解决方案不同，因为它使您能够快速获得高性能内容交付的好处，而无需协商合同、高价格或最低费用。与其他 AWS 服务一样，Amazon CloudFront 是一种自助服务产品，采用按需付费定价。
+
+![屏幕截图 2024-11-19 093501](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 093501.jpg)
+
+AmazonCloudFront 通过全球数据中心网络（称为边缘站点）提供内容。当用户请求您使用 CloudFront 提供的内容时，用户将被路由到提供最低延迟（或时间延迟）的边缘站点，以便以最佳性能提供内容。CloudFront 边缘站点旨在快速向您的查看者提供热门内容。
+
+随着对象变得不那么受欢迎，各个边缘站点可能会删除这些对象，为更受欢迎的内容腾出空间。对于不太受欢迎的内容，CloudFront 具有区域边缘缓存。区域边缘缓存是全球部署且靠近您的查看者的 CloudFront 站点。它们位于您的原始服务器和直接向查看者提供内容的全球边缘站点之间。区域边缘缓存的缓存比单个边缘站点更大，因此对象在区域边缘缓存中保留的时间更长。您的更多内容会更靠近您的查看者，从而减少 CloudFront 返回原始服务器的需要并提高查看者的整体性能。
+
+Amazon CloudFront 具有以下优势：
+
+- 快速且全球化 – Amazon CloudFront 具有大规模扩展和全球分布。为了以低延迟向最终用户提供内容，Amazon CloudFront 使用由边缘站点和区域缓存组成的全球网络。
+- 边缘安全性 – Amazon CloudFront 提供网络级和应用程序级保护。您的流量和应用程序可通过各种内置保护（如 AWS Shield Standard）获益，无需支付额外费用。您还可以使用可配置功能（如 AWS 证书管理器 (ACM)）创建和管理自定义安全套接字层 (SSL) 证书，无需支付额外费用。
+- 高度可编程 – Amazon CloudFront 功能可根据特定应用程序要求进行自定义。它与 Lambda@Edge 集成，因此您可以在全球 AWS 站点运行自定义代码，从而使您能够将复杂的应用程序逻辑移近用户以提高响应能力。CDN 还支持与其他工具和 DevOps 自动化接口集成。它提供持续集成和持续交付 (CI/CD) 环境。
+- 与 AWS 深度集成 – Amazon CloudFront 与 AWS 集成，其物理位置直接连接到 AWS 全球基础设施和其他 AWS 服务。您可以使用 API 或 AWS 管理控制台以编程方式配置 CDN 中的所有功能。
+- 经济高效 – Amazon CloudFront 之所以经济高效，是因为它没有最低承诺，只按实际使用量收费。与自托管相比，Amazon CloudFront 避免了在互联网上的多个站点运营缓存服务器网络的费用和复杂性。它消除了过度配置容量以应对潜在的流量高峰的需要。Amazon CloudFront 还使用了一些技术，例如将边缘位置对同一文件的同时查看请求合并为对原始服务器的单个请求。结果就是减少了原始服务器上的负载，减少了扩展原始基础设施的需求，从而进一步节省了成本。如果您使用 AWS 原始服务器（例如 Amazon Simple Storage Service (Amazon S3) 或 Elastic Load Balancing），则只需支付存储费用，而无需支付在这些服务和 CloudFront 之间传输的任何数据的费用。
+
+![屏幕截图 2024-11-19 093648](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 093648.jpg)
+
+Amazon CloudFront 费用基于四个方面的服务实际使用情况：
+
+- 数据传出 – 您需要为从 Amazon CloudFront 边缘站点传出到互联网或您的源（AWS 源和其他源服务器）的数据量付费（以 GB 为单位）。数据传输使用量按特定地理区域单独计算，然后根据每个区域的定价套餐计算费用。如果您使用其他 AWS 服务作为文件的源，则您需要为使用这些服务单独付费，包括存储和计算小时数。
+- HTTP(S) 请求 – 您需要为内容向 Amazon CloudFront 发出的 HTTP(S) 请求数量付费。
+- 失效请求 – 您需要为失效请求中的每个路径付费。失效请求中列出的路径表示要从 CloudFront 缓存中失效的对象的 URL（如果路径包含通配符，则为多个 URL）。您每月可以从 Amazon CloudFront 请求最多 1,000 条路径，无需支付额外费用。超过前 1,000 条路径后，您需要按失效请求中列出的每条路径付费。
+- 专用 IP 自定义安全套接字层 (SSL) – 您每月需要为与使用专用 IP 版本自定义 SSL 证书支持的一个或多个 CloudFront 分发相关联的每个自定义 SSL 证书支付 600 美元。此月费按小时按比例计算。例如，如果您的自定义 SSL 证书在 6 月份仅与至少一个 CloudFront 分发相关联 24 小时（即 1 天），则您在 6 月份使用自定义 SSL 证书功能的总费用为（1 天/30 天）* 600 美元 = 20 美元。
+
+**Section 6 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- CDN 是一个全球分布的缓存服务器系统，可以加速内容交付。
+- Amazon CloudFront 是一种快速 CDN 服务，可以通过全球基础设施安全地交付数据、视频、应用程序和 API，具有低延迟和高传输速度。
+- Amazon CloudFront 提供许多好处，包括：
+  - 快速且全球化
+  - 边缘安全
+  - 高度可编程
+  - 与 AWS 深度集成
+  - 经济高效
+
+**Module summary**  
+
+总之，在本模块中，您学习了如何：
+
+- 认识网络基础知识
+-  使用 Amazon VPC 描述云中的虚拟网络
+-  标记网络图• 设计基本 VPC 架构
+-  指示构建 VPC 的步骤
+-  识别安全组
+-  创建自己的 VPC 并向其中添加其他组件以生成自定义网络
+-  识别 Amazon Route 53 的基础知识
+-  认识 Amazon CloudFront 的优势
+
+
+
+## Module 6: Compute
+
+本模块将讨论以下主题：
+
+- 计算服务概述
+- Amazon EC2
+- Amazon EC2 成本优化
+- 容器服务
+- AWS Lambda 简介
+- AWS Elastic Beanstalk 简介
+
+完成本模块后，您应该能够：
+
+- 概述云中不同的 AWS 计算服务
+- 演示为什么要使用 Amazon Elastic Compute Cloud (Amazon EC2)
+- 识别 EC2 控制台中的功能
+- 执行 EC2 中的基本功能以构建虚拟计算环
+- 识别 EC2 成本优化元素
+- 演示何时使用 AWS Elastic Beanstalk
+- 演示何时使用 AWS Lambda
+- 识别如何在托管服务器集群中运行容器化应用程序
+
+
+
+### Section 1: Compute services overview
+
+![屏幕截图 2024-11-19 095322](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 095322.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
