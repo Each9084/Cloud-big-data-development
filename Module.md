@@ -2408,6 +2408,178 @@ Amazon ECR 支持 Docker Registry HTTP API 版本 2，这让您可以使用 Dock
 
 ### Section 5: Introduction to AWS Lambda
 
+![屏幕截图 2024-11-19 150335](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 150335.jpg)
+
+正如您在本模块前面的部分中看到的，AWS 提供了许多计算选项。例如，**Amazon EC2** 提供虚拟机。再例如，**Amazon ECS** 和 **Amazon EKS** 是基于容器的计算服务。
+
+然而，还有另一种计算方法，不需要您配置或管理服务器。第三种方法通常称为**serverless computing**。
+
+**AWS Lambda** 是一种事件驱动的无服务器计算服务。Lambda 使您无需配置或管理服务器即可运行代码。
+
+您创建一个 **Lambda function**，它是包含您上传的代码的 AWS 资源。然后，您将 Lambda 函数设置为按计划触发或响应事件触发。您的代码仅在触发时运行。
+
+您只需为您消耗的计算时间付费 — 当您的代码未运行时，您无需付费。
+
+![屏幕截图 2024-11-19 150623](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 150623.jpg)
+
+使用 Lambda，无需学习任何新语言、工具或框架。Lambda 支持多种编程语言，包括 Java、Go、PowerShell、Node.js、C#、Python 和 Ruby。您的代码可以使用任何库，无论是原生库还是第三方库。
+
+Lambda 完全自动化了管理。它管理所有基础设施，以便在高可用性、容错能力强的基础设施上运行您的代码，让您可以专注于构建差异化的后端服务。Lambda 无缝部署您的代码；执行所有管理、维护和安全修补；并通过 Amazon CloudWatch 提供内置日志记录和监控。
+
+Lambda 提供内置容错功能。它在每个区域的多个可用区中维护计算能力，以帮助保护您的代码免受单个机器故障或数据中心故障的影响。没有维护时段或计划停机时间。
+
+您可以使用 AWS Step Functions 构建工作流程，为复杂或长时间运行的任务编排多个 Lambda 函数。使用 Step Functions 定义工作流程。这些工作流程使用顺序、并行、分支和错误处理步骤触发一组 Lambda 函数。使用 Step Functions 和 Lambda，您可以为应用程序和后端构建有状态的长时间运行的流程。
+
+使用 Lambda，您只需为所处理的请求和运行代码所需的计算时间付费。计费以 100 毫秒为增量，这使得它具有成本效益，并且可以轻松地从每天几个请求自动扩展到每秒数千个请求。
+
+![屏幕截图 2024-11-19 150825](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 150825.jpg)
+
+事件源是一种 AWS 服务或开发人员创建的应用程序，它会产生触发 AWS Lambda 函数运行的事件。
+
+某些服务通过直接调用 Lambda 函数将事件发布到 Lambda。这些异步调用 Lambda 函数的服务包括但不限于 Amazon S3、Amazon Simple Notification Service (Amazon SNS) 和 Amazon CloudWatch Events。
+
+Lambda 还可以轮询未向 Lambda 发布事件的其他服务中的资源。例如，Lambda 可以从 Amazon Simple Queue Service (Amazon SQS) 队列中提取记录，并针对每条获取的消息运行 Lambda 函数。Lambda 也可以从 Amazon DynamoDB 读取事件。
+
+某些服务（例如 Elastic Load Balancing（应用程序负载均衡器）和 Amazon API Gateway ）可以直接调用您的 Lambda 函数。
+
+您可以使用 Lambda 控制台、Lambda API、AWS 软件开发工具包 (SDK)、AWS CLI 和 AWS 工具包直接调用 Lambda 函数。直接调用方法可能很有用，例如当您开发移动应用程序并希望该应用程序调用 Lambda 函数时。有关所有受支持服务的更多详细信息，请参阅 https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html 上的“将 Lambda 与其他服务结合使用”文档。
+
+AWS Lambda 使用 Amazon CloudWatch 自动监控 Lambda 函数。为了帮助您排除函数故障，Lambda 会记录由您的函数处理的所有请求。它还会通过 Amazon CloudWatch Logs 自动存储由您的代码生成的日志。
+
+![屏幕截图 2024-11-19 151344](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 151344.jpg)
+
+请记住，Lambda 函数是您编写的用于处理事件的自定义代码，Lambda 代表您运行 Lambda 函数。
+
+当您使用 AWS 管理控制台创建 Lambda 函数时，首先要为该函数命名。然后，指定：
+
+- 该函数将使用的运行时环境（例如，Python 或 Node.js 的版本）
+- 执行角色（向该函数授予 IAM 权限，以便它可以根据需要与其他 AWS 服务交互）
+
+接下来，单击“Create Function 创建函数”后，即可配置该函数。配置包括：
+
+- 添加**trigger** 触发器（指定上一张幻灯片中可用的**event sources**事件源之一）
+- 添加**function code**函数代码（使用提供的代码编辑器或上传包含代码的文件）
+- 指定分配给函数的**memory**（以 MB 为单位）（128 MB 到 10,240 MB）•（可选）指定环境变量、描述、超时、运行函数的特定虚拟私有云 (VPC)、要使用的标签和其他设置。有关更多信息，请参阅 AWS 文档中的在 AWS Lambda 控制台中配置函数 https://docs.aws.amazon.com/lambda/latest/dg/configuration-console.html。
+
+所有上述设置最终都会保存在 Lambda 部署包中，这是一个包含函数代码和依赖项的 ZIP 存档。当您使用 Lambda 控制台编写函数时，控制台会为您管理该包。但是，如果您使用 Lambda API 管理函数，则需要创建部署包。
+
+![屏幕截图 2024-11-19 151535](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 151535.jpg)
+
+考虑一个基于计划的 Lambda 函数的示例用例。假设您处于想要减少 Amazon EC2 使用量的情况。您决定要在预定义的时间停止实例（例如，晚上没有人访问它们时），然后要在早上（工作日开始之前）重新启动实例。
+
+在这种情况下，您可以配置 **AWS Lambda** 和 **Amazon CloudWatch Events** 来帮助您自动完成这些操作。
+
+以下是示例中每个步骤发生的情况：
+
+1.CloudWatch 事件安排在 22:00 GMT（例如）运行 Lambda 函数来停止您的 EC2 实例。
+
+2.Lambda 函数被触发，并使用 IAM 角色运行，该角色授予该函数停止 EC2 实例的权限。
+
+3.EC2 实例进入停止状态。
+
+4.稍后，在 05:00 AM GMT（例如）安排 CloudWatch 事件运行 Lambda 函数来启动 EC2 实例。
+
+5.Lambda 函数被触发，并使用 IAM 角色运行，该角色授予其启动 EC2 实例的权限。
+
+6.EC2 实例进入运行状态。
+
+![屏幕截图 2024-11-19 151648](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 151648.jpg)
+
+现在，考虑一个基于事件的 Lambda 函数的示例用例。假设您想要为上传到 S3 存储桶的每个图像（.jpg 或 .png 对象）创建一个缩略图。
+
+要构建解决方案，您可以创建一个 Lambda 函数，Amazon S3 在上传对象时会调用该函数。然后，Lambda 函数从源存储桶读取图像对象并在目标存储桶中创建缩略图。其工作原理如下：
+
+1.用户将对象上传到 Amazon S3 中的源存储桶（对象创建事件）。
+2.Amazon S3 检测对象创建事件。
+3.Amazon S3 通过调用 Lambda 函数并传递事件数据将对象创建事件发布到 Lambda。
+4.Lambda 通过承担您在创建 Lambda 函数时指定的执行角色来运行 Lambda 函数。
+5.根据 Lambda 函数收到的事件数据，它知道源存储桶名称和对象键名称。Lambda 函数读取对象并使用图形库创建缩略图，然后将缩略图保存到目标存储桶。
+
+![屏幕截图 2024-11-19 151930](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 151930.jpg)
+
+在创建和部署 Lambda 函数时，您应该了解 AWS Lambda 确实有一些配额。
+
+AWS Lambda 限制了可用于运行和存储函数的计算和存储资源量。例如，截至本文撰写时，单个 Lambda 函数的最大内存分配为 10,240 MB。它还限制了区域内 1,000 次并发执行。Lambda 函数可以配置为每次运行最多 15 分钟。您可以将超时设置为 1 秒到 15 分钟之间的任何值。如果您正在对 Lambda 部署进行故障排除，请记住这些限制。
+
+函数的**deployment package size** 部署包大小有限制（250 MB）。层是包含库、自定义运行时或其他依赖项的 ZIP 存档。使用层，您可以在函数中使用库，而无需将它们包含在部署包中。使用层可以帮助避免达到部署包的大小限制。层也是在 Lambda 函数之间共享代码和数据的好方法。
+
+对于依赖于大量依赖项的较大工作负载（例如机器学习或数据密集型工作负载），您可以将 Lambda 函数部署到大小不超过 10 GB 的容器映像中。
+
+限制分为软限制和硬限制。通过提交支持单并提供请求理由，可以放宽帐户的**Soft limits** 软限制。硬限制无法提高。
+
+有关当前 AWS Lambda 配额的详细信息，请参阅 AWS Lambda 配额文档：https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html。
+
+**Section 5 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- 无服务器计算使您无需配置或管理服务器即可构建和运行应用程序和服务。
+- AWS Lambda 是一种无服务器计算服务，提供内置容错和自动扩展。
+- 事件源是触发 Lambda 函数运行的 AWS 服务或开发人员创建的应用程序。
+- 单个 Lambda 函数的最大内存分配为 10,240 MB。
+- Lambda 函数的最大运行时间为 15 分钟。
+
+### Section 6: Introduction to AWS Elastic Beanstalk
+
+![屏幕截图 2024-11-19 152256](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 152256.jpg)
+
+AWS Elastic Beanstalk 是另一种 AWS 计算服务选项。它是一种平台即服务 (PaaS)，有助于快速部署、扩展和管理您的 Web 应用程序和服务。
+
+您仍可掌控一切。整个平台已构建完毕，您只需上传代码即可。选择您的实例类型、数据库、设置和调整自动扩展、更新应用程序、访问服务器日志文件并在负载均衡器上启用 HTTPS。
+
+您上传代码，Elastic Beanstalk 会自动处理部署，从容量配置和负载平衡到自动扩展和监控应用程序运行状况。同时，您可以完全控制支持应用程序的 AWS 资源，并且可以随时访问底层资源。
+
+AWS Elastic Beanstalk 无需额外付费。您只需为存储和运行应用程序而创建的 AWS 资源（例如 EC2 实例或 S3 存储桶）付费。您只需按实际使用量付费。没有最低费用，也无需预先承诺。
+
+![屏幕截图 2024-11-19 152340](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 152340.jpg)
+
+AWS Elastic Beanstalk 使您可以通过 AWS 管理控制台、AWS 命令行界面 (AWS CLI)、Visual Studio 和 Eclipse 部署代码。它提供了应用程序所需的所有应用程序服务。您唯一需要创建的就是代码。Elastic Beanstalk 旨在使应用程序的部署过程变得快速而简单。
+
+Elastic Beanstalk 支持多种平台。支持的平台包括 Docker、Go、Java、.NET、Node.js、PHP、Python 和 Ruby。
+
+AWS Elastic Beanstalk 可在 **Apache Tomcat**（适用于 Java 应用程序）上部署您的代码；可在 **Apache HTTP Server**（适用于 PHP 和 Python 应用程序）上部署您的代码；可在 NGINX 或 Apache HTTP Server（适用于 Node.js 应用程序）上部署您的代码；可在 **Passenger** 或 **Puma**（适用于 Ruby 应用程序）上部署您的代码；还可在 **Microsoft Internet Information Services (IIS)**（适用于 .NET 应用程序、Java SE、Docker 和 Go）上部署您的代码。
+
+![屏幕截图 2024-11-19 152850](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 152850.jpg)
+
+Elastic Beanstalk 的**fast and simple to start using**使用既快速又简单。使用 AWS 管理控制台、Git 存储库或集成开发环境 (IDE)（例如 Eclipse 或 Visual Studio）上传您的应用程序。Elastic Beanstalk 会自动处理容量配置、负载平衡、自动扩展和监控应用程序运行状况的部署细节。
+
+您可以专注于编写代码，而不是管理和**developer productivity** 配置服务器、数据库、负载均衡器、防火墙和网络，从而提高开发人员的工作效率。AWS 使用补丁和更新来更新运行应用程序的底层平台。
+
+Elastic Beanstalk is **difficult to outgrow** 很难被超越。借助 Elastic Beanstalk，您的应用程序可以处理工作负载或流量高峰，同时最大限度地降低成本。它使用易于调整的自动扩展设置，根据应用程序的特定需求自动扩展或缩减应用程序。您可以使用 CPU 利用率指标来触发自动扩展操作。
+
+您可以**freedom to select the AWS resources**自由选择最适合您应用程序的 AWS 资源（例如 Amazon EC2 实例类型）。Elastic Beanstalk 使您能够完全控制支持您应用程序的 AWS 资源。如果您决定接管基础设施的部分（或全部）元素，则可以使用 Elastic Beanstalk 提供的管理功能无缝地完成此操作。
+
+**Section 6 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- AWS Elastic Beanstalk 可提高开发人员的工作效率。
+- 简化部署应用程序的过程。
+- 降低管理复杂性。
+- Elastic Beanstalk 支持 Java、.NET、PHP、Node.js、Python、Ruby、Go 和 Docker。
+- Elastic Beanstalk 不收费。只需为您使用的 AWS 资源付费。
+
+**Module summary**
+
+总之，在本模块中，您学习了如何：
+
+- 概述云中的不同 AWS 计算服务
+- 演示为什么要使用 Amazon Elastic Compute Cloud (Amazon EC2)
+- 识别 Amazon EC2 控制台中的功能
+- 执行 Amazon EC2 中的基本功能以构建虚拟计算环境
+- 识别 Amazon EC2 成本优化元素
+- 演示何时使用 AWS Elastic Beanstalk
+- 演示何时使用 AWS Lambda
+- 识别如何在托管服务器集群中运行容器化应用程序
+
+
+
+
+
+
+
+
+
 
 
 
