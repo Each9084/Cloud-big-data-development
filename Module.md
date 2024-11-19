@@ -1818,29 +1818,595 @@ Amazon CloudFront 费用基于四个方面的服务实际使用情况：
 
 ![屏幕截图 2024-11-19 095322](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 095322.jpg)
 
+Amazon Web Services (AWS) 提供多种计算服务。以下是每种计算服务提供的服务的简要概述：
+
+- Amazon Elastic Compute Cloud (Amazon EC2) 提供可调整大小的虚拟机。
+- Amazon EC2 Auto Scaling 通过允许您定义自动启动或终止 EC2 实例的条件来支持应用程序可用性。
+- Amazon Elastic Container Registry (Amazon ECR) 用于存储和检索 Docker 映像。
+- Amazon Elastic Container Service (Amazon ECS) 是一种支持 Docker 的容器编排服务。
+- VMware Cloud on AWS 使您能够配置混合云而无需自定义硬件。
+- AWS Elastic Beanstalk 提供了一种运行和管理 Web 应用程序的简单方法。
+- AWS Lambda 是一种无服务器计算解决方案。您只需为使用的计算时间付费。
+- Amazon Elastic Kubernetes Service (Amazon EKS) 使您能够在 AWS 上运行托管的 Kubernetes。
+- Amazon Lightsail 提供一种易于使用的服务，用于构建应用程序或网站。
+- AWS Batch 提供一种工具，用于运行任何规模的批处理作业。
+- AWS Fargate 提供一种运行容器的方法，从而减少了您管理服务器或集群的需要。
+- AWS Outposts 提供一种在本地数据中心运行选定 AWS 服务的方法。
+- AWS Serverless Application Repository 提供一种发现、部署和发布无服务器应用程序的方法。
+
+![屏幕截图 2024-11-19 095529](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 095529.jpg)
+
+您可以将每个 AWS 计算服务视为属于四大类别之一：提供基础设施即服务 (IaaS) 的虚拟机 (VM)、无服务器、基于容器的和平台即服务 (PaaS)。
+
+**Amazon EC2** 提供虚拟机，您可以将其视为基础设施即服务 (IaaS)。IaaS 服务提供灵活性，并将许多服务器管理责任留给您。您可以选择操作系统，还可以选择要启动的服务器的大小和资源功能。对于有使用本地计算经验的 IT 专业人员来说，虚拟机是一个熟悉的概念。Amazon EC2 是首批 AWS 服务之一，它仍然是最受欢迎的服务之一。
+
+**AWS Lambda** 是一个零管理计算平台。AWS Lambda 使您无需配置或管理服务器即可运行代码。您只需为使用的计算时间付费。这种无服务器技术概念对于许多 IT 专业人士来说相对较新。然而，它正变得越来越流行，因为它支持云原生架构，与全天候运行服务器以支持相同工作负载相比，它能够以更低的成本实现大规模可扩展性。
+
+基于容器的服务（包括 **Amazon Elastic Container Service**、**Amazon Elastic Kubernetes Service**、**AWS Fargate** 和 **Amazon Elastic Container Registry**）可让您在单个操作系统 (OS) 上运行多个工作负载。容器比虚拟机启动速度更快，因此响应速度更快。基于容器的解决方案越来越受欢迎。
+
+最后，**AWS Elastic Beanstalk** 提供平台即服务 (PaaS)。它通过提供您需要的所有应用程序服务，帮助您快速部署创建的应用程序。AWS 管理操作系统、应用程序服务器和其他基础设施组件，以便您可以专注于开发应用程序代码。
+
+AWS 提供多种计算服务，因为不同的用例受益于不同的计算环境。您使用的最佳计算服务将取决于您的用例。
+
+通常，您使用的计算架构由遗留代码决定。但是，这并不意味着您无法改进架构以利用经过验证的云原生设计。
+
+最佳实践包括：
+
+- 评估可用的计算选项
+- 了解可用的计算配置选项
+- 收集与计算机相关的指标
+- 利用资源的可用弹性
+- 根据指标重新评估计算需求
 
 
 
 
 
+### Section 2: Amazon EC2
+
+![屏幕截图 2024-11-19 100058](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 100058.jpg)
+
+**Running servers on premises**是一项昂贵的任务。必须采购硬件，并且采购可能基于项目计划，而不是服务器的实际使用情况。数据中心的建设、人员配备和维护成本高昂。组织还需要永久配置足够的硬件来处理流量高峰和峰值工作负载。在构建传统的本地部署后，服务器容量可能会在服务器运行的大部分时间内处于闲置状态，这是一种浪费。
+
+Amazon Elastic Compute Cloud (Amazon EC2) 提供虚拟机，您可以在其中托管在传统本地服务器上运行的相同类型的应用程序。它在云中提供安全、可调整大小的计算容量。EC2 实例可以支持各种工作负载。EC2 实例的常见用途包括但不限于：
+
+- 应用程序服务器
+
+- Web 服务器
+- 数据库服务器
+- 游戏服务器
+- 邮件服务器
+- 媒体服务器
+- 目录服务器
+- 文件服务器
+- 计算服务器
+- 代理服务器
+
+![屏幕截图 2024-11-19 100220](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 100220.jpg)
+
+Amazon EC2 中的 EC2 代表弹性计算云：
+
+- 弹性是指您可以轻松增加或减少运行的服务器数量以自动支持应用程序，还可以增加或减少现有服务器的大小。
+- 计算是指大多数用户首先运行服务器的原因，即托管正在运行的应用程序或处理数据 - 这些操作需要计算资源，包括处理能力 (CPU) 和内存 (RAM)。
+- 云是指您运行的 EC2 实例托管在云中。
+
+Amazon EC2 在云中提供虚拟机，并让您完全管理实例上运行的 Windows 或 Linux 操作系统。支持大多数服务器操作系统，包括：Windows 2008、2012、2016 和 2019、Red Hat、SuSE、Ubuntu 和 Amazon Linux。
+
+在虚拟机上运行的操作系统通常称为客户操作系统，以区别于主机操作系统。主机操作系统直接安装在托管一台或多台虚拟机的任何服务器硬件上。
+
+使用 Amazon EC2，您可以在几分钟内将任意数量、任意大小的实例启动到全球任何可用区。实例从 Amazon 系统映像 (AMI) 启动，这些映像实际上是虚拟机模板。本模块后面将更详细地讨论 AMI。
+
+您可以使用安全组控制往返实例的流量。此外，由于服务器在 AWS 云中运行，您可以构建使用多种 AWS 服务的解决方案。
+
+![屏幕截图 2024-11-19 100345](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 100345.jpg)
+
+首次启动 Amazon EC2 实例时，您可能会使用 AWS 管理控制台启动实例向导。您将有机会在本模块的实验中体验使用启动向导。
+
+启动实例向导可让您轻松启动实例。例如，如果您选择接受所有默认设置，则可以跳过向导提供的大部分步骤，只需单击六次即可启动 EC2 实例。本节末尾的演示中显示了此过程的一个示例。
+
+但是，对于大多数部署，您将需要修改默认设置，以便以符合您特定需求的方式部署启动的服务器。
+
+下一组幻灯片将向您介绍启动实例时必须做出的基本选择。幻灯片涵盖了做出这些选择时需要了解的基本概念。这些概念的描述旨在帮助您了解可用的选项以及您将做出的决定的影响。
+
+![屏幕截图 2024-11-19 100458](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 100458.jpg)
+
+**Amazon Machine Image (AMI)** 提供启动 EC2 实例所需的信息。启动实例时必须指定源 AMI。您可以使用不同的 AMI 来启动不同类型的实例。例如，您可以选择一个 AMI 来启动将成为 Web 服务器的实例，并选择另一个 AMI 来部署将托管应用程序服务器的实例。您还可以从单个 AMI 启动多个实例。
+
+AMI 包括以下组件：
+
+- 实例根卷的模板。根卷通常包含操作系统 (OS) 以及安装在该操作系统中的所有内容（应用程序、库等）。Amazon EC2 将模板复制到新 EC2 实例的根卷，然后启动该实例。
+- **Launch permissions 启动权限**，控制哪些 AWS 账户可以使用 AMI。
+- **block device mapping 块设备映射**，指定启动实例时要附加到实例的卷（如果有）。
+
+您可以选择多种 AMI：
+
+- **Quick Start 快速入门** – AWS 提供许多预构建的 AMI 来启动您的实例。这些 AMI 包括许多 Linux 和 Windows 选项。
+- **My AMIs 我的 AMI** – 这些 AMI 是您创建的 AMI。
+- **AWS Marketplace** – AWS Marketplace 提供列出数千种软件解决方案的数字目录。这些 AMI 可以提供特定的使用案例来帮助您快速入门。
+- **Community AMI社区 AMI** – 这些 AMI 由世界各地的人们创建。这些 AMI 未经 AWS 检查，因此使用它们需要您自担风险。社区 AMI 可以为各种问题提供许多不同的解决方案，但请谨慎使用。避免在任何生产或企业环境中使用它们。
+
+![屏幕截图 2024-11-19 100720](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 100720.jpg)
+
+AMI 是从 EC2 实例创建的。您可以导入虚拟机，使其成为 EC2 实例，然后将 EC2 实例另存为 AMI。然后，您可以从该 AMI 启动 EC2 实例。或者，您可以从现有 AMI（例如 AWS 提供的快速入门 AMI）开始，并从中创建 EC2 实例。
+
+无论您选择哪个选项（步骤 1），您都将获得图中所示的未修改实例。然后，您可以从该实例创建一个黄金实例（即，使用所需的特定操作系统和应用程序设置配置的虚拟机）（步骤 2），然后将其捕获为新的 AMI（步骤 3）。当您创建 AMI 时，Amazon EC2 会停止该实例，创建其根卷的快照，最后将该快照注册为 AMI。
+
+注册 AMI 后，可以使用该 AMI 在同一 AWS 区域中启动新实例。现在可以将新 AMI 视为新的启动 AMI。您可能还想将 AMI 复制到其他区域（步骤 4），以便也可以在这些位置启动 EC2 实例。
+
+![屏幕截图 2024-11-19 101318](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 101318.jpg)
+
+Amazon EC2 提供多种实例类型，这些实例类型经过优化，可满足不同使用案例的需求。实例类型包括各种 CPU、内存、存储和网络容量组合。不同的实例类型让您可以灵活地为应用程序选择合适的资源组合。每种实例类型都包含一种或多种实例大小，让您能够根据目标工作负载的要求扩展资源。
+
+实例类型类别包括通用型、计算优化型、内存优化型、存储优化型和加速计算型实例。每个实例类型类别都提供多种实例类型可供选择。
+
+![屏幕截图 2024-11-19 101353](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 101353.jpg)
+
+当您查看 EC2 实例类型时，您会看到其名称由几个部分组成。例如，考虑 T 类型。
+
+T 是姓氏，后面跟着一个数字。这里，这个数字是 3。
+
+该数字是该类型的代数。因此，t3 实例是 T 系列的第三代。一般而言，更高代数的实例类型功能更强大，性价比更高。
+
+名称的下一部分是实例的大小部分。比较大小时，查看大小类别的系数部分很重要。
+
+例如，t3.2xlarge 的 vCPU 和内存是 t3.xlarge 的两倍。反过来，t3.xlarge 的 vCPU 和内存也是 t3.large 的两倍。
+
+还要注意的是，网络带宽也与 Amazon EC2 实例的大小有关。如果您要运行对网络要求很高的作业，则可能需要增加实例规格以满足您的需求。
+
+![屏幕截图 2024-11-19 101801](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 101801.jpg)
+
+实例类型有多种变化，包括：CPU 类型、CPU 或核心数、存储类型、存储量、内存量和网络性能。该图表提供了不同实例类别的概览，以及哪些实例类型系列和代数适合每种类别类型。更详细地考虑一些实例类型：
+
+- **T3** 实例提供可突发性能的通用实例，可提供基准级别的 CPU 性能，并能够超出基准水平。此类实例的使用案例包括网站和 Web 应用程序、开发环境、构建服务器、代码存储库、微服务、测试和暂存环境以及业务线应用程序。
+- **C5** 实例针对计算密集型工作负载进行了优化，以低廉的单位计算成本提供经济高效的高性能。用例包括科学建模、批处理、广告投放、高度可扩展的多人游戏和视频编码。
+- **R5**实例针对内存密集型应用程序进行了优化。用例包括高性能数据库、数据挖掘和分析、内存数据库、分布式Web级内存缓存、实时处理非结构化大数据的应用程序、Apache Hadoop或Apache Spark集群以及其他企业应用程序。
+
+![屏幕截图 2024-11-19 101915](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 101915.jpg)
+
+除了考虑工作负载的 CPU、RAM 和存储需求之外，考虑网络带宽要求也很重要。
+
+每种实例类型都提供记录在案的网络性能级别。例如，a1.medium 实例将提供高达 10 Gbps 的速度，而 p3dn.24xlarge 实例则提供高达 100 Gbps 的速度。选择符合您要求的实例类型。
+
+当您启动多个新的 EC2 实例时，Amazon EC2 会尝试放置这些实例，以便默认情况下它们分散在底层硬件上。这样做是为了最大限度地减少相关故障。但是，如果您想指定特定的放置标准，则可以使用放置组来影响一组相互依赖的实例的放置，以满足您的工作负载需求。例如，您可以指定三个实例都应部署在同一个可用区中，以确保实例之间的网络延迟更低、网络吞吐量更高。有关详细信息，请参阅 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html 上的放置组文档。
+
+![屏幕截图 2024-11-19 102030](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102030.jpg)
+
+选择 AMI 和实例类型后，您必须指定将部署 EC2 实例的网络位置。在启动启动实例向导之前，必须选择**Region 区域**。在选择**Launch Instance 启动实例**之前，请验证您是否位于 Amazon EC2 控制台的正确区域页面中。
+
+当您在**默认 VPC** 中启动实例时，AWS 会默认为其分配一个**公有 IP 地址**。当您在**nondefault VPC** 中启动实例时，子网有一个属性，该属性决定在该子网中启动的实例是否从公有 IPv4 地址池中接收公有 IP 地址。默认情况下，AWS 不会为在非默认子网中启动的实例分配公有 IP 地址。您可以通过修改子网的公有 IP 寻址属性，或在启动期间启用或禁用公有 IP 寻址功能（这将覆盖子网的公有 IP 寻址属性）来控制实例是否接收公有 IP 地址。
+
+![屏幕截图 2024-11-19 102228](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102228.jpg)
+
+通常使用 EC2 实例来运行必须对其他 AWS 服务进行安全 API 调用的应用程序。为了支持这些用例，AWS 允许您将 AWS 身份和访问管理 (IAM) 角色附加到 EC2 实例。如果没有此功能，您可能会倾向于将 AWS 凭证放在 EC2 实例上，以便在该实例上运行的应用程序使用。但是，您永远不应将 AWS 凭证存储在 EC2 实例上。这非常不安全。相反，将 IAM 角色附加到 EC2 实例。然后，IAM 角色授予在 EC2 实例上运行的应用程序发出应用程序编程接口 (API) 请求的权限。
+
+**Instance profile 实例配置文件**是 IAM 角色的容器。如果您使用 AWS 管理控制台为 Amazon EC2 创建角色，控制台会自动创建实例配置文件并赋予其与角色相同的名称。当您随后使用 Amazon EC2 控制台启动具有 IAM 角色的实例时，您可以选择与该实例关联的角色。在控制台中，显示的列表实际上是实例配置文件名称的列表。
+
+**在示例中 In the example**，您会看到 IAM 角色用于向在 EC2 实例上运行的应用程序授予权限。该应用程序必须访问 Amazon S3 中的存储桶。
+
+您可以在启动实例时附加 IAM 角色，但也可以向已运行的 EC2 实例附加角色。定义可由 EC2 实例使用的角色时，可以定义哪些账户或 AWS 服务可以担任该角色。还可以定义应用程序在担任该角色后可以使用哪些 API 操作和资源。如果您更改角色，则更改将传播到附加了该角色的所有实例。
+
+![屏幕截图 2024-11-19 102457](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102457.jpg)
+
+创建 EC2 实例时，您可以选择将用户数据传递给实例。用户数据可以在实例启动时自动完成安装和配置。例如，用户数据脚本可能会修补和更新实例的操作系统、获取和安装软件许可证密钥或安装其他软件。
+
+在示例用户数据脚本中，您会看到一个简单的三行 LinuxBash shell 脚本。第一行表示该脚本应由 Bash shell 运行。第二行调用 Yellowdog Updater, Modified (YUM) 实用程序，该实用程序通常用于许多 Linux 发行版（例如 Amazon Linux、CentOS 和 Red Hat Linux）以从在线存储库检索软件并进行安装。在示例的第二行中，该命令告诉 YUM 将所有已安装的软件包更新为其配置为访问的软件存储库已知的最新版本。脚本的第三行表示应安装 Wget 实用程序。Wget 是一种用于从 Web 下载文件的常用实用程序。
+
+对于 Windows 实例，用户数据脚本应采用与命令提示符窗口（批处理命令）或 Windows PowerShell 兼容的格式编写。有关详细信息，请参阅 https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-windows-user-data.html 上的 Windows 用户数据脚本文档。
+
+创建 EC2 实例后，用户数据脚本将在启动过程的最后阶段以 root 权限运行。在 Linux 实例上，它由 cloud-initservice 运行。在 Windows 实例上，它由 EC2Configor EC2Launchutility 运行。默认情况下，用户数据仅在实例首次启动时运行。但是，如果您希望用户数据脚本在每次启动实例时运行，则可以创建多用途 Internet 邮件扩展 (MIME) 多部分文件用户数据脚本（此过程并不常见）。更多信息请参阅 https://aws.amazon.com/premiumsupport/knowledge-center/execute-user-data-ec2/
+
+![屏幕截图 2024-11-19 102550](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102550.jpg)
+
+启动 EC2 实例时，您可以配置存储选项。例如，您可以配置安装客户操作系统的根卷的大小。您还可以在启动实例时附加其他存储卷。某些 AMI 还配置为默认启动多个存储卷，以提供与根卷分开的存储。
+
+对于实例将拥有的每个卷，您可以指定磁盘的大小、卷类型以及实例终止时是否保留存储。您还可以指定是否应使用加密。
+
+![屏幕截图 2024-11-19 102622](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102622.jpg)
+
+**Amazon Elastic Block Store (Amazon EBS)** 是一种易于使用、高性能的持久块存储服务，旨在与 Amazon EC2 配合使用，用于处理吞吐量和事务密集型工作负载。使用 Amazon EBS，您可以从四种不同的卷类型中进行选择，以平衡最佳价格和性能。您可以更改卷类型或增加卷大小，而不会中断关键应用程序，因此您可以在需要时获得经济高效的存储。
+
+**Amazon EC2 Instance Storage** 为您的实例提供短暂或临时的块级存储。此存储位于物理连接到主机的磁盘上。当您必须临时存储频繁更改的信息（例如缓冲区、缓存、临时数据和其他临时内容）时，实例存储非常有用。您还可以将实例存储用于在一组实例（例如负载平衡的 Web 服务器池）中复制的数据。如果实例因用户错误或故障而停止，则实例存储上的数据将被删除。
+
+**Amazon Elastic File System (Amazon EFS)** 提供简单、可扩展、完全托管的弹性网络文件系统 (NFS) 文件系统，可与 AWS 云服务和本地资源配合使用。它旨在按需扩展到 PB 级，而不会中断应用程序。它会随着您添加和删除文件而自动增大和缩小，从而减少了配置和管理容量以适应增长的需要。
+
+**Amazon Simple Storage Service (Amazon S3)** 是一种对象存储服务，可提供可扩展性、数据可用性、安全性和性能。您可以存储和保护任意数量的数据，以满足各种使用案例的需求，例如网站、移动应用程序、备份和还原、存档、企业应用程序、物联网 (IoT) 设备和大数据分析。
+
+![屏幕截图 2024-11-19 102752](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102752.jpg)
+
+在这里，您可以看到两个如何为 EC2 实例配置存储选项的示例。
+
+实例 1 示例显示，根卷（包含操作系统和其他数据）存储在 Amazon EBS 上。此实例还具有两个附加卷。一个卷是 500 GB 的 Amazon EBS 存储卷，另一个卷是实例存储卷。如果停止此实例然后重新启动，则操作系统将继续存在，并且存储在 20 GB 的 Amazon EBS 卷或 500 GB 的 Amazon EBS 卷上的任何数据都将保持不变。但是，存储在临时卷 1 上的任何数据都将永久丢失。实例存储非常适合临时存储频繁更改的信息，例如缓冲区、缓存、临时数据和其他临时内容。
+
+实例 2 示例显示根卷位于实例存储（临时卷 2）上。具有实例存储根卷的实例无法通过 Amazon EC2 API 调用停止。它只能被终止。但是，它可以从实例的操作系统内部停止（例如，通过发出关闭命令） - 或者它可以因操作系统或磁盘故障而停止 - 这会导致实例终止。如果实例被终止，存储在临时卷 2 上的所有数据都将丢失，包括操作系统。您将无法再次启动实例。因此，不要依赖实例存储来存储有价值的长期数据。相反，使用更持久的数据存储，例如 Amazon EBS、Amazon EFS 或 Amazon S3。
+
+如果实例重新启动（有意或无意），实例存储根卷上的数据将会保留下来。
+
+![屏幕截图 2024-11-19 102842](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102842.jpg)
+
+
+
+标签是您分配给 AWS 资源的标签。每个标签由一个键和一个可选值组成，两者都是您定义的。标签使您能够以不同的方式对 AWS 资源（例如 EC2 实例）进行分类。例如，您可以按用途、所有者或环境标记实例。
+
+标记是将元数据附加到 EC2 实例的方法。
+
+标签键和标签值区分大小写。例如，EC2 实例常用的标签是名为 Name 的标签键和描述实例的标签值，例如 My Web Server。默认情况下，Name 标签显示在 Amazon EC2 控制台实例页面中。但是，如果您创建名为 name（n 小写）的键，它将不会出现在实例列表的 Name 列中（尽管它仍会显示在 Tags 选项卡中的实例详细信息面板中）。
+
+制定标记策略是一种最佳实践。使用一组一致的标签键可以让您更轻松地管理资源。您还可以根据添加的标签搜索和筛选资源。有关更多信息，请参阅 https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf。
+
+![屏幕截图 2024-11-19 102929](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 102929.jpg)
+
+**security group 安全组**充当虚拟防火墙，控制一个或多个实例的网络流量。启动实例时，您可以指定一个或多个安全组；否则，将使用默认安全组。
+
+您可以向每个安全组添加**rules 规则**。规则允许流量进入或来自其关联实例。您可以随时修改安全组的规则，新规则将自动应用于与该安全组关联的所有实例。当 AWS 决定是否允许流量到达实例时，将评估与该实例关联的所有安全组的所有规则。在虚拟私有云 (VPC) 中启动实例时，您必须创建新的安全组或使用该 VPC 中已存在的安全组。启动实例后，您可以更改其安全组。
+
+**define a rule 定义规则时**，您可以指定允许的网络通信源（入站规则）或目标（出站规则）。源可以是 IP 地址、IP 地址范围、另一个安全组、网关 VPC 终端节点或任何位置（这意味着将允许所有源）。默认情况下，安全组包含允许所有出站流量的出站规则。您可以删除规则并添加仅允许特定出站流量的出站规则。如果您的安全组没有出站规则，则不允许来自您的实例的任何出站流量。
+
+在**示例规则中**，如果请求的来源是 My IP，则规则允许通过传输控制协议 (TCP) 端口 22 进行安全 Shell (SSH) 流量。My IP IP 地址是通过确定您定义规则时当前连接到 AWS 云的 IP 地址来计算的。
+
+**Network access control lists 网络访问控制列表（网络 ACL）**也可以用作防火墙来保护 VPC 中的子网。
+
+**For accessibility 对于可访问性**：EC2 控制台屏幕的屏幕截图，您可以在其中定义安全组规则。它显示了类型为 SSH、协议为 TCP、端口范围为 22、来源为 My IP 的规则，以及显示示例 My IP 地址的 CIDR 块。可访问性描述结束。
+
+![屏幕截图 2024-11-19 103138](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 103138.jpg)
+
+在您指定启动 EC2 实例所需的所有配置，并自定义任何可选的 EC2 启动向导配置设置后，系统会向您显示“检查实例启动”窗口。如果您随后选择“启动”，系统会显示一个对话框，要求您选择现有密钥对、在没有密钥对的情况下继续操作或创建新密钥对，然后您才能选择“启动实例”并创建 EC2 实例。
+
+Amazon EC2 使用公钥加密技术来加密和解密登录信息。该技术使用公钥来加密一段数据，然后接收者使用私钥来解密数据。公钥和私钥称为密钥对。公钥加密技术使您可以使用私钥而不是密码来安全地访问您的实例。
+
+启动实例时，您需要指定密钥对。您可以指定现有密钥对，也可以指定启动时创建的新密钥对。如果您创建了新密钥对，请下载并保存在安全位置。这是您保存私钥文件的唯一机会。
+
+要连接到 Windows 实例，请使用私钥获取管理员密码，然后使用远程桌面协议 (RDP) 登录到 EC2 实例的 Windows 桌面。要从 Windows 计算机建立到 Amazon EC2 实例的 SSH 连接，您可以使用 PuTTY 等工具，该工具需要相同的私钥。
+
+使用 Linux 实例时，在启动时，公钥内容将放置在实例上。在 within~/.ssh/authorized_keys 中创建一个条目。要登录到您的 Linux 实例（例如，通过使用 SSH），您必须在建立连接时提供私钥。
+
+![屏幕截图 2024-11-19 103242](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 103242.jpg)
+
+
+
+选择**Launch Instances**并选择**View Instances**后，您将看到一个与示例类似的屏幕。
+
+您在启动期间指定的许多设置在**Description**描述面板中可见。
+
+有关可用实例的信息包括 IP 地址和 DNS 地址信息、实例类型、分配给该实例的唯一实例 ID、用于启动实例的 AMI 的 AMI ID、VPC ID、子网 ID 等。
+
+其中许多详细信息都提供了超链接，您可以选择这些超链接来了解有关您启动的 EC2 实例相关的资源的更多信息。
+
+![屏幕截图 2024-11-19 103508](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 103508.jpg)
+
+您还可以使用 AWS 命令行界面 (AWS CLI) 或某个 AWS 软件开发工具包 (SDK) 以编程方式启动 EC2 实例。
+
+在示例 AWS CLI 命令中，您会看到一个命令，它指定启动实例所需的最少信息。该命令包含以下信息：•aws – 指定调用 aws 命令行实用程序。
+
+- ec2 – 指定调用 ec2 服务命令。
+- run-instances – 是正在调用的子命令。
 
 
 
 
 
+该命令的其余部分指定了几个参数，包括：
+
+- image-id – 此参数后面跟着 AMI ID。所有 AMI 都有唯一的 AMI ID。
+- count – 您可以指定多个。
+- Instance-type – 您可以指定实例类型以创建（例如）c3.large 实例
+- key-name – 在示例中，假设 MyKeyPair 已经存在。
+- security-groups - 在此示例中，假设 MySecurityGroup 已经存在。
+- region -AMI 存在于 AWS 区域中，因此您必须指定 AWS CLI 将在其中找到 AMI 并启动 EC2 实例的区域。
 
 
 
+如果满足以下条件，则命令应该能够成功创建 EC2 实例：
+
+- 命令格式正确
+- 命令所需的资源已经存在
+- 您拥有足够的权限来运行该命令
+- 您的 AWS 账户拥有足够的容量如果命令成功执行，API 会使用实例 ID 和其他相关数据来响应命令，以供您的应用程序在后续 API 请求中使用。
 
 
 
+![屏幕截图 2024-11-19 104114](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 104114.jpg)
+
+在这里，您可以看到实例的生命周期。箭头表示您可以采取的操作，方框表示实例在该操作之后将进入的状态。实例可以处于以下状态之一：
+
+待处理 – 首次从 AMI 启动实例或启动已停止的实例时，实例启动并部署到主机后将进入待处理状态。启动时指定的实例类型决定了实例的主机硬件。
+
+- **Pending** 待处理– 首次从 AMI 启动实例或启动已停止的实例时，实例在启动并部署到主机后进入待处理状态。启动时指定的实例类型决定了实例的主机硬件。
+- **Running** 正在运行 – 实例完全启动并准备就绪后，将退出待处理状态并进入运行状态。您可以通过 Internet 连接到正在运行的实例。
+- **Rebooting** 正在重启 –AWS 建议您使用 Amazon EC2 控制台、AWS CLI 或 AWS SDKs 重启实例，而不是从客户操作系统 (OS) 中调用重启。重启的实例将保留在同一物理主机上，维护相同的公共 DNS 名称和公共 IP 地址，并且如果它具有实例存储卷，它将保留这些卷上的数据。
+- **Shutting down** 正在关闭 – 此状态是运行和终止之间的中间状态。
+- **Terminated** 已终止 – 终止的实例在虚拟机被删除之前仍会在 Amazon EC2 控制台中可见一段时间。但是，您无法连接或恢复已终止的实例。 
+- **Stopping** 正在停止 – 可以停止由 Amazon EBS 支持的实例。它们在达到完全停止状态之前会进入停止状态。
+- **Stopped** 已停止 – 已停止的实例不会产生与正在运行的实例相同的成本。启动已停止的实例会将其重新置于待处理状态，从而将实例移动到新的主机。
+
+![屏幕截图 2024-11-19 104437](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 104437.jpg)
+
+公有 IP 地址是可从 Internet 访问的 IPv4 地址。每个接收公有 IP 地址的实例也会被赋予一个外部 DNS 主机名。例如，如果分配给实例的公有 IP 地址是 203.0.113.25，则外部 DNS 主机名可能是 ec2-203-0-113-25.compute-1.amazonaws.com。
+
+如果您指定应将公有 IP 地址分配给您的实例，则该地址将从 AWS 公有 IPv4 地址池中分配。公有 IP 地址与您的 AWS 账户无关。当公有 IP 地址与您的实例解除关联时，它将被释放回公有 IPv4 地址池，并且您将无法指定是否要重复使用它。当实例停止或终止时，AWS 会释放您的实例的公有 IP 地址。当您停止的实例重新启动时，它将收到一个新的公有 IP 地址。
+
+如果您需要持久的公共 IP 地址，则可能需要将弹性 IP 地址与实例关联。要关联弹性 IP 地址，您必须先在实例所在的区域中分配新的弹性 IP 地址。分配弹性 IP 地址后，您可以将弹性 IP 地址与 EC2 实例关联。
+
+默认情况下，每个区域的所有 AWS 账户都限制为五 (5) 个弹性 IP 地址，因为公共 (IPv4) 互联网地址是一种稀缺的公共资源。不过，这是一个软限制，您可以请求增加限制（可能会获得批准）。
+
+![屏幕截图 2024-11-19 104748](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 104748.jpg)
+
+实例元数据是有关您的实例的数据。您可以在连接到实例时查看它。要在浏览器中访问它，请转到以下 URL：http://169.254.169.254/latest/meta-data/。也可以通过编程方式读取数据，例如从具有 cURL 实用程序的终端窗口读取。在终端窗口中，运行 curl http://169.254.169.254/latest/meta-data/ 以检索它。IP 地址 169.254.169.254 是链接本地地址，并且仅在实例中有效。
+
+ 实例元数据提供了有关正在运行的实例的大部分信息，这些信息与您在 AWS 管理控制台中找到的信息相同。例如，您可以发现公有 IP 地址、私有 IP 地址、公有主机名、实例 ID、安全组、区域、可用区等。
+
+实例启动时指定的任何用户数据也可以通过以下 URL 访问：http://169.254.169.254/latest/user-data。
+
+EC2 实例元数据可用于配置或管理正在运行的实例。例如，您可以编写一个配置脚本来访问元数据信息并使用它来配置应用程序或操作系统设置。
+
+![屏幕截图 2024-11-19 104834](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 104834.jpg)
+
+您可以使用 Amazon CloudWatch 监控您的实例，它可以收集来自 Amazon EC2 的原始数据并将其处理为可读的近乎实时的指标。这些统计数据会记录 15 个月，因此您可以访问历史信息并更好地了解您的 Web 应用程序或服务的运行情况
+
+默认情况下，Amazon EC2 提供基本监控，即以 5 分钟为周期向 CloudWatch 发送指标数据。要以 1 分钟为周期将实例的指标数据发送到 CloudWatch，您可以启用实例的详细监控。有关更多信息，请参阅 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html 上的“为您的实例启用或禁用详细监控”。
+
+Amazon EC2 控制台根据来自 Amazon CloudWatch 的原始数据显示一系列图表。根据您的需要，您可能更愿意从 Amazon CloudWatch 获取实例数据，而不是通过控制台中的图表。默认情况下，Amazon CloudWatch 不提供 EC2 实例的 RAM 指标，但如果您希望 CloudWatch 收集该数据，您可以配置该选项。
 
 
 
+**Section 2 key takeaways**
+
+本模块此部分的一些关键要点包括：
+
+- Amazon EC2 使您能够在云中运行 Windows 和 Linux 虚拟机。
+- 您从 AMI 模板将 EC2 实例启动到您账户中的 VPC 中。
+- 您可以从许多实例类型中进行选择。每种实例类型都提供不同的 CPU、RAM、存储和网络功能组合。
+- 您可以配置安全组来控制对实例的访问（指定允许的端口和源）。
+- 用户数据使您能够指定在实例首次启动时运行的脚本。
+- 只能停止由 Amazon EBS 支持的实例。•您可以使用 Amazon CloudWatch 捕获和查看 EC2 实例上的指标。
+
+![屏幕截图 2024-11-19 105155](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105155.jpg)
+
+请注意，Amazon RDS 实例的每小时成本高于类似大小的 EC2 实例。考虑成本时，不要忘记包括人工成本。例如，请记住，标准单可用区 Amazon RDS 部署（示例价格参考的基础）提供自动备份。使用 Amazon RDS，如果数据库实例组件发生故障并且需要用户启动的恢复操作，您将拥有一个可以使用的可恢复备份。如果您在 Amazon EC2 上运行数据库，则可以为 Microsoft SQL Server 配置同样强大的备份程序。但是，构建解决方案需要时间、知识和技术技能。您还需要在遇到需要它的情况之前预先配置解决方案。出于这些原因，当您全面考虑部署需求时，您可能会发现使用 Amazon RDS 比使用 Amazon EC2 更便宜。但是，如果您拥有熟练的数据库管理员，并且您有非常具体的部署要求，希望您能够完全控制部署的各个方面，那么您可以使用 Amazon EC2。在这种情况下，您可能会发现 Amazon EC2 是更具成本效益的解决方案。
 
 
 
+### Section 3: Amazon EC2 cost optimization
 
+![屏幕截图 2024-11-19 105310](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105310.jpg)
+
+当您想要运行 EC2 实例时，Amazon 提供不同的定价模型供您选择。
+
+- **Per second billing 按秒计费**仅适用于运行 Amazon Linux 或 Ubuntu 的按需实例、预留实例和竞价实例。
+- **On Demand 按需实例**符合 AWS 免费套餐 (https://aws.amazon.com/free/) 的条件。它们具有最低的前期成本和最大的灵活性。无需前期承诺或长期合同。对于具有短期、尖峰或不可预测的工作负载的应用程序来说，这是一个不错的选择。
+- **Dedicated Hosts 专用主机**是具有实例容量的物理服务器，专供您使用。它们使您能够使用现有的每套接字、每核心或每虚拟机软件许可证，例如 Microsoft Windows 或 Microsoft SQL Server。
+- **Dedicated Instances 专用实例**是在专用于单个客户的硬件上的虚拟私有云 (VPC) 中运行的实例。它们在主机硬件级别与属于其他 AWS 账户的实例物理隔离。 
+- **Reserved Instance 预留实例**使您能够以较低的每小时运行成本预留 1 年或 3 年的计算容量。只要您拥有预留实例，折扣使用价格就是固定的。如果您预计会持续大量使用，与按需实例相比，它们可以为您节省大量成本。
+- **Scheduled Reserved Instances 预定预留实例**使您能够购买按天、周或月重复的容量预留，期限为 1 年，持续时间为指定时间。即使您不使用实例，您也需要为实例的预定时间付费。
+- **Spot Instances 竞价型实例**使您能够竞标未使用的 EC2 实例，从而降低您的成本。竞价型实例的每小时价格会根据供求情况而波动。只要您的出价超过当前市场价格，您的竞价型实例就会运行
+
+![屏幕截图 2024-11-19 105501](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105501.jpg)
+
+每种 Amazon EC2 定价模型都提供不同的优势。
+
+**On Demand Instances 按需实例**提供最大的灵活性，无需长期合同且费率低廉。
+
+**Spot Instances 竞价型实例**以大幅折扣的价格提供大规模服务。
+
+**Reserved Instances 预留实例**是一个不错的选择,如果您有可预测或稳定状态的计算需求的话（例如，您知道希望在几个月或几年内大部分时间或所有时间运行的实例）。
+
+如果您对要在 Amazon EC2 上运行的软件有许可限制，或者您有特定的合规性或监管要求而无法使用其他部署选项，则**Dedicated Hosts 专用主机**是一个不错的选择。
+
+
+
+![屏幕截图 2024-11-19 105647](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105647.jpg)
+
+以下是各种定价选项的一些用例回顾。
+
+**On-Demand Instance 按需实例**定价适用于工作负载高峰期，或者您只需要在短时间内测试或运行应用程序（例如，在应用程序开发或测试期间）。
+
+有时，您的工作负载是不可预测的，按需实例是这些情况下的不错选择。如果您的应用程序可以容忍中断并发出 2 分钟的警告通知，则 **Spot Instances**是不错的选择。默认情况下，实例会被终止，但您可以将其配置为停止或休眠。常见用例包括容错应用程序，例如 Web 服务器、API 后端和大数据处理。不断将数据保存到持久性存储（如 Amazon S3）的工作负载也是不错的选择。
+
+当您拥有具有可预测使用模式的长期工作负载时，**Reserved Instances 预留实例**是一个不错的选择，例如您知道需要在未来数月内以一致的方式运行的服务器。
+
+当您拥有现有的每个插槽、每个核心或每个虚拟机的软件许可证时，或者当您必须满足特定的企业合规性和监管要求时，**Dedicated Hosts 专用主机**是一个不错的选择。
+
+![屏幕截图 2024-11-19 105849](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105849.jpg)
+
+要优化成本，您必须考虑四个一致、强大的驱动因素：
+
+- 合适规模 – 选择合适的实例类型平衡。注意何时可以缩小服务器规模或关闭服务器，同时仍能满足您的性能要求。
+- 提高弹性 – 通过实施弹性部署（例如使用自动扩展来处理峰值负载的部署），设计您的部署以减少闲置的服务器容量。
+- 最佳定价模型 – 识别可用的定价选项。分析您的使用模式，以便您可以使用合适的定价选项组合运行 EC2 实例。
+- 优化存储选择 – 分析部署的存储要求。尽可能减少未使用的存储开销，如果存储选项仍能满足您的存储性能要求，则选择较便宜的存储选项。
+
+![屏幕截图 2024-11-19 105932](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 105932.jpg)
+
+首先，考虑合理调整规模。AWS 提供大约 60 种实例类型和大小。广泛的选择使客户能够选择最适合其工作负载的实例。从技术角度和成本角度来看，很难知道从哪里开始以及哪种实例选择将被证明是最好的。合理调整规模是审查已部署资源并寻找可能缩小规模的机会的过程。
+
+**To right size** 正确确定大小：
+
+- **Select** 选择最便宜的实例，同时仍能满足您的性能要求。
+- **Review** 检查 CPU、RAM、存储和网络利用率，以确定可以缩小大小的实例。您可能希望在测试环境中配置各种实例类型和大小，然后在这些不同的测试部署上测试您的应用程序，以确定哪些实例提供最佳性能成本比。要正确确定大小，请使用负载测试等技术来发挥您的优势。
+- **Use** 使用 Amazon CloudWatch 指标并设置自定义指标。指标表示发布到 CloudWatch 的一组按时间顺序排列的值（例如，特定 EC2 实例的 CPU 使用率）。数据点可以来自您为其收集数据的任何应用程序或业务活动。
+
+![屏幕截图 2024-11-19 110043](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 110043.jpg)
+
+**elasticity 弹性**的一种形式是在需要时创建、启动或使用 EC2 实例，但在不使用时关闭它们。弹性是云的核心原则之一，但客户通常需要经历一个学习过程才能将弹性付诸实践，从而节省成本。
+
+对于大型客户来说，采用弹性的最简单方法是寻找适合停止或休眠的资源，例如非生产环境、开发工作负载或测试工作负载。例如，如果您在单个时区内运行开发或测试工作负载，则可以轻松地在工作时间之外关闭这些实例，从而将运行时成本降低约 65%。这个概念类似于为什么门旁边有一个电灯开关，以及为什么大多数办公室鼓励员工每晚离开办公室时关灯。
+
+对于生产工作负载，配置更精确、更细粒度的自动扩展策略可以帮助您利用水平扩展来满足峰值容量需求，而不必一直为峰值容量付费。
+
+根据经验法则，您应该将 20% 到 30% 的 Amazon EC2 实例作为按需实例或 Spot 实例运行，并且还应该积极寻找最大化弹性的方法。
+
+![屏幕截图 2024-11-19 110143](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 110143.jpg)
+
+AWS 为 Amazon EC2 提供了多种定价模型，以帮助客户节省资金。本模块前面详细讨论了可用的模型。客户可以组合多种购买类型，以根据其当前和预测的容量需求优化定价。
+
+我们还鼓励客户考虑他们的应用程序架构。例如，您的应用程序提供的功能是否需要在 EC2 虚拟机上运行？也许通过使用 AWS Lambda 服务，您可以显著降低成本。
+
+本模块后面将讨论 AWS Lambda。
+
+![屏幕截图 2024-11-19 110231](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 110231.jpg)
+
+
+
+客户还可以降低存储成本。启动 EC2 实例时，不同的实例类型提供不同的存储选项。最佳做法是尝试降低成本，同时保持存储性能和可用性。
+
+实现此目的的一种方法是**resizing EBS volumes 调整 EBS 卷的大小**。例如，如果您最初为 EC2 实例配置了一个 500 GB 的卷，而该实例最多只需要 20 GB 的存储空间，则可以减小卷的大小并节省成本。
+
+还有各种**EBS volume types EBS 卷类型**。选择最便宜但仍然满足您的性能要求的类型。例如，Amazon EBS 吞吐量优化 HDD (st1) 存储的成本通常只有默认通用 SSD (gp2) 存储选项的一半。如果 st1 驱动器可以满足您的工作负载需求，请充分利用成本节省。
+
+客户经常使用**EBS snapshots EBS 快照**来创建数据备份。但是，有些客户忘记删除不再需要的快照。删除这些不需要的快照以节省成本。
+
+最后，尝试确定**appropriate destination for specific types of data 特定类型数据最合适的目的地**。您的应用程序是否需要将其使用的数据驻留在 Amazon EBS 上？如果应用程序改用 Amazon S3 进行存储，其运行效果是否一样好？配置数据生命周期策略还可以降低成本。例如，您可以自动将较旧的、不常访问的数据迁移到更便宜的存储位置，例如 Amazon Simple Storage Service Glacier。
+
+![屏幕截图 2024-11-19 110454](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 110454.jpg)
+
+如果操作正确，成本优化并不是客户一次性完成的过程。相反，通过定期测量和分析您的系统，您可以不断改进和调整成本。
+
+**Tagging 标记**有助于提供有关哪些资源由谁使用以及用于什么目的的信息。您可以在账单和成本管理控制台中激活成本分配标签，AWS 可以生成成本分配报告，其中使用情况和成本按您的活动标签分组。应用代表业务类别（例如成本中心、应用程序名称或所有者）的标签来组织跨多项服务的成本
+
+**Encourage teams to architect for cost 鼓励团队根据成本进行架构**。AWS Cost Explorer 是一款免费工具，可用于查看成本图表。您可以使用 Cost Explorer 查看一段时间内您在 AWS 资源上花费的模式，确定需要进一步调查的领域，并查看可用于了解成本的趋势。
+
+使用 AWS 服务（例如 **AWS Trusted Advisor**），它提供实时指导，帮助您配置遵循 AWS 最佳实践的资源。
+
+当将成本优化的责任分配给个人或团队时，成本优化工作通常会更成功。
+
+**Section 3 key takeaways**
+
+本模块此部分的一些关键要点如下：
+
+- **Amazon EC2 pricing models** Amazon EC2 定价模型包括按需实例、预留实例、竞价实例、专用实例和专用主机。仅使用 Amazon Linux 和 Ubuntu 的按需实例、预留实例和竞价实例可按秒计费。
+
+- **Spot Instances** 竞价实例可通过 2 分钟通知中断。但是，与按需实例相比，它们可以节省大量成本。
+
+- 成本优化的四大支柱是–
+
+  - Right size 合适的规模
+  - Increase elasticit 增加弹性
+  - Optimal pricing model 最佳定价模型
+  - Optimize storage choices 优化存储选择
+
+  
+
+### Section 4: Container services
+
+![屏幕截图 2024-11-19 110826](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 110826.jpg)
+
+**Containers 容器**是一种**operating system virtualization**操作系统虚拟化方法，可让您在资源隔离的进程中运行应用程序及其依赖项。通过使用容器，您可以轻松地将应用程序的代码、配置和依赖项打包成易于使用的构建块，从而提供环境一致性、运营效率、开发人员生产力和版本控制。
+
+容器比虚拟机小，不包含整个操作系统。相反，容器共享虚拟化操作系统并作为资源隔离的进程运行，从而确保快速、可靠和一致的部署。容器包含软件运行所需的一切，例如库、系统工具、代码和运行时。
+
+容器提供**environmental consistency 环境一致性**，因为应用程序的代码、配置和依赖项被打包到单个对象中。
+
+在空间方面，容器镜像通常比虚拟机小一个数量级。启动容器只需数百毫秒。因此，通过使用容器，您可以使用快速、便携且与基础设施无关的环境。
+
+无论部署环境如何，容器都可以帮助确保应用程序快速、可靠且一致地部署。容器还可以让您更精细地控制资源，从而提高基础设施的效率。
+
+![屏幕截图 2024-11-19 111001](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111001.jpg)
+
+**Docker** 是一个将软件（如应用程序）打包到容器中的软件平台。
+
+Docker 安装在将托管容器的每台服务器上，它提供了可用于构建、启动或停止容器的简单命令。
+
+通过使用 Docker，您可以快速部署和扩展应用程序到任何环境中。
+
+当您想要执行以下操作时，Docker 是最佳解决方案：
+
+- 标准化环境
+- 减少语言堆栈和版本之间的冲突
+- 使用容器作为服务
+- 使用标准化代码部署运行微服务
+- 要求数据处理的可移植性
+
+![屏幕截图 2024-11-19 111125](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111125.jpg)
+
+很多初次接触容器概念的人认为容器与虚拟机完全一样。然而，两者的区别在于细节。一个显著的区别是虚拟机直接在虚拟机管理程序上运行，而容器可以在任何 Linux 操作系统上运行，前提是它们具有适当的内核功能支持并且存在 Docker 守护程序。这使得容器非常易于移植。您的笔记本电脑、VM、EC2 实例和裸机服务器都是可以运行容器的潜在主机。
+
+**图表右侧有一个基于虚拟机 (VM) 的部署**。三个 EC2 实例中的每一个都直接在 AWS 全球基础设施提供的虚拟机管理程序上运行。每个 EC2 实例都运行一个虚拟机。在此基于 VM 的部署中，三个应用程序中的每一个都在自己的 VM 上运行，从而提供进程隔离。
+
+**图左侧为基于容器的部署**。只有一个 EC2 实例运行虚拟机。Docker 引擎安装在 EC2 实例的 Linux 客户操作系统上，并且有三个容器。在此基于容器的部署中，每个应用程序都在其自己的容器中运行（这提供了进程隔离），但所有容器都在单个 EC2 实例上运行。在容器中运行的进程直接与 Linux 客户操作系统中的内核通信，并且基本上不知道它们的容器孤岛。Docker 引擎用于管理容器在 Linux 客户操作系统上的运行方式，并且它还在整个容器生命周期中提供必要的管理功能。
+
+在实际的基于容器的部署中，大型 EC2 实例可以运行数百个容器。
+
+![屏幕截图 2024-11-19 111303](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111303.jpg)
+
+
+
+鉴于您现在对容器的了解，您可能会认为您可以启动一个或多个 Amazon EC2 实例，在每个实例上安装 Docker，然后自己管理和运行这些 Amazon EC2 实例上的 Docker 容器。虽然这是一种选择，但 AWS 提供了一项名为 Amazon Elastic Container Service (Amazon ECS) 的服务来简化容器管理。
+
+**Amazon Elastic Container Service (Amazon ECS)** 是一种高度可扩展、高性能的容器管理服务，支持 Docker 容器。Amazon ECS 使您能够在托管的 Amazon EC2 实例集群上轻松运行应用程序。
+
+基本 Amazon ECS 功能包括：
+
+- 在几秒钟内**启动**数万个 Docker 容器
+- **监控**容器部署
+- **管理**运行容器的集群的状态
+- 使用内置**调度**程序或第三方调度程序（例如 Apache Mesos 或 Blox）调度容器
+
+Amazon ECS 集群还可以使用 Spot 实例和预留实例。
+
+![屏幕截图 2024-11-19 111439](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111439.jpg)
+
+
+
+要准备在 Amazon ECS 上运行您的应用程序，您需要创建一个**task definition** 任务定义，这是一个文本文件，用于描述构成您的应用程序的一个或多个容器（最多十个）。您可以将其视为应用程序的蓝图。任务定义指定应用程序的参数，例如要使用哪些容器、应为您的应用程序打开哪些端口以及应将哪些数据卷与任务中的容器一起使用。
+
+**task 任务**是集群内任务定义的实例化。您可以指定集群上运行的任务数量。**Amazon ECS task scheduler**程序负责将任务放置在集群内。任务将在 1 到 10 个容器中运行，具体取决于您定义的任务定义。
+
+当 Amazon ECS 运行组成任务的容器时，它会将它们放置在 **ECS cluster** 上。集群（当您选择 EC2 启动类型时）由一组 EC2 实例组成，每个实例都运行一个 **Amazon ECS container agent**。
+
+Amazon ECS 提供多种调度策略，可根据您的资源需求（例如 CPU 或 RAM）和可用性要求将容器放置在您的集群中。
+
+![屏幕截图 2024-11-19 111630](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111630.jpg)
+
+创建 Amazon ECS 集群时，您有三个选项：
+
+- 仅**Networking Only** 网络集群（由 AWS Fargate 提供支持）
+- **EC2 Linux + Networking** 
+- An **EC2 Windows** + **Networking cluster**
+
+如果您选择两种 **EC2 launch type** 选项之一，系统将提示您选择集群 EC2 实例是作为按需实例还是 Spot 实例运行。此外，您还需要指定组成集群的 EC2 实例的许多详细信息 — 启动独立 EC2 实例时必须指定这些详细信息。通过这种方式，EC2 启动类型可以更精细地控制运行容器应用程序的基础设施，因为您管理组成集群的 EC2 实例。Amazon ECS 会跟踪集群中的所有 CPU、内存和其他资源。Amazon ECS 还会根据您指定的资源需求为您的容器找到最佳服务器
+
+如果您选择仅联网的 **Fargate  launch type**，则运行容器的集群将由 AWS 管理。使用此选项，您只需将应用程序打包到容器中，指定 CPU 和内存要求，定义网络和 IAM 策略，然后启动应用程序。您无需预置、配置或扩展集群。它消除了选择服务器类型、决定何时扩展集群或优化集群打包的需要。Fargate 选项使您能够专注于设计和构建应用程序。
+
+![屏幕截图 2024-11-19 111832](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 111832.jpg)
+
+**Kubernetes** 是用于容器编排的开源软件。Kubernetes 可以与许多容器化技术配合使用，包括 Docker。由于它是一个流行的开源项目，因此大量开发人员和公司构建了扩展、集成和插件，以保持软件的相关性，并经常添加新的和热门的功能。
+
+Kubernetes 可让您大规模部署和管理**containerized applications 容器化应用程序**。借助 Kubernetes，您可以在本地数据中心和云中使用相同的工具集运行任何类型的容器化应用程序。Kubernetes 管理计算实例（称为节点）**cluster 集群**。它在集群上运行容器，这些容器基于可用的计算资源位置和每个容器的资源需求。容器以称为 **pods** 的逻辑分组运行。您可以将一个或多个容器作为一个 pod 一起运行和扩展。每个 pod 都有一个 IP 地址和一个域名系统 (DNS) 名称，Kubernetes 使用这些名称将您的服务相互连接并连接外部流量。
+
+Kubernetes 的一个主要优势是，您可以使用它在任何地方运行容器化应用程序，而无需更改操作工具。例如，可以使用相同的操作工具将应用程序从本地开发机器移动到云中的生产部署。
+
+![屏幕截图 2024-11-19 112323](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 112323.jpg)
+
+您可能认为可以启动一个或多个 Amazon EC2 实例，在每个实例上安装 Docker，在集群上安装 Kubernetes，然后自行管理和运行 Kubernetes。虽然这是一种选择，但 AWS 提供了一项名为 Amazon Elastic Kubernetes Service (Amazon EKS) 的服务，可简化 Kubernetes 集群的管理。
+
+**Amazon Elastic Kubernetes Service (Amazon EKS)** 是一项托管的 Kubernetes 服务，让您可以轻松地在 AWS 上运行 Kubernetes，而无需安装、操作和维护您自己的 Kubernetes 控制平面。它经过认证，符合 Kubernetes 标准，因此在上游 Kubernetes 上运行的现有应用程序与 Amazon EKS 兼容。
+
+Amazon EKS 自动管理负责启动和停止容器、在虚拟机上调度容器、存储集群数据和其他任务的集群节点的可用性和可扩展性。它会自动检测并替换每个集群的运行状况不佳的控制平面节点。您可以利用 AWS 云的性能、规模、可靠性和可用性，其中包括 AWS 网络和安全服务，例如用于负载分配的应用程序负载均衡器、用于基于角色的访问控制的 IAM 以及用于 Pod 网络的 VPC。
+
+您可能想知道为什么亚马逊同时提供 Amazon ECS 和 Amazon EKS，因为它们都能够编排 Docker 容器。这两项服务存在的原因是为了为客户提供灵活的选择。您可以决定哪种选择最符合您的需求。
+
+![屏幕截图 2024-11-19 112414](C:\Users\EACH\Desktop\Large-Scale Data Engineering 2024\Cloud big data development\asset\image\屏幕截图 2024-11-19 112414.jpg)
+
+**Amazon Elastic Container Registry (Amazon ECR)** 是一个完全托管的 Docker 容器注册表，可让开发人员轻松存储、管理和部署 Docker 容器映像。它与 **integrated with Amazon ECS** Amazon ECS 集成，因此您可以存储、运行和管理在 Amazon ECS 上运行的应用程序的容器映像。在任务定义中指定 Amazon ECR 存储库，Amazon ECS 将为您的应用程序检索适当的映像。
+
+Amazon ECR 支持 Docker Registry HTTP API 版本 2，这让您可以使用 Docker CLI 命令或您首选的 Docker 工具与 Amazon ECR 进行交互。因此，您可以维护现有的开发工作流程并从任何 Docker 环境访问 Amazon ECR — 无论是在云中、本地还是本地计算机上。
+
+您可以通过 HTTPS 将容器映像传输到 Amazon ECS 或从 Amazon ECS 传输容器映像。您的映像还会使用 Amazon S3 服务器端加密自动进行静态加密。
+
+**Section 4 key takeaways**
+
+本节的一些关键要点包括：
+
+- 容器可以容纳应用程序运行所需的一切。
+- Docker 是一个将软件打包到容器中的软件平台。
+- 单个应用程序可以跨多个容器。
+- Amazon Elastic Container Service (Amazon ECS) 协调 Docker 容器的运行。
+- Kubernetes 是用于容器编排的开源软件。
+- Amazon Elastic Kubernetes Service (Amazon EKS) 使您能够在 AWS 上运行 Kubernetes
+- Amazon Elastic Container Registry (Amazon ECR) 使您能够存储、管理和部署 Docker 容器。
+
+
+
+### Section 5: Introduction to AWS Lambda
 
 
 
