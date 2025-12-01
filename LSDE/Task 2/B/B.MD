@@ -1,5 +1,19 @@
 **Task B** — **Design and Implement Auto-scaling** 的任务要求我们为 **WordFreq 应用程序** 实现 **自动扩展**（Auto-scaling）功能。这个任务的目标是确保当工作负载增加时，自动增加更多的工作实例（worker instances），并且当工作负载降低时，自动减少不必要的实例，以便高效地处理文件处理任务。
 
+
+
+Task B – Design and Implement Auto-scaling Review the architecture of the existing application. Each job process takes a random time to complete between 10-20 seconds (artificially induced, but DO NOT modify the application source code!). To be able to process multiple uploaded files, we need to add scaling to the application.
+
+This should initially function as follows: • When a given maximum performance metric threshold is exceeded, an identical worker instance is launched and begins to also process messages on the queues. • When a given minimum performance metric threshold is exceeded, the most recently launched worker instance is removed (terminated). • There must always be at least one worker instance available to process messages when the application architecture is 'live'. • You don’t want to add more instances every 2 minutes. Using the knowledge gained from the Cloud Foundations course, architect, please implement autoscaling functionality for the WordFreq application and demonstrate how you configure the autoscaling policy. Note that this will not be exactly the same as Lab 6 in Module 10, which is for a web application. You will not need a load balancer, and you will need to identify a different CloudWatch performance metric to use for the ‘scale out’ and ‘scale in’ rules. The 'Average CPU Utilization' metric used in Lab 6 is not necessarily the best choice for this application.
+
+
+
+
+
+![image-20241201124742522](C:\Users\EACH\AppData\Roaming\Typora\typora-user-images\image-20241201124742522.png)
+
+
+
 ### **Task B的关键需求：**
 
 1. **自动扩展和缩减规则：**
@@ -13,16 +27,16 @@
 
 ### **实施自动扩展功能：**
 
-在实现自动扩展时，我们将使用 **Amazon EC2 Auto Scaling** 和 **Amazon CloudWatch** 来监控和调整实例的数量。具体步骤如下：
+在实现自动扩展时，我看了一下得使用 **Amazon EC2 Auto Scaling** 和 **Amazon CloudWatch** 来监控和调整实例的数量。
 
-------
+
 
 ### **步骤 1：定义自动扩展组**
 
 1. **创建启动模板（Launch Template）**：
    - 自动扩展组需要一个启动模板（Launch Template），用于定义实例的启动配置，例如实例类型、AMI、密钥对等。
    - 在 AWS 控制台中创建一个启动模板，配置好 EC2 实例的所有启动细节，例如：
-     - **AMI**：选择与你的应用程序兼容的 Ubuntu 版本（例如 Ubuntu 22.04）。
+     - **AMI**：选择与咱们自己应用程序兼容的 Ubuntu 版本（例如 Ubuntu 22.04）。
      - **实例类型**：选择合适的实例类型（例如 `t2.micro` 或 `t3.small`）。
      - **安全组**：选择允许 SSH 访问和其他必要端口的安全组。
 2. **创建自动扩展组**：
@@ -35,15 +49,13 @@
 
 ### **步骤 2：选择并创建性能指标**
 
-为了确保自动扩展机制能有效地工作，我们需要选择合适的性能指标，通常考虑 **SQS队列长度** 或 **EC2 CPU 使用率**。因为这是一个异步文件处理应用，CPU 使用率可能不是最理想的选择，**SQS 队列的消息数量** 更能反映任务积压的情况。
+为了确保自动扩展机制能有效地工作，这里的话需要选择合适的性能指标，通常考虑 **SQS队列长度** 或 **EC2 CPU 使用率**。因为这是一个异步文件处理应用，CPU 使用率可能不是最理想的选择，**SQS 队列的消息数量** 更能反映任务积压的情况。
 
-1. 创建自定义 CloudWatch 指标
+1. 创建自定义 CloudWatch 指标：
 
-   ：
-
-   - 你可以监控 **SQS 队列的消息数量** 来决定是否需要扩展或收缩实例数量。
+   - 这部分的话可以监控 **SQS 队列的消息数量** 来决定是否需要扩展或收缩实例数量。
    - 使用 **CloudWatch 监控 SQS 队列的消息数**，为扩展和收缩设置触发条件。
-   - 例如，当队列中的消息数超过某个阈值（比如 1000），可以触发 **scale out** 规则。
+   - 例如，当队列中的消息数超过某个阈值（比如 1000 瞎编的指标），可以触发 **scale out** 规则。
 
 ------
 
@@ -66,7 +78,7 @@
 
 ### **步骤 4：配置 CloudWatch 警报**
 
-为了使 **Auto Scaling** 机制响应 **SQS 队列的消息数量**，你需要配置 **CloudWatch 警报**，监控队列的大小并触发自动扩展。
+为了使 **Auto Scaling** 机制响应 **SQS 队列的消息数量**，需要配置 **CloudWatch 警报**，监控队列的大小并触发自动扩展。
 
 1. **创建 CloudWatch 警报**：
    - 监控 **SQS 队列的消息数**，当消息数超过设定阈值（如 1000）时，触发 **扩展**。
@@ -79,16 +91,9 @@
 ### **步骤 5：测试自动扩展功能**
 
 1. **模拟负载增加**：
-   - 你可以通过上传多个文件到 **S3 上传存储桶**，或者手动向 **SQS 队列** 添加消息，模拟负载增加。
+   - 可以通过上传多个文件到 **S3 上传存储桶**，或者手动向 **SQS 队列** 添加消息，模拟负载增加。
    - 监控 **CloudWatch**，检查是否会根据消息数量触发自动扩展规则。
 2. **模拟负载减少**：
    - 可以通过减少 **SQS 队列中的消息**，或者暂停上传文件，模拟负载减少。
    - 监控是否触发自动收缩规则，减少工作实例的数量。
 
-------
-
-### **总结**
-
-通过实施 **自动扩展功能**，我们确保了 **WordFreq 应用程序** 在负载增加时自动扩展实例，在负载减少时自动收缩实例，从而保持系统的高效性和弹性。这一步涉及了配置 **EC2 Auto Scaling**、**CloudWatch 警报** 和 **SQS 队列的性能指标**。
-
-如果你在实施过程中遇到任何问题，或者有进一步的问题，请随时告诉我！
